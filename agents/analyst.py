@@ -13,11 +13,9 @@ class Analyst:
     def analizar_item(self, item_id: str, metricas: dict) -> dict:
         impresiones = metricas.get("prints", 0)
         clics = metricas.get("clicks", 0)
-        costo = metricas.get("cost", 0.0)
-        ingresos = metricas.get("direct_amount", 0.0) + metricas.get("indirect_amount", 0.0)
-        conversiones = metricas.get("conversions", 0)
+        conversiones = metricas.get("units_quantity", 0)
+        roas = metricas.get("roas", 0.0)  # ML ya lo calcula, no hace falta recomputarlo
 
-        roas = (ingresos / costo) if costo > 0 else 0.0
         alertas = reglas.alertas_metricas(impresiones, clics, conversiones)
 
         return {

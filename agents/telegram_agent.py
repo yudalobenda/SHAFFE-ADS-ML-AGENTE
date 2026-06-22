@@ -35,25 +35,33 @@ class TelegramAgent:
 
     def _texto_accion(self, accion: dict) -> str:
         tipo = accion.get("tipo")
-        item_id = accion.get("item_id", "")
+        nombre = accion.get("family_name") or accion.get("item_id", "")
+        n_variantes = len(accion.get("item_ids", []))
+        sufijo_variantes = f" ({n_variantes} variantes)" if n_variantes > 1 else ""
+
         if tipo == "mover_tier":
             return (
-                f"🔄 *{item_id}*\n{accion['tier_origen']} → {accion['tier_destino']}\n"
+                f"🔄 *{nombre}*{sufijo_variantes}\n{accion['tier_origen']} → {accion['tier_destino']}\n"
                 f"ROAS reciente: {accion.get('roas_reciente', 'N/D')}"
             )
         if tipo == "agregar_a_testeo":
-            return f"🆕 *{item_id}*\nNueva publicación → agregar a {accion['campania']} (ROAS objetivo 3)"
+            return f"🆕 *{nombre}*{sufijo_variantes}\nNueva publicación → agregar a {accion['campania']} (ROAS objetivo 3)"
         if tipo == "agregar_a_promo":
-            return f"📦 *{item_id}*\nPoco stock → agregar a promo ML"
+            return f"📦 *{nombre}*{sufijo_variantes}\nPoco stock → agregar a promo ML"
         if tipo == "pausar":
-            return f"⏸️ *{item_id}*\nMotivo: {accion.get('motivo')}"
+            return f"⏸️ *{nombre}*{sufijo_variantes}\nMotivo: {accion.get('motivo')}"
         if tipo == "alerta":
             detalle = {
                 "ctr_bajo": "CTR bajo con muchas impresiones → revisar foto principal o precio",
                 "cvr_bajo": "CVR bajo con buenos clics → revisar descripción o ficha",
             }.get(accion["alerta"], accion["alerta"])
-            return f"⚠️ *{item_id}*\n{detalle}\nROAS actual: {accion.get('roas', 0):.2f}"
-        return f"❔ *{item_id}*\n{accion}"
+            return f"⚠️ *{nombre}*{sufijo_variantes}\n{detalle}\nROAS actual: {accion.get('roas', 0):.2f}"
+        if tipo == "tier_dividido":
+            return (
+                f"🚧 *{nombre}*\nLas variantes de este producto están repartidas en campañas distintas: "
+                f"{', '.join(accion.get('tiers_detectados', []))}. Corregilo a mano — el agente no lo mueve solo."
+            )
+        return f"❔ *{nombre}*\n{accion}"
 
     def _enviar_mensaje(self, texto: str, reply_markup: dict | None = None) -> None:
         payload = {"chat_id": self.chat_id, "text": texto, "parse_mode": "Markdown"}

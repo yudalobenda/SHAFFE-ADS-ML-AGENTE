@@ -49,33 +49,46 @@ def modo_collect() -> None:
     state = _cargar_json("state.json")
 
     advertiser_id = campaign_ids.get("advertiser_id")
-    if advertiser_id is None:
-        raise RuntimeError("Falta advertiser_id en memory/campaign_ids.json")
+    site_id = campaign_ids.get("site_id")
+    if advertiser_id is None or site_id is None:
+        raise RuntimeError("Falta advertiser_id o site_id en memory/campaign_ids.json")
 
     ml = _crear_ml_client()
-    collector = Collector(ml, advertiser_id)
+    collector = Collector(ml, site_id, advertiser_id)
     analyst = Analyst(learnings)
     structurer = Structurer()
     stock_agent = StockAgent()
     copywriter = Copywriter()
 
-    datos = collector.recolectar(campaign_ids["campañas"])
+    grupos = collector.recolectar(campaign_ids["campañas"])
 
     acciones: list = []
-    for item_id, info in datos.items():
-        analisis = analyst.analizar_item(item_id, info["metricas"])
+    for family_id, grupo in grupos.items():
+        if len(grupo["tiers_detectados"]) > 1:
+            acciones.append({
+                "tipo": "tier_dividido",
+                "item_ids": grupo["item_ids"],
+                "family_name": grupo["family_name"],
+                "tiers_detectados": grupo["tiers_detectados"],
+            })
+            continue  # no se evalúan alertas/movimientos hasta que esté en una sola campaña
+
+        analisis = analyst.analizar_item(family_id, grupo["metricas"])
         for alerta in analisis["alertas"]:
-            acciones.append({"tipo": "alerta", "item_id": item_id, "alerta": alerta, "roas": analisis["roas"]})
+            acciones.append({
+                "tipo": "alerta", "item_ids": grupo["item_ids"], "family_name": grupo["family_name"],
+                "alerta": alerta, "roas": analisis["roas"],
+            })
         # TODO: alimentar con historial_roas real (serie diaria persistida en
-        # memory/state.json) para poder llamar analyst.decidir_movimiento_tier
-        # y structurer.construir_movimiento.
+        # memory/state.json, agregada por family_id) para poder llamar
+        # analyst.decidir_movimiento_tier y structurer.construir_movimiento.
         # TODO: stock_agent.evaluar() y copywriter.sugerir_ultimo_intento()
-        # necesitan datos de stock/ficha por item vía ml.get_item(item_id).
+        # necesitan datos de stock/ficha por producto vía ml.get_item(item_id).
 
     nuevas = collector.items_activos_sin_campania(campaign_ids["campañas"])
-    for item_id in nuevas:
-        # TODO: clasificar_ticket(precio real del item) y validar stock antes
-        # de proponer el alta con structurer.construir_alta_testeo(...).
+    for family_id, grupo in nuevas.items():
+        # TODO: clasificar_ticket(precio real del producto) y validar stock
+        # antes de proponer el alta con structurer.construir_alta_testeo(...).
         pass
 
     telegram = TelegramAgent()

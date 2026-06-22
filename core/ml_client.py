@@ -1,8 +1,23 @@
 """Cliente de la API de MercadoLibre Ads: auth con refresh token + operaciones.
 
-NOTA: los paths/payloads de la Ads API (PADS) son el contrato esperado a partir
-de la documentación pública de MercadoLibre; verificar contra la doc vigente
-antes de la primera corrida en producción, porque ML las versiona seguido.
+Verificado en vivo contra la cuenta real de SHAFFE (advertiser_id=21757, site MLA):
+- get_advertisers / get_campaigns: confirmados, funcionan tal cual están.
+- search_ads / search_ads_todas: confirmado. OJO: los filtros de query
+  (campaign_id, status, item_id, text) NO funcionan en este endpoint — siempre
+  devuelve los ads de toda la cuenta paginados. Hay que pedir todo y filtrar
+  por campaign_id en nuestro propio código (así lo hace collector.py).
+  metrics válidas confirmadas: clicks, prints, cost, direct_amount,
+  indirect_amount, total_amount, direct_items_quantity,
+  indirect_items_quantity, units_quantity (trae direct/indirect/total),
+  acos, roas. NO válidas: cvr, ctr, conversions, impressions, sold_quantity.
+  date_from/date_to: máximo 90 días de diferencia.
+
+NO verificado contra la API real (no se probó para no tocar campañas/ítems
+reales sin autorización explícita): update_campaign_roas_target,
+update_campaign_budget, add_item_to_campaign, remove_item_from_campaign,
+pause_item, add_item_to_promotion. Confirmar el path/payload exacto (ideal:
+probar primero sobre una campaña de prueba o pausada) antes de que el agente
+ejecute la primera acción real de este tipo.
 """
 from __future__ import annotations
 
@@ -82,30 +97,50 @@ class MLClient:
     def get_campaigns(self, advertiser_id: str) -> dict:
         return self._request("GET", f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns")
 
-    def get_campaign_items(self, advertiser_id: str, campaign_id: str) -> dict:
-        return self._request(
-            "GET", f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items"
-        )
+    ADS_METRICS = "clicks,prints,cost,direct_amount,indirect_amount,units_quantity,acos,roas"
 
-    def get_item_metrics(self, advertiser_id: str, item_id: str, date_from: str, date_to: str) -> dict:
+    def search_ads(
+        self, site_id: str, advertiser_id: str, date_from: str, date_to: str, limit: int = 200, offset: int = 0
+    ) -> dict:
+        """Una página de ads con métricas. NO filtra por campaign_id: trae todos
+        los ads de la cuenta (ver nota de la clase). date_from/date_to: máximo
+        90 días de diferencia."""
         return self._request(
             "GET",
-            f"/advertising/advertisers/{advertiser_id}/product_ads/items/{item_id}",
+            f"/marketplace/advertising/{site_id}/advertisers/{advertiser_id}/product_ads/ads/search",
             params={
                 "date_from": date_from,
                 "date_to": date_to,
-                "metrics": "clicks,prints,cost,direct_amount,indirect_amount",
+                "metrics": self.ADS_METRICS,
+                "limit": limit,
+                "offset": offset,
             },
         )
 
+    def search_ads_todas(self, site_id: str, advertiser_id: str, date_from: str, date_to: str) -> list:
+        """Pagina search_ads hasta traer todos los ads de la cuenta."""
+        resultados: list = []
+        offset = 0
+        limit = 200
+        while True:
+            pagina = self.search_ads(site_id, advertiser_id, date_from, date_to, limit=limit, offset=offset)
+            resultados.extend(pagina.get("results", []))
+            total = pagina.get("paging", {}).get("total", len(resultados))
+            offset += limit
+            if offset >= total:
+                break
+        return resultados
+
     def update_campaign_roas_target(self, advertiser_id: str, campaign_id: str, roas_target: float) -> dict:
+        """NO verificado contra la API real. roas_target documentado entre 1x y 35x."""
         return self._request(
             "PUT",
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}",
-            json={"strategy": "profitability", "roas_target": roas_target},
+            json={"roas_target": roas_target},
         )
 
     def update_campaign_budget(self, advertiser_id: str, campaign_id: str, daily_budget: float) -> dict:
+        """NO verificado contra la API real."""
         return self._request(
             "PUT",
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}",
@@ -113,6 +148,8 @@ class MLClient:
         )
 
     def add_item_to_campaign(self, advertiser_id: str, campaign_id: str, item_id: str) -> dict:
+        """NO verificado contra la API real. Probar primero sobre una campaña
+        de prueba/pausada antes de usar en producción."""
         return self._request(
             "POST",
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items",
@@ -120,12 +157,14 @@ class MLClient:
         )
 
     def remove_item_from_campaign(self, advertiser_id: str, campaign_id: str, item_id: str) -> dict:
+        """NO verificado contra la API real."""
         return self._request(
             "DELETE",
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items/{item_id}",
         )
 
     def pause_item(self, advertiser_id: str, campaign_id: str, item_id: str) -> dict:
+        """NO verificado contra la API real."""
         return self._request(
             "PUT",
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items/{item_id}",
