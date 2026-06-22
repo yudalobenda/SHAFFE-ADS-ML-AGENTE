@@ -98,6 +98,22 @@ Modo: **human-in-the-loop** — genera reporte, envía a Telegram, espera aproba
 - El agente también evalúa ajustar el ROAS objetivo de la campaña una vez que está funcionando bien
 - Nunca gasta por gastar: toda inversión tiene que tener retorno visible
 
+### Importante: roas_target configurado en ML ≠ ROAS real de evaluación
+El `roas_target` que se manda a la API de ML es una **palanca para que el
+algoritmo empuje/compita la campaña**, no el objetivo real de performance.
+
+- Campañas nuevas (o que recién suben de tier) arrancan con un `roas_target`
+  **bajo a propósito**: si se pone alto desde el principio, ML no compite la
+  campaña y queda muerta.
+- Las decisiones de tier (subir/bajar entre testeo/plata/oro) **siempre** se
+  evalúan contra el ROAS real logrado (ingresos/costo medido), nunca contra el
+  `roas_target` configurado en ML. Esto ya está así en `analyst.py`.
+- Si el agente decide ajustar el `roas_target` configurado, el cambio tiene
+  que ser **incremental y conservador** (ir subiéndolo de a poco a medida que
+  el ROAS real se sostiene bien), nunca saltar directo al umbral de la tabla
+  de tiers (6.5 / 4–6.5 / <4) de un saque — eso mata la competitividad de la
+  campaña en ML.
+
 ### Nota técnica importante
 ML Ads deprecó `acos_target` en diciembre 2025. Usar `roas_target`.
 Conversión: `roas_target = 1 / (acos_target / 100)`

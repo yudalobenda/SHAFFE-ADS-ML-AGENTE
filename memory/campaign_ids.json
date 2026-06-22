@@ -1,15 +1,15 @@
 {
-  "advertiser_id": null,
+  "advertiser_id": 21757,
   "promotion_id": null,
   "campañas": {
-    "oro_alto": null,
-    "oro_medio": null,
-    "oro_bajo": null,
-    "plata_alto": null,
-    "plata_medio": null,
-    "plata_bajo": null,
-    "testeo_alto": null,
-    "testeo_medio": null,
-    "testeo_bajo": null
+    "oro_alto": 357702416,
+    "oro_medio": 357709533,
+    "oro_bajo": 357702510,
+    "plata_alto": 357936810,
+    "plata_medio": 357700023,
+    "plata_bajo": 357700015,
+    "testeo_alto": 357706745,
+    "testeo_medio": 357700008,
+    "testeo_bajo": 357700013
   }
 }
