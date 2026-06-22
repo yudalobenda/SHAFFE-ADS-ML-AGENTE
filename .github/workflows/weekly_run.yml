@@ -1,0 +1,43 @@
+name: SHAFFE Ads - Análisis semanal
+
+on:
+  schedule:
+    - cron: '0 12 * * 2' # martes 9:00 ART (UTC-3) = 12:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -r requirements.txt
+
+      - run: python main.py collect
+        env:
+          ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
+          ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
+          ML_SELLER_ID: ${{ secrets.ML_SELLER_ID }}
+          ML_REDIRECT_URI: ${{ secrets.ML_REDIRECT_URI }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # ML_ACCESS_TOKEN/ML_REFRESH_TOKEN no van por Secrets: main.py los lee y
+      # los reescribe en memory/ml_tokens.json (rotan en cada refresh). Por eso
+      # ese archivo se commitea junto con state.json. Requiere que el repo sea
+      # privado.
+      - name: Persistir estado y tokens ML
+        run: |
+          git config user.name "shaffe-ads-bot"
+          git config user.email "bot@shaffe.local"
+          git add memory/state.json memory/ml_tokens.json
+          git diff --cached --quiet || git commit -m "chore: estado y tokens tras corrida semanal"
+          git push

@@ -1,0 +1,15 @@
+{
+  "advertiser_id": null,
+  "promotion_id": null,
+  "campañas": {
+    "oro_alto": null,
+    "oro_medio": null,
+    "oro_bajo": null,
+    "plata_alto": null,
+    "plata_medio": null,
+    "plata_bajo": null,
+    "testeo_alto": null,
+    "testeo_medio": null,
+    "testeo_bajo": null
+  }
+}
