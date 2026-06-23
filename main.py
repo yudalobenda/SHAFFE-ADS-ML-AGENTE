@@ -8,8 +8,11 @@ import json
 import os
 import sys
 
+from datetime import date
+
 from dotenv import load_dotenv
 
+import core.campaign_rules as reglas
 from agents.analyst import Analyst
 from agents.collector import Collector
 from agents.copywriter import Copywriter
@@ -43,10 +46,28 @@ def _guardar_tokens_ml(ml: MLClient) -> None:
     _guardar_json("ml_tokens.json", ml.tokens_actuales())
 
 
+VENTANA_HISTORIAL_DIAS = 60
+
+
+def _actualizar_historial(historial_por_grupo: dict, grupo_id, roas: float) -> list:
+    """Agrega/actualiza la entrada de hoy en el historial de ROAS del grupo y
+    devuelve la serie completa (lista de floats, más reciente al final)."""
+    clave = str(grupo_id)
+    historial = historial_por_grupo.setdefault(clave, [])
+    hoy = date.today().isoformat()
+    if historial and historial[-1]["fecha"] == hoy:
+        historial[-1]["roas"] = roas
+    else:
+        historial.append({"fecha": hoy, "roas": roas})
+    del historial[:-VENTANA_HISTORIAL_DIAS]
+    return [h["roas"] for h in historial]
+
+
 def modo_collect() -> None:
     campaign_ids = _cargar_json("campaign_ids.json")
     learnings = _cargar_json("learnings.json")
     state = _cargar_json("state.json")
+    historial_roas = _cargar_json("roas_history.json")
 
     advertiser_id = campaign_ids.get("advertiser_id")
     site_id = campaign_ids.get("site_id")
@@ -79,16 +100,44 @@ def modo_collect() -> None:
                 "tipo": "alerta", "item_ids": grupo["item_ids"], "family_name": grupo["family_name"],
                 "alerta": alerta, "roas": analisis["roas"],
             })
-        # TODO: alimentar con historial_roas real (serie diaria persistida en
-        # memory/state.json, agregada por family_id) para poder llamar
-        # analyst.decidir_movimiento_tier y structurer.construir_movimiento.
-        # TODO: stock_agent.evaluar() y copywriter.sugerir_ultimo_intento()
-        # necesitan datos de stock/ficha por producto vía ml.get_item(item_id).
+
+        nombre_campania_actual = grupo["tiers_detectados"][0]
+        tier_actual, ticket = reglas.tier_y_ticket(nombre_campania_actual)
+        serie_roas = _actualizar_historial(historial_roas, family_id, analisis["roas"])
+
+        unidades_totales, variantes_disponibles = collector.obtener_stock(grupo["item_ids"])
+        poco_stock = reglas.es_poco_stock(unidades_totales, variantes_disponibles)
+
+        decision = analyst.decidir_movimiento_tier(family_id, tier_actual, serie_roas)
+        if decision:
+            accion_mover = structurer.construir_movimiento(
+                grupo["item_ids"], grupo["family_name"], ticket,
+                decision["tier_origen"], decision["tier_destino"], decision["roas_reciente"],
+            )
+            if poco_stock and reglas.es_subida_tier(decision["tier_origen"], decision["tier_destino"]):
+                # No se frena la subida solo: el usuario decide si puede
+                # reponer. Pero no tiene sentido aprobarla sin saber que el
+                # producto tiene poco stock, así que va anotado en la misma
+                # propuesta en vez de en un mensaje aparte sin contexto.
+                accion_mover["poco_stock"] = True
+            acciones.append(accion_mover)
+
+        accion_stock = stock_agent.evaluar(
+            grupo["item_ids"], grupo["family_name"], nombre_campania_actual,
+            unidades_totales, variantes_disponibles, fin_de_temporada=False,
+        )
+        if accion_stock:
+            acciones.append(accion_stock)
+        # TODO: copywriter.sugerir_ultimo_intento() para pubs de testeo sin
+        # conversiones 10-15 días: falta wirear "días sin conversión" (no viene
+        # directo de ads/search, hay que derivarlo de units_quantity=0 sostenido
+        # en el historial) y el título/descripción real del producto.
 
     nuevas = collector.items_activos_sin_campania(campaign_ids["campañas"])
     for family_id, grupo in nuevas.items():
-        # TODO: clasificar_ticket(precio real del producto) y validar stock
-        # antes de proponer el alta con structurer.construir_alta_testeo(...).
+        # TODO: clasificar_ticket(precio real del producto, vía ml.get_item) y
+        # validar stock antes de proponer el alta con
+        # structurer.construir_alta_testeo(...).
         pass
 
     telegram = TelegramAgent()
@@ -97,6 +146,7 @@ def modo_collect() -> None:
     state["acciones_pendientes"] = acciones
     state["ultima_corrida"] = "collect"
     _guardar_json("state.json", state)
+    _guardar_json("roas_history.json", historial_roas)
     _guardar_tokens_ml(ml)
 
 

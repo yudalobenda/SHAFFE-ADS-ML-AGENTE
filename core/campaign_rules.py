@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 TIERS = ("testeo", "plata", "oro")
+TIERS_ORDEN = {"testeo": 0, "plata": 1, "oro": 2}
 
 TICKET_BAJO_MAX = 18999
 TICKET_MEDIO_MAX = 39999
@@ -36,6 +37,15 @@ def clasificar_ticket(precio: float) -> str:
 
 def nombre_campania(tier: str, ticket: str) -> str:
     return f"{tier}_{ticket}"
+
+
+def tier_y_ticket(nombre_campania: str) -> tuple:
+    tier, _, ticket = nombre_campania.partition("_")
+    return tier, ticket
+
+
+def es_subida_tier(tier_origen: str, tier_destino: str) -> bool:
+    return TIERS_ORDEN[tier_destino] > TIERS_ORDEN[tier_origen]
 
 
 def roas_target_to_acos_target(roas_target: float) -> float:

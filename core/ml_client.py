@@ -186,6 +186,19 @@ class MLClient:
     def get_item(self, item_id: str) -> dict:
         return self._request("GET", f"/items/{item_id}")
 
+    def get_items_multiget(self, item_ids: list, attributes: str = "id,status,available_quantity,price") -> list:
+        """Confirmado en vivo: GET /items?ids=A,B,C (máx. 20 ids por llamada),
+        devuelve [{"code": 200, "body": {...}}, ...]. SHAFFE publica cada
+        talle/color como item_id separado (variations=[] siempre), así que el
+        stock real de un producto es la suma de available_quantity de todos
+        los item_ids de su family_id."""
+        resultados: list = []
+        for i in range(0, len(item_ids), 20):
+            lote = item_ids[i:i + 20]
+            data = self._request("GET", "/items", params={"ids": ",".join(lote), "attributes": attributes})
+            resultados.extend(r["body"] for r in data if r.get("code") == 200)
+        return resultados
+
     def get_seller_items(self, status: str = "active") -> dict:
         return self._request(
             "GET", f"/users/{self.seller_id}/items/search", params={"status": status, "limit": 100}

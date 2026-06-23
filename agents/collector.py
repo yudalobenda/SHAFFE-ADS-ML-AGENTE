@@ -93,3 +93,12 @@ class Collector:
             grupo = grupos.setdefault(family_id, {"family_name": nombre_por_family.get(family_id, ""), "item_ids": []})
             grupo["item_ids"].append(item_id)
         return grupos
+
+    def obtener_stock(self, item_ids: list) -> tuple:
+        """(unidades_totales, variantes_disponibles) sumando/contando entre
+        todos los item_ids del grupo (cada uno es una variante con su propio
+        available_quantity, ver core/ml_client.get_items_multiget)."""
+        items = self.ml.get_items_multiget(item_ids)
+        unidades_totales = sum(item.get("available_quantity", 0) for item in items)
+        variantes_disponibles = sum(1 for item in items if item.get("available_quantity", 0) > 0)
+        return unidades_totales, variantes_disponibles
