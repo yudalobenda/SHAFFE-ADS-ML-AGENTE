@@ -89,7 +89,7 @@ class ReportAgent:
         # KPIs generales
         ws["A4"] = "ESTADO GENERAL DE LA CUENTA"
         ws["A4"].font = Font(bold=True)
-        _header(ws, 5, ["KPI", "Semana actual", "Semana anterior", "Variación", "Objetivo", "Estado"])
+        _header(ws, 5, ["KPI", "Semana actual", "Semana anterior", "Variación", "Objetivo", "Estado", "Recomendación del agente"])
 
         total_costo = sum(g["metricas"].get("cost", 0) for g in grupos.values())
         total_ingresos = sum(
@@ -100,42 +100,65 @@ class ReportAgent:
         roas_general = (total_ingresos / total_costo) if total_costo > 0 else 0.0
         acos_general = (total_costo / total_ingresos) if total_ingresos > 0 else None
         pubs_en_ads = len(grupos)
-        pubs_sin_ads = 0  # se completa con candidatas_sin_ads cuando hay datos
 
         kpis = [
             ("ROAS general", round(roas_general, 2), None, None, "6.5+",
-             "✅ OK" if roas_general >= 6.5 else "⚠️ Revisar"),
+             "✅ OK" if roas_general >= 6.5 else "⚠️ Revisar",
+             "Seguir escalando campañas Oro. No frenar lo que funciona." if roas_general >= 6.5
+             else "Revisá la hoja Publicaciones Problema — identificá qué arrastra el ROAS hacia abajo."),
             ("ACOS general (%)", f"{acos_general*100:.1f}%" if acos_general else "N/A", None, None, "≤18%",
-             "✅ OK" if (acos_general and acos_general <= 0.18) else "⚠️ Revisar"),
-            ("Inversión total ($)", round(total_costo), None, None, "-", "-"),
-            ("Ventas atribuidas ($)", round(total_ingresos), None, None, "-", "-"),
-            ("Clicks totales", total_clicks, None, None, "-", "-"),
-            ("Publicaciones activas en Ads", pubs_en_ads, None, None, "-", "-"),
+             "✅ OK" if (acos_general and acos_general <= 0.18) else "⚠️ Revisar",
+             "Margen de publicidad saludable." if (acos_general and acos_general <= 0.18)
+             else "Bajá presupuesto en campañas con ROAS bajo objetivo para reducir el ACOS."),
+            ("Inversión total ($)", round(total_costo), None, None, "-", "-", "-"),
+            ("Ventas atribuidas ($)", round(total_ingresos), None, None, "-", "-", "-"),
+            ("Clicks totales", total_clicks, None, None, "-", "-", "-"),
+            ("Publicaciones activas en Ads", pubs_en_ads, None, None, "-", "-", "-"),
         ]
         for i, row in enumerate(kpis, start=6):
             for j, val in enumerate(row, start=1):
                 ws.cell(row=i, column=j, value=val)
-            if row[-1] and "OK" in str(row[-1]):
+            if row[5] and "OK" in str(row[5]):
                 ws.cell(row=i, column=6).fill = PatternFill("solid", fgColor=_VERDE)
-            elif row[-1] and "Revisar" in str(row[-1]):
+            elif row[5] and "Revisar" in str(row[5]):
                 ws.cell(row=i, column=6).fill = PatternFill("solid", fgColor=_AMARILLO)
 
         # Semáforo por campaña
         fila = len(kpis) + 8
         ws.cell(row=fila - 1, column=1, value="SEMÁFORO POR CAMPAÑA").font = Font(bold=True)
-        _header(ws, fila, ["Campaña", "Tier", "Inversión ($)", "Ventas ($)", "ROAS", "ACOS", "Estado", "Acción recomendada"])
+        _header(ws, fila, ["Campaña", "Tier", "Inversión ($)", "Ventas ($)", "ROAS", "ACOS", "Estado", "Recomendación del agente"])
         fila += 1
 
-        nombres_campanas = [
-            ("Oro - Ticket Alto ($33k+)", "ORO"),
-            ("Oro - Ticket Medio ($18k-$33k)", "ORO"),
-            ("Oro - Ticket Bajo (< $18k)", "ORO"),
-            ("Plata - Recuperación", "PLATA"),
-            ("Testeo - Productos nuevos", "TESTEO"),
+        campanas_config = [
+            ("Oro - Ticket Alto ($33k+)",    "ORO",    "oro_alto",  7.5),
+            ("Oro - Ticket Medio ($18k-$33k)", "ORO",  "oro_medio", 6.5),
+            ("Oro - Ticket Bajo (< $18k)",   "ORO",    "oro_bajo",  8.0),
+            ("Plata - Recuperación",          "PLATA",  "plata",     4.0),
+            ("Testeo - Productos nuevos",     "TESTEO", "testeo",    3.0),
         ]
-        campanas_keys = ["oro_alto", "oro_medio", "oro_bajo", "plata", "testeo"]
 
-        for (nombre_display, tier_display), clave_tier in zip(nombres_campanas, campanas_keys):
+        def _recomendacion_semaforo(tier: str, roas: float, roas_obj: float) -> str:
+            ratio = roas / roas_obj if roas_obj else 0
+            if tier == "oro":
+                if ratio >= 1:
+                    return "Ganadoras. Subir presupuesto leve si hay stock ≥ 10 uds. No tocar lo que funciona."
+                if ratio >= 0.8:
+                    return "Cerca del objetivo. Revisá publicaciones con ROAS < 5.5 — moverlas a Plata si persisten 3 días."
+                return "ROAS bajo para Oro — mover a Plata las publicaciones que no cumplen el objetivo esta semana."
+            if tier == "plata":
+                if ratio >= 1:
+                    return "Sala de observación en buen estado. Si ROAS ≥ 6.5 sostenido 3 días → mover a Oro."
+                if ratio >= 0.7:
+                    return "ROAS cerca del mínimo. Monitorear. Si no mejora en 3 días → pausar publicaciones problema."
+                return "ROAS en Plata por debajo del mínimo — pausar publicaciones con gasto real y sin retorno."
+            # testeo
+            if ratio >= 1:
+                return "Testeo funcionando. Si ROAS > 3.5 sostenido 3 días → mover a Plata."
+            if ratio >= 0.6:
+                return "En rango testeo. Revisar fotos principales. Sin mejora en 7 días → pausar."
+            return "Sin resultados claros — cambiar foto/título en las publicaciones con gasto. Si persiste, pausar."
+
+        for nombre_display, tier_display, clave_tier, roas_obj in campanas_config:
             grupos_campana = [
                 g for g in grupos.values()
                 if any(t.startswith(clave_tier) for t in g["tiers_detectados"])
@@ -147,9 +170,9 @@ class ReportAgent:
             )
             roas_c = (ing_c / costo_c) if costo_c > 0 else 0.0
             acos_c = (costo_c / ing_c) if ing_c > 0 else None
-            roas_obj = 6.5 if "oro" in clave_tier else (4.0 if "plata" in clave_tier else 3.0)
             estado = "✅ OK" if roas_c >= roas_obj else ("⚠️ Revisar" if roas_c >= roas_obj * 0.7 else "🔴 Problema")
-            accion = "Mantener" if roas_c >= roas_obj else "Revisar publicaciones"
+            tier_key = clave_tier.split("_")[0]
+            recomendacion = _recomendacion_semaforo(tier_key, roas_c, roas_obj)
 
             ws.cell(row=fila, column=1, value=nombre_display)
             ws.cell(row=fila, column=2, value=tier_display)
@@ -158,8 +181,9 @@ class ReportAgent:
             ws.cell(row=fila, column=5, value=round(roas_c, 2))
             ws.cell(row=fila, column=6, value=f"{acos_c*100:.1f}%" if acos_c else "N/A")
             ws.cell(row=fila, column=7, value=estado)
-            ws.cell(row=fila, column=8, value=accion)
+            ws.cell(row=fila, column=8, value=recomendacion)
             ws.cell(row=fila, column=7).fill = _semaforo_fill(estado)
+            ws.cell(row=fila, column=8).alignment = Alignment(wrap_text=True)
             fila += 1
 
         _autowidth(ws)
@@ -261,23 +285,38 @@ class ReportAgent:
         ws = wb.create_sheet("Sin Ads - Candidatas")
         ws["A1"] = "PUBLICACIONES SIN PUBLICIDAD - Candidatas a ingresar a Ads"
         ws["A1"].font = Font(bold=True, size=12)
-        ws["A2"] = "Publicaciones activas con ventas orgánicas en los últimos 30 días y stock suficiente para escalar"
+        ws["A2"] = "Publicaciones activas sin campaña de Ads. Ventas orgánicas en 30 días: verificar en ML (requiere orders API)."
 
-        _header(ws, 4, ["MLA", "Título publicación", "Precio ($)", "Tier según ticket", "Ventas 30 días", "Stock actual", "Envío gratis?", "Campaña recomendada", "Prioridad"])
+        _header(ws, 4, [
+            "MLA", "Título publicación", "Precio ($)", "Tier según ticket",
+            "Ventas 30 días (*)", "Stock actual", "Variantes disp.", "Envío gratis?",
+            "Campaña recomendada", "Prioridad", "Motivo y recomendación del agente",
+        ])
+
+        # color de prioridad
+        colores_prioridad = {"Alta": _VERDE, "Media": _AMARILLO, "Baja": _ROJO}
 
         fila = 5
         for family_id, grupo in candidatas.items():
+            prioridad = grupo.get("prioridad", "Media")
             ws.cell(row=fila, column=1, value=grupo["item_ids"][0] if grupo["item_ids"] else "")
             ws.cell(row=fila, column=2, value=grupo.get("family_name", ""))
-            ws.cell(row=fila, column=3, value="Ver ML")
-            ws.cell(row=fila, column=4, value="Verificar precio")
-            ws.cell(row=fila, column=5, value="N/D (requiere orders API)")
-            ws.cell(row=fila, column=6, value="N/D")
-            ws.cell(row=fila, column=7, value="N/D")
-            ws.cell(row=fila, column=8, value="Evaluar manualmente")
-            ws.cell(row=fila, column=9, value="Media")
+            precio = grupo.get("precio", 0)
+            ws.cell(row=fila, column=3, value=f"${precio:,.0f}" if precio else "Ver ML")
+            ws.cell(row=fila, column=4, value=grupo.get("ticket", "?").capitalize())
+            ws.cell(row=fila, column=5, value="(*) Ver en ML")
+            ws.cell(row=fila, column=6, value=grupo.get("stock_total", "N/D"))
+            ws.cell(row=fila, column=7, value=grupo.get("variantes_disponibles", "N/D"))
+            ws.cell(row=fila, column=8, value=grupo.get("envio_gratis", "N/D"))
+            ws.cell(row=fila, column=9, value=grupo.get("campania_recomendada", "testeo"))
+            ws.cell(row=fila, column=10, value=prioridad)
+            ws.cell(row=fila, column=10).fill = PatternFill("solid", fgColor=colores_prioridad.get(prioridad, _GRIS))
+            ws.cell(row=fila, column=11, value=grupo.get("motivo", ""))
+            ws.cell(row=fila, column=11).alignment = Alignment(wrap_text=True)
             fila += 1
 
+        ws.cell(row=fila + 1, column=1, value="(*) Las ventas orgánicas de los últimos 30 días requieren la orders API de ML — verificar manualmente en el panel de vendedor.")
+        ws.cell(row=fila + 1, column=1).font = Font(italic=True, color="808080")
         _autowidth(ws)
 
     # ------------------------------------------------------------------ #

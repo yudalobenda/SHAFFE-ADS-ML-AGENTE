@@ -190,10 +190,65 @@ def modo_collect() -> None:
     nuevas = collector.items_activos_sin_campania(campaign_ids["campañas"])
     candidatas_sin_ads = {}
     for family_id, grupo in nuevas.items():
-        # TODO: get_item() para obtener precio real y calcular ticket; verificar stock >= 10
-        # y ventas orgánicas >= 20 en 30 días (requiere orders API) antes de proponer alta.
-        # Por ahora se incluyen en el reporte Excel como candidatas a evaluar manualmente.
-        candidatas_sin_ads[family_id] = grupo
+        item_ids = grupo["item_ids"]
+        try:
+            items_data = ml.get_items_multiget(
+                item_ids[:20],
+                attributes="id,title,price,available_quantity,status,shipping",
+            )
+        except Exception:
+            items_data = []
+
+        precio = 0
+        titulo = grupo.get("family_name", "")
+        unidades = 0
+        variantes_disp = 0
+        envio_gratis = False
+
+        if items_data:
+            precios = [i.get("price", 0) for i in items_data if i.get("price")]
+            precio = max(precios) if precios else 0
+            titulo = items_data[0].get("title") or titulo
+            unidades = sum(i.get("available_quantity", 0) for i in items_data)
+            variantes_disp = sum(1 for i in items_data if i.get("available_quantity", 0) > 0)
+            envio_gratis = any(
+                (i.get("shipping") or {}).get("free_shipping", False) for i in items_data
+            )
+
+        ticket = reglas.clasificar_ticket(precio) if precio else "medio"
+        campania_rec = f"testeo_{ticket}"
+
+        if unidades >= 10:
+            prioridad = "Alta"
+            motivo = (
+                f"Publicación activa sin Ads — {unidades} uds en {variantes_disp} talles/colores disponibles. "
+                f"Stock suficiente. Entrar a {campania_rec} con presupuesto mínimo."
+            )
+        elif unidades >= 5:
+            prioridad = "Media"
+            motivo = (
+                f"Publicación activa sin Ads — {unidades} uds en {variantes_disp} talles/colores. "
+                f"Stock justo. Reponer antes de escalar; entrar a {campania_rec} solo si repone."
+            )
+        else:
+            prioridad = "Baja"
+            motivo = (
+                f"Publicación activa sin Ads — solo {unidades} uds disponibles. "
+                f"Reponer stock primero. No conviene poner en Ads con tan poco inventario."
+            )
+
+        candidatas_sin_ads[str(family_id)] = {
+            "family_name": titulo,
+            "item_ids": item_ids,
+            "precio": precio,
+            "ticket": ticket,
+            "campania_recomendada": campania_rec,
+            "stock_total": unidades,
+            "variantes_disponibles": variantes_disp,
+            "envio_gratis": "✅ Sí" if envio_gratis else "No",
+            "prioridad": prioridad,
+            "motivo": motivo,
+        }
 
     semana_str = date.today().strftime("%d/%m/%Y")
     telegram = TelegramAgent()
