@@ -1,12 +1,14 @@
 """Entry point. Modos:
   python main.py collect          -> análisis semanal (lunes 9am ART), genera reporte Excel y lo envía
-  python main.py check-approvals  -> revisa aprobaciones pendientes en Telegram y ejecuta lo aprobado
+  python main.py check-approvals  -> drena callbacks Telegram y ejecuta acciones aprobadas
+  python main.py research         -> research mensual ML Argentina + Excel tendencias
 """
 from __future__ import annotations
 
 import json
 import os
 import sys
+import time
 
 from datetime import date, timedelta
 
@@ -270,13 +272,16 @@ def modo_collect() -> None:
         }
 
     semana_str = date.today().strftime("%d/%m/%Y")
+    # ID único de esta corrida: filtra callbacks viejos en check-approvals
+    run_id = str(int(time.time()))
+
     telegram = TelegramAgent()
 
     # Alertas urgentes van primero, sin esperar el batch semanal
     if alertas_urgentes:
         telegram.enviar_alertas_urgentes(alertas_urgentes)
 
-    telegram.enviar_reporte(acciones)
+    telegram.enviar_reporte(acciones, run_id=run_id)
 
     # Reporte Excel
     report_agent = ReportAgent()
@@ -291,66 +296,12 @@ def modo_collect() -> None:
     telegram.enviar_archivo(ruta_xlsx, caption=f"📊 Reporte semanal SHAFFE Ads — {semana_str}")
 
     state["acciones_pendientes"] = acciones
+    state["run_id"] = run_id
+    state["telegram_offset"] = None  # resetear al iniciar nueva corrida
     state["ultima_corrida"] = "collect"
     _guardar_json("state.json", state)
     _guardar_json("roas_history.json", historial_roas)
     _guardar_tokens_ml(ml)
-
-
-def modo_check_approvals() -> None:
-    load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
-
-    state = _cargar_json("state.json")
-    acciones = state.get("acciones_pendientes", [])
-    if not acciones:
-        print("No hay acciones pendientes de aprobación.")
-        return
-
-    campaign_ids = _cargar_json("campaign_ids.json")
-    changes_history = _cargar_json("changes_history.json")
-    telegram = TelegramAgent()
-    decisiones = telegram.obtener_aprobaciones(acciones, timeout_seg=240)
-
-    aprobadas = [acciones[i] for i, aprobado in decisiones.items() if aprobado]
-    if aprobadas:
-        ml = _crear_ml_client()
-        executor = Executor(ml, campaign_ids)
-        resultados = executor.ejecutar(aprobadas)
-        _guardar_tokens_ml(ml)
-
-        # Registrar en historial los movimientos ejecutados
-        hoy = date.today().isoformat()
-        fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
-        for accion in aprobadas:
-            if accion.get("tipo") == "mover_tier":
-                entrada = {
-                    "fecha": hoy,
-                    "mla": accion["item_ids"][0] if accion["item_ids"] else "",
-                    "publicacion": accion.get("family_name", ""),
-                    "cambio": f"{accion.get('campania_origen', accion.get('tier_origen', ''))} → {accion.get('campania_destino', accion.get('tier_destino', ''))}",
-                    "roas_antes": accion.get("roas_reciente"),
-                    "roas_despues_7d": None,
-                    "resultado": "pendiente",
-                    "tier_origen": accion.get("tier_origen", ""),
-                    "tier_destino": accion.get("tier_destino", ""),
-                }
-                changes_history.append(entrada)
-                # Registrar fecha de entrada a oro para respetar los 15 días
-                if accion.get("tier_destino") == "oro":
-                    for item_id in accion.get("item_ids", []):
-                        fecha_entrada_oro[item_id] = hoy
-                    # También por family_id si está disponible
-                    if "grupo_id" in accion:
-                        fecha_entrada_oro[str(accion["grupo_id"])] = hoy
-
-        _guardar_json("changes_history.json", changes_history)
-        print(f"Ejecutadas {len(resultados)} acciones aprobadas.")
-    else:
-        print("Sin aprobaciones nuevas todavía.")
-
-    pendientes_restantes = [a for i, a in enumerate(acciones) if i not in decisiones]
-    state["acciones_pendientes"] = pendientes_restantes
-    _guardar_json("state.json", state)
 
 
 def modo_research() -> None:
@@ -387,6 +338,8 @@ def modo_research() -> None:
 
 
 def modo_check_approvals() -> None:
+    """Drena la cola de callbacks Telegram (non-blocking) y ejecuta lo aprobado.
+    Persiste el offset para no re-procesar updates en futuras corridas."""
     load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 
     state = _cargar_json("state.json")
@@ -395,10 +348,20 @@ def modo_check_approvals() -> None:
         print("No hay acciones pendientes de aprobación.")
         return
 
+    run_id = state.get("run_id", "")
+    telegram_offset = state.get("telegram_offset")
+
     campaign_ids = _cargar_json("campaign_ids.json")
     changes_history = _cargar_json("changes_history.json")
+
     telegram = TelegramAgent()
-    decisiones = telegram.obtener_aprobaciones(acciones, timeout_seg=240)
+    decisiones, nuevo_offset = telegram.obtener_aprobaciones(
+        acciones, run_id=run_id, offset=telegram_offset
+    )
+
+    # Persistir offset inmediatamente para no procesar los mismos updates otra vez
+    state["telegram_offset"] = nuevo_offset
+    _guardar_json("state.json", state)
 
     aprobadas = [acciones[i] for i, aprobado in decisiones.items() if aprobado]
     if aprobadas:
@@ -407,12 +370,11 @@ def modo_check_approvals() -> None:
         resultados = executor.ejecutar(aprobadas)
         _guardar_tokens_ml(ml)
 
-        # Registrar en historial los movimientos ejecutados
         hoy = date.today().isoformat()
         fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
         for accion in aprobadas:
             if accion.get("tipo") == "mover_tier":
-                entrada = {
+                changes_history.append({
                     "fecha": hoy,
                     "mla": accion["item_ids"][0] if accion["item_ids"] else "",
                     "publicacion": accion.get("family_name", ""),
@@ -422,8 +384,7 @@ def modo_check_approvals() -> None:
                     "resultado": "pendiente",
                     "tier_origen": accion.get("tier_origen", ""),
                     "tier_destino": accion.get("tier_destino", ""),
-                }
-                changes_history.append(entrada)
+                })
                 if accion.get("tier_destino") == "oro":
                     for item_id in accion.get("item_ids", []):
                         fecha_entrada_oro[item_id] = hoy
@@ -432,8 +393,11 @@ def modo_check_approvals() -> None:
 
         _guardar_json("changes_history.json", changes_history)
         print(f"Ejecutadas {len(resultados)} acciones aprobadas.")
+    elif decisiones:
+        rechazadas = sum(1 for v in decisiones.values() if not v)
+        print(f"{rechazadas} accion(es) rechazada(s) por León.")
     else:
-        print("Sin aprobaciones nuevas todavía.")
+        print("Sin nuevos callbacks esta corrida.")
 
     pendientes_restantes = [a for i, a in enumerate(acciones) if i not in decisiones]
     state["acciones_pendientes"] = pendientes_restantes

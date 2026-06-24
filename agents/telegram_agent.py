@@ -38,7 +38,7 @@ class TelegramAgent:
     # ------------------------------------------------------------------ #
     # Punto de entrada principal
     # ------------------------------------------------------------------ #
-    def enviar_reporte(self, acciones: list) -> None:
+    def enviar_reporte(self, acciones: list, run_id: str = "") -> None:
         informativas = [a for a in acciones if a.get("tipo") not in TIPOS_ACCIONABLES]
         campanas = [(i, a) for i, a in enumerate(acciones) if a.get("tipo") in TIPOS_CAMPANAS]
         promos   = [(i, a) for i, a in enumerate(acciones) if a.get("tipo") in TIPOS_PROMOS]
@@ -57,10 +57,10 @@ class TelegramAgent:
             self._enviar_alertas(informativas)
 
         if campanas:
-            self._enviar_accionables(campanas, titulo="🔄 *Acciones de CAMPAÑAS — aprobá o rechazá*")
+            self._enviar_accionables(campanas, titulo="🔄 *Acciones de CAMPAÑAS — aprobá o rechazá*", run_id=run_id)
 
         if promos:
-            self._enviar_accionables(promos, titulo="📦 *Acciones de STOCK y PROMOS — aprobá o rechazá*")
+            self._enviar_accionables(promos, titulo="📦 *Acciones de STOCK y PROMOS — aprobá o rechazá*", run_id=run_id)
 
     def enviar_alertas_urgentes(self, alertas_urgentes: list) -> None:
         """Mensaje separado, enviado inmediatamente al detectar caídas sostenidas."""
@@ -142,9 +142,10 @@ class TelegramAgent:
     # ------------------------------------------------------------------ #
     # Accionables con botones inline
     # ------------------------------------------------------------------ #
-    def _enviar_accionables(self, accionables: list, titulo: str) -> None:
+    def _enviar_accionables(self, accionables: list, titulo: str, run_id: str = "") -> None:
         """accionables: [(indice_original, accion), ...]. Un mensaje con todas las
-        propuestas numeradas + una fila de botones por cada una."""
+        propuestas numeradas + una fila de botones por cada una.
+        run_id se embebe en callback_data para filtrar callbacks de corridas viejas."""
         inicio = 0
         while inicio < len(accionables):
             lote = []
@@ -160,10 +161,11 @@ class TelegramAgent:
                 lote.append(accionables[fin])
                 fin += 1
 
+            prefix = f"{run_id}:" if run_id else ""
             botones = [
                 [
-                    {"text": f"✅ {n}", "callback_data": f"aprobar:{i}"},
-                    {"text": f"❌ {n}", "callback_data": f"rechazar:{i}"},
+                    {"text": f"✅ {n}", "callback_data": f"aprobar:{prefix}{i}"},
+                    {"text": f"❌ {n}", "callback_data": f"rechazar:{prefix}{i}"},
                 ]
                 for n, (i, _) in enumerate(lote, start=1)
             ]
@@ -201,36 +203,59 @@ class TelegramAgent:
     # ------------------------------------------------------------------ #
     # Aprobaciones
     # ------------------------------------------------------------------ #
-    def obtener_aprobaciones(self, acciones: list, timeout_seg: int = 300, intervalo_seg: int = 15) -> dict:
-        """Long-poll getUpdates buscando callback_query de los botones enviados.
-        Devuelve {indice_accion: True/False}."""
+    def obtener_aprobaciones(
+        self, acciones: list, run_id: str = "", offset: int | None = None
+    ) -> tuple[dict, int | None]:
+        """Drena callbacks pendientes (non-blocking, timeout=0).
+        Solo acepta callbacks cuyo run_id coincida con el de la corrida actual.
+        Devuelve (decisiones, nuevo_offset).
+        Persistir el offset en state.json para no re-procesar updates anteriores."""
         decisiones: dict = {}
-        offset = None
-        tiempo_limite = time.time() + timeout_seg
 
-        while time.time() < tiempo_limite and len(decisiones) < len(acciones):
-            params = {"timeout": intervalo_seg}
-            if offset is not None:
-                params["offset"] = offset
-            resp = requests.get(f"{self._base}/getUpdates", params=params, timeout=intervalo_seg + 10)
-            resp.raise_for_status()
-            for update in resp.json().get("result", []):
-                offset = update["update_id"] + 1
-                callback = update.get("callback_query")
-                if not callback:
+        params: dict = {"timeout": 0, "allowed_updates": ["callback_query"]}
+        if offset is not None:
+            params["offset"] = offset
+
+        resp = requests.get(f"{self._base}/getUpdates", params=params, timeout=30)
+        resp.raise_for_status()
+
+        new_offset = offset
+        for update in resp.json().get("result", []):
+            new_offset = update["update_id"] + 1
+            callback = update.get("callback_query")
+            if not callback:
+                continue
+            data = callback["data"]
+            parts = data.split(":")
+
+            # Formato con run_id: "aprobar:RUN_ID:INDEX" (3 partes)
+            # Formato legacy sin run_id: "aprobar:INDEX" (2 partes)
+            if len(parts) == 3:
+                accion_str, cb_run_id, idx_str = parts
+                if run_id and cb_run_id != run_id:
+                    # Callback de una corrida anterior — avisar y descartar
+                    self._responder_callback(callback["id"], "⚠️ Acción vieja, volvé a presionar en el mensaje de hoy")
                     continue
-                accion_str, idx_str = callback["data"].split(":")
-                decisiones[int(idx_str)] = accion_str == "aprobar"
+            elif len(parts) == 2:
+                accion_str, idx_str = parts
+            else:
+                continue
+
+            try:
+                idx = int(idx_str)
+                decisiones[idx] = accion_str == "aprobar"
                 self._responder_callback(callback["id"])
+            except (ValueError, KeyError):
+                pass
 
-        return decisiones
+        return decisiones, new_offset
 
-    def _responder_callback(self, callback_query_id: str) -> None:
-        requests.post(
-            f"{self._base}/answerCallbackQuery",
-            json={"callback_query_id": callback_query_id},
-            timeout=15,
-        )
+    def _responder_callback(self, callback_query_id: str, texto: str = "") -> None:
+        payload: dict = {"callback_query_id": callback_query_id}
+        if texto:
+            payload["text"] = texto
+            payload["show_alert"] = True
+        requests.post(f"{self._base}/answerCallbackQuery", json=payload, timeout=15)
 
     # ------------------------------------------------------------------ #
     # Envío base
