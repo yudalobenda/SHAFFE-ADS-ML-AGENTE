@@ -23,6 +23,12 @@ TIPOS_ACCIONABLES = TIPOS_CAMPANAS | TIPOS_PROMOS
 MAX_LARGO_MENSAJE = 3500
 
 
+def _esc(text: str) -> str:
+    """Escapa guiones bajos y caracteres especiales en valores dinámicos
+    para que Telegram Markdown v1 no los interprete como cursiva."""
+    return str(text).replace("_", "\\_").replace("*", "\\*").replace("`", "\\`")
+
+
 class TelegramAgent:
     def __init__(self):
         self.token = os.environ["TELEGRAM_BOT_TOKEN"]
@@ -65,7 +71,7 @@ class TelegramAgent:
             roas_ult = a.get("roas_ultimos_dias", [])
             roas_str = " → ".join(f"{r:.2f}" for r in roas_ult)
             lineas.append(
-                f"• *{a['family_name']}* ({a.get('campania', '')}): "
+                f"• *{_esc(a['family_name'])}* ({_esc(a.get('campania', ''))}): "
                 f"ROAS histórico {a.get('roas_historico_prom', 0):.2f} → últimos días {roas_str} "
                 f"(caída {a.get('caida_pct', 0):.0f}%)"
             )
@@ -94,22 +100,22 @@ class TelegramAgent:
         if divididos:
             self._enviar_digest(
                 "🚧 *Variantes repartidas entre campañas* — corregir a mano:",
-                [f"• *{a['family_name']}*: en {', '.join(a.get('tiers_detectados', []))}" for a in divididos],
+                [f"• *{_esc(a['family_name'])}*: en {_esc(', '.join(a.get('tiers_detectados', [])))}" for a in divididos],
             )
         if ctr:
             self._enviar_digest(
-                f"📷 *CTR bajo* ({len(ctr)}) — pocas clics para las impresiones. Revisar foto o precio. (ROAS más bajo → más alto):",
-                [f"• *{a['family_name']}*: ROAS {a['roas']:.2f} — {a.get('campania', '')}" for a in ctr],
+                f"📷 *CTR bajo* ({len(ctr)}) — pocas clics para las impresiones. Revisar foto o precio:",
+                [f"• *{_esc(a['family_name'])}*: ROAS {a['roas']:.2f} — {_esc(a.get('campania', ''))}" for a in ctr],
             )
         if cvr:
             self._enviar_digest(
                 f"📝 *CVR bajo* ({len(cvr)}) — entran pero no compran. Revisar descripción o ficha:",
-                [f"• *{a['family_name']}*: ROAS {a['roas']:.2f}" for a in cvr],
+                [f"• *{_esc(a['family_name'])}*: ROAS {a['roas']:.2f}" for a in cvr],
             )
         if acos:
             self._enviar_digest(
                 f"💸 *ACOS alto* ({len(acos)}) — costo de publicidad supera el máximo del tier:",
-                [f"• *{a['family_name']}*: ACOS {a.get('acos', 0)*100:.1f}% en {a.get('campania', '')}" for a in acos],
+                [f"• *{_esc(a['family_name'])}*: ACOS {a.get('acos', 0)*100:.1f}% en {_esc(a.get('campania', ''))}" for a in acos],
             )
 
     def _enviar_digest(self, titulo: str, lineas: list) -> None:
@@ -158,26 +164,27 @@ class TelegramAgent:
         n_variantes = len(accion.get("item_ids", []))
         sufijo = f" ({n_variantes} var.)" if n_variantes > 1 else ""
 
+        nombre_e = _esc(nombre)
         if tipo == "mover_tier":
-            origen  = accion.get("campania_origen") or accion.get("tier_origen", "")
-            destino = accion.get("campania_destino") or accion.get("tier_destino", "")
-            base = f"🔄 *{nombre}*{sufijo}: {origen} → {destino} (ROAS {accion.get('roas_reciente', 0):.2f})"
+            origen  = _esc(accion.get("campania_origen") or accion.get("tier_origen", ""))
+            destino = _esc(accion.get("campania_destino") or accion.get("tier_destino", ""))
+            base = f"🔄 *{nombre_e}*{sufijo}: {origen} → {destino} (ROAS {accion.get('roas_reciente', 0):.2f})"
             if accion.get("poco_stock"):
                 base += "\n   ⚠️ tiene poco stock — aprobá solo si vas a reponer"
             return base
         if tipo == "agregar_a_testeo":
-            return f"🆕 *{nombre}*{sufijo}: nueva → {accion.get('campania', 'testeo')} (ROAS objetivo {accion.get('roas_target_inicial', 3.0)})"
+            return f"🆕 *{nombre_e}*{sufijo}: nueva → {_esc(accion.get('campania', 'testeo'))} (ROAS objetivo {accion.get('roas_target_inicial', 3.0)})"
         if tipo == "agregar_a_promo":
-            return f"📦 *{nombre}*{sufijo}: poco stock → agregar a promo ML"
+            return f"📦 *{nombre_e}*{sufijo}: poco stock → agregar a promo ML"
         if tipo == "pausar":
-            motivo = accion.get("motivo", "")
+            motivo = accion.get("motivo", "").replace("_", " ")
             roas = accion.get("roas_reciente", 0) or 0
-            return f"⏸️ *{nombre}*{sufijo}: pausar / sacar de ads (ROAS {roas:.2f}, {motivo.replace('_', ' ')})"
+            return f"⏸️ *{nombre_e}*{sufijo}: pausar / sacar de ads (ROAS {roas:.2f}, {motivo})"
         if tipo == "ajustar_presupuesto":
-            return f"💰 *{nombre}*: presupuesto → {accion.get('presupuesto_nuevo')}"
+            return f"💰 *{nombre_e}*: presupuesto → {accion.get('presupuesto_nuevo')}"
         if tipo == "ajustar_roas_target":
-            return f"🎯 *{nombre}*: roas_target → {accion.get('roas_target_nuevo')}"
-        return f"❔ *{nombre}*: {tipo}"
+            return f"🎯 *{nombre_e}*: roas\\_target → {accion.get('roas_target_nuevo')}"
+        return f"❔ *{nombre_e}*: {tipo}"
 
     # ------------------------------------------------------------------ #
     # Aprobaciones
