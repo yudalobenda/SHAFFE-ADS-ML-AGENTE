@@ -1,10 +1,12 @@
 """Agente de notificaciones: reporte semanal por Telegram con botones de aprobación.
 
-Formato pensado para no inundar el chat: un mensaje resumen, un digest de lo
-informativo (alertas CTR/CVR, tier dividido — sin botones, no hay nada para
-aprobar ahí), y un único mensaje con todo lo accionable (mover tier, agregar
-a promo, pausar, etc.), cada propuesta numerada con su propio par de botones
-Aprobar/Rechazar dentro del mismo mensaje."""
+Mensajes enviados cada lunes:
+1. Resumen ejecutivo (sin botones)
+2. Alertas urgentes si las hay (sin botones, se envían inmediatamente al detectarlas)
+3. Alertas informativas CTR/CVR/tier_dividido (sin botones)
+4. Acciones de CAMPAÑAS — mover tier, presupuesto (con botones)
+5. Acciones de STOCK/PROMOS — agregar a promo, pausar (con botones)
+6. Archivo Excel como documento adjunto"""
 from __future__ import annotations
 
 import os
@@ -13,8 +15,12 @@ import time
 import requests
 
 TELEGRAM_API_BASE = "https://api.telegram.org"
-TIPOS_ACCIONABLES = {"mover_tier", "agregar_a_testeo", "agregar_a_promo", "pausar", "ajustar_presupuesto", "ajustar_roas_target"}
-MAX_LARGO_MENSAJE = 3500  # margen bajo el límite real de Telegram (4096)
+
+TIPOS_CAMPANAS  = {"mover_tier", "ajustar_presupuesto", "ajustar_roas_target"}
+TIPOS_PROMOS    = {"agregar_a_promo", "pausar", "agregar_a_testeo"}
+TIPOS_ACCIONABLES = TIPOS_CAMPANAS | TIPOS_PROMOS
+
+MAX_LARGO_MENSAJE = 3500
 
 
 class TelegramAgent:
@@ -23,25 +29,88 @@ class TelegramAgent:
         self.chat_id = os.environ["TELEGRAM_CHAT_ID"]
         self._base = f"{TELEGRAM_API_BASE}/bot{self.token}"
 
+    # ------------------------------------------------------------------ #
+    # Punto de entrada principal
+    # ------------------------------------------------------------------ #
     def enviar_reporte(self, acciones: list) -> None:
+        informativas = [a for a in acciones if a.get("tipo") not in TIPOS_ACCIONABLES]
+        campanas = [(i, a) for i, a in enumerate(acciones) if a.get("tipo") in TIPOS_CAMPANAS]
+        promos   = [(i, a) for i, a in enumerate(acciones) if a.get("tipo") in TIPOS_PROMOS]
+
+        n_accionables = len(campanas) + len(promos)
         if not acciones:
             self._enviar_mensaje("✅ Análisis semanal SHAFFE Ads: sin acciones para revisar esta semana.")
             return
 
-        informativas = [a for a in acciones if a.get("tipo") not in TIPOS_ACCIONABLES]
-        accionables = [(i, a) for i, a in enumerate(acciones) if a.get("tipo") in TIPOS_ACCIONABLES]
-
         self._enviar_mensaje(
             f"📊 *Reporte semanal SHAFFE Ads*\n"
-            f"{len(informativas)} alerta(s) informativa(s) y {len(accionables)} propuesta(s) para aprobar."
+            f"{len(informativas)} alerta(s) informativa(s) y {n_accionables} propuesta(s) para aprobar."
         )
 
         if informativas:
-            lineas = [self._linea_informativa(a) for a in informativas]
-            self._enviar_digest("⚠️ *Alertas (informativo, no requieren acción)*", lineas)
+            self._enviar_alertas(informativas)
 
-        if accionables:
-            self._enviar_accionables(accionables)
+        if campanas:
+            self._enviar_accionables(campanas, titulo="🔄 *Acciones de CAMPAÑAS — aprobá o rechazá*")
+
+        if promos:
+            self._enviar_accionables(promos, titulo="📦 *Acciones de STOCK y PROMOS — aprobá o rechazá*")
+
+    def enviar_alertas_urgentes(self, alertas_urgentes: list) -> None:
+        """Mensaje separado, enviado inmediatamente al detectar caídas sostenidas."""
+        if not alertas_urgentes:
+            return
+        lineas = [f"⚠️ *ALERTAS URGENTES* — {len(alertas_urgentes)} producto(s) cayendo hace {alertas_urgentes[0].get('dias_cayendo', 3)}+ días:"]
+        for a in alertas_urgentes:
+            roas_ult = a.get("roas_ultimos_dias", [])
+            roas_str = " → ".join(f"{r:.2f}" for r in roas_ult)
+            lineas.append(
+                f"• *{a['family_name']}* ({a.get('campania', '')}): "
+                f"ROAS histórico {a.get('roas_historico_prom', 0):.2f} → últimos días {roas_str} "
+                f"(caída {a.get('caida_pct', 0):.0f}%)"
+            )
+        lineas.append("\n_Revisá el Excel adjunto: hoja \"Alertas Urgentes\"._")
+        self._enviar_digest("\n".join(lineas[:1]), lineas[1:])
+
+    def enviar_archivo(self, ruta: str, caption: str = "") -> None:
+        with open(ruta, "rb") as f:
+            resp = requests.post(
+                f"{self._base}/sendDocument",
+                data={"chat_id": self.chat_id, "caption": caption, "parse_mode": "Markdown"},
+                files={"document": f},
+                timeout=60,
+            )
+        resp.raise_for_status()
+
+    # ------------------------------------------------------------------ #
+    # Alertas informativas (CTR/CVR/ACOS/tier_dividido)
+    # ------------------------------------------------------------------ #
+    def _enviar_alertas(self, informativas: list) -> None:
+        divididos = [a for a in informativas if a["tipo"] == "tier_dividido"]
+        ctr  = sorted((a for a in informativas if a.get("alerta") == "ctr_bajo"),  key=lambda a: a["roas"])
+        cvr  = sorted((a for a in informativas if a.get("alerta") == "cvr_bajo"),  key=lambda a: a["roas"])
+        acos = sorted((a for a in informativas if a.get("alerta") == "acos_alto"), key=lambda a: a.get("acos") or 0, reverse=True)
+
+        if divididos:
+            self._enviar_digest(
+                "🚧 *Variantes repartidas entre campañas* — corregir a mano:",
+                [f"• *{a['family_name']}*: en {', '.join(a.get('tiers_detectados', []))}" for a in divididos],
+            )
+        if ctr:
+            self._enviar_digest(
+                f"📷 *CTR bajo* ({len(ctr)}) — pocas clics para las impresiones. Revisar foto o precio. (ROAS más bajo → más alto):",
+                [f"• *{a['family_name']}*: ROAS {a['roas']:.2f} — {a.get('campania', '')}" for a in ctr],
+            )
+        if cvr:
+            self._enviar_digest(
+                f"📝 *CVR bajo* ({len(cvr)}) — entran pero no compran. Revisar descripción o ficha:",
+                [f"• *{a['family_name']}*: ROAS {a['roas']:.2f}" for a in cvr],
+            )
+        if acos:
+            self._enviar_digest(
+                f"💸 *ACOS alto* ({len(acos)}) — costo de publicidad supera el máximo del tier:",
+                [f"• *{a['family_name']}*: ACOS {a.get('acos', 0)*100:.1f}% en {a.get('campania', '')}" for a in acos],
+            )
 
     def _enviar_digest(self, titulo: str, lineas: list) -> None:
         bloque = titulo
@@ -52,14 +121,16 @@ class TelegramAgent:
             bloque += "\n" + linea
         self._enviar_mensaje(bloque)
 
-    def _enviar_accionables(self, accionables: list) -> None:
-        """accionables: [(indice_original, accion), ...]. Un mensaje con todas
-        las propuestas numeradas y, debajo, una fila de botones por cada una
-        (el número del botón corresponde al número de la línea de texto)."""
+    # ------------------------------------------------------------------ #
+    # Accionables con botones inline
+    # ------------------------------------------------------------------ #
+    def _enviar_accionables(self, accionables: list, titulo: str) -> None:
+        """accionables: [(indice_original, accion), ...]. Un mensaje con todas las
+        propuestas numeradas + una fila de botones por cada una."""
         inicio = 0
         while inicio < len(accionables):
             lote = []
-            texto = "✅ *Acciones propuestas — aprobá o rechazá cada una*"
+            texto = titulo
             fin = inicio
             while fin < len(accionables):
                 _, accion = accionables[fin]
@@ -81,18 +152,6 @@ class TelegramAgent:
             self._enviar_mensaje(texto, reply_markup={"inline_keyboard": botones})
             inicio = fin
 
-    def _linea_informativa(self, accion: dict) -> str:
-        tipo = accion.get("tipo")
-        nombre = accion.get("family_name") or ""
-        if tipo == "tier_dividido":
-            return f"🚧 *{nombre}*: variantes repartidas en {', '.join(accion.get('tiers_detectados', []))} — corregir a mano."
-        if tipo == "alerta":
-            detalle = {"ctr_bajo": "CTR bajo → revisar foto/precio", "cvr_bajo": "CVR bajo → revisar descripción/ficha"}.get(
-                accion["alerta"], accion["alerta"]
-            )
-            return f"⚠️ *{nombre}*: {detalle} (ROAS {accion.get('roas', 0):.2f})"
-        return f"❔ *{nombre}*: {tipo}"
-
     def _linea_accionable(self, accion: dict) -> str:
         tipo = accion.get("tipo")
         nombre = accion.get("family_name") or accion.get("item_id", "")
@@ -100,32 +159,32 @@ class TelegramAgent:
         sufijo = f" ({n_variantes} var.)" if n_variantes > 1 else ""
 
         if tipo == "mover_tier":
-            base = f"🔄 *{nombre}*{sufijo}: {accion['tier_origen']} → {accion['tier_destino']} (ROAS {accion.get('roas_reciente', 0):.2f})"
+            origen  = accion.get("campania_origen") or accion.get("tier_origen", "")
+            destino = accion.get("campania_destino") or accion.get("tier_destino", "")
+            base = f"🔄 *{nombre}*{sufijo}: {origen} → {destino} (ROAS {accion.get('roas_reciente', 0):.2f})"
             if accion.get("poco_stock"):
                 base += "\n   ⚠️ tiene poco stock — aprobá solo si vas a reponer"
             return base
         if tipo == "agregar_a_testeo":
-            return f"🆕 *{nombre}*{sufijo}: nueva → {accion['campania']} (ROAS objetivo 3)"
+            return f"🆕 *{nombre}*{sufijo}: nueva → {accion.get('campania', 'testeo')} (ROAS objetivo {accion.get('roas_target_inicial', 3.0)})"
         if tipo == "agregar_a_promo":
             return f"📦 *{nombre}*{sufijo}: poco stock → agregar a promo ML"
         if tipo == "pausar":
-            return f"⏸️ *{nombre}*{sufijo}: pausar ({accion.get('motivo')})"
+            motivo = accion.get("motivo", "")
+            roas = accion.get("roas_reciente", 0) or 0
+            return f"⏸️ *{nombre}*{sufijo}: pausar / sacar de ads (ROAS {roas:.2f}, {motivo.replace('_', ' ')})"
         if tipo == "ajustar_presupuesto":
             return f"💰 *{nombre}*: presupuesto → {accion.get('presupuesto_nuevo')}"
         if tipo == "ajustar_roas_target":
             return f"🎯 *{nombre}*: roas_target → {accion.get('roas_target_nuevo')}"
         return f"❔ *{nombre}*: {tipo}"
 
-    def _enviar_mensaje(self, texto: str, reply_markup: dict | None = None) -> None:
-        payload = {"chat_id": self.chat_id, "text": texto, "parse_mode": "Markdown"}
-        if reply_markup:
-            payload["reply_markup"] = reply_markup
-        resp = requests.post(f"{self._base}/sendMessage", json=payload, timeout=30)
-        resp.raise_for_status()
-
+    # ------------------------------------------------------------------ #
+    # Aprobaciones
+    # ------------------------------------------------------------------ #
     def obtener_aprobaciones(self, acciones: list, timeout_seg: int = 300, intervalo_seg: int = 15) -> dict:
-        """Long-poll a getUpdates buscando los callback_query de los botones enviados.
-        Devuelve {indice_accion: True/False} para las acciones que recibieron respuesta."""
+        """Long-poll getUpdates buscando callback_query de los botones enviados.
+        Devuelve {indice_accion: True/False}."""
         decisiones: dict = {}
         offset = None
         tiempo_limite = time.time() + timeout_seg
@@ -149,5 +208,17 @@ class TelegramAgent:
 
     def _responder_callback(self, callback_query_id: str) -> None:
         requests.post(
-            f"{self._base}/answerCallbackQuery", json={"callback_query_id": callback_query_id}, timeout=15
+            f"{self._base}/answerCallbackQuery",
+            json={"callback_query_id": callback_query_id},
+            timeout=15,
         )
+
+    # ------------------------------------------------------------------ #
+    # Envío base
+    # ------------------------------------------------------------------ #
+    def _enviar_mensaje(self, texto: str, reply_markup: dict | None = None) -> None:
+        payload = {"chat_id": self.chat_id, "text": texto, "parse_mode": "Markdown"}
+        if reply_markup:
+            payload["reply_markup"] = reply_markup
+        resp = requests.post(f"{self._base}/sendMessage", json=payload, timeout=30)
+        resp.raise_for_status()

@@ -27,5 +27,5 @@ class Structurer:
             "item_ids": item_ids,
             "family_name": family_name,
             "campania": reglas.nombre_campania("testeo", ticket),
-            "roas_target_inicial": reglas.ROAS_TARGET["testeo"],
+            "roas_target_inicial": reglas.ROAS_TARGET.get(f"testeo_{ticket}", 3.0),
         }

@@ -64,6 +64,7 @@ class Collector:
             costo = metricas.get("cost", 0.0)
             ingresos = metricas.get("direct_amount", 0.0) + metricas.get("indirect_amount", 0.0)
             metricas["roas"] = (ingresos / costo) if costo > 0 else 0.0
+            metricas["acos"] = (costo / ingresos) if ingresos > 0 else None
             grupo["metricas"] = dict(metricas)
             grupo["tiers_detectados"] = sorted(grupo["tiers_detectados"])
 

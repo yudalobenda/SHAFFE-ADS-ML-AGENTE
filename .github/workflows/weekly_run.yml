@@ -2,7 +2,7 @@ name: SHAFFE Ads - Análisis semanal
 
 on:
   schedule:
-    - cron: '0 12 * * 2' # martes 9:00 ART (UTC-3) = 12:00 UTC
+    - cron: '0 12 * * 1' # lunes 9:00 ART (UTC-3) = 12:00 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -32,12 +32,11 @@ jobs:
 
       # ML_ACCESS_TOKEN/ML_REFRESH_TOKEN no van por Secrets: main.py los lee y
       # los reescribe en memory/ml_tokens.json (rotan en cada refresh). Por eso
-      # ese archivo se commitea junto con state.json. Requiere que el repo sea
-      # privado.
-      - name: Persistir estado y tokens ML
+      # ese archivo se commitea junto con state.json. Requiere que el repo sea privado.
+      - name: Persistir estado, tokens ML y historial
         run: |
           git config user.name "shaffe-ads-bot"
           git config user.email "bot@shaffe.local"
-          git add memory/state.json memory/ml_tokens.json
+          git add memory/state.json memory/ml_tokens.json memory/roas_history.json memory/changes_history.json
           git diff --cached --quiet || git commit -m "chore: estado y tokens tras corrida semanal"
           git push
