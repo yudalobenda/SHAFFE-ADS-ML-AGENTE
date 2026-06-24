@@ -130,6 +130,7 @@ def modo_collect() -> None:
                 "roas": analisis["roas"],
                 "acos": analisis["acos"],
                 "campania": nombre_campania_actual,
+                "recomendacion": reglas.recomendacion_alerta(alerta, analisis["roas"], nombre_campania_actual),
             })
 
         serie_roas = _actualizar_historial(historial_roas, family_id, analisis["roas"])

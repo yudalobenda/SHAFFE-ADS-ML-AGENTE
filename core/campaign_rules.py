@@ -156,6 +156,27 @@ def es_caida_urgente(historial_roas: list, roas_target: float) -> bool:
     return tenia_buen_roas and caida_reciente
 
 
+def recomendacion_alerta(alerta_tipo: str, roas: float, nombre_campania_actual: str) -> str:
+    """Texto corto de acción recomendada para mostrar junto a cada alerta."""
+    if alerta_tipo == "ctr_bajo":
+        if roas == 0:
+            return "sin ventas — cambiá la foto principal antes de decidir"
+        target = roas_target_campania(nombre_campania_actual)
+        ratio = roas / target if target else 0
+        if ratio < 0.4:
+            return "ROAS muy bajo — cambiar foto + precio o pausar"
+        if ratio < 0.7:
+            return "mejorar foto/precio para recuperar el ROAS"
+        return "mejorar foto para potenciar (ya está cerca del objetivo)"
+    if alerta_tipo == "cvr_bajo":
+        if roas == 0:
+            return "sin ventas — revisá descripción, precio y fotos secundarias"
+        return "la gente entra pero no compra — mejorar descripción/ficha"
+    if alerta_tipo == "acos_alto":
+        return "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    return ""
+
+
 def alertas_metricas(impresiones: int, clics: int, conversiones: int, acos: float | None, nombre_campania_actual: str) -> list:
     alertas = []
     if impresiones == 0:

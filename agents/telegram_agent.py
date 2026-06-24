@@ -104,18 +104,30 @@ class TelegramAgent:
             )
         if ctr:
             self._enviar_digest(
-                f"📷 *CTR bajo* ({len(ctr)}) — pocas clics para las impresiones. Revisar foto o precio:",
-                [f"• *{_esc(a['family_name'])}*: ROAS {a['roas']:.2f} — {_esc(a.get('campania', ''))}" for a in ctr],
+                f"📷 *CTR bajo* ({len(ctr)}) — pocos clics para las impresiones que tienen:",
+                [
+                    f"• *{_esc(a['family_name'])}* (ROAS {a['roas']:.2f})\n"
+                    f"  → {a.get('recomendacion', 'revisar foto o precio')}"
+                    for a in ctr
+                ],
             )
         if cvr:
             self._enviar_digest(
-                f"📝 *CVR bajo* ({len(cvr)}) — entran pero no compran. Revisar descripción o ficha:",
-                [f"• *{_esc(a['family_name'])}*: ROAS {a['roas']:.2f}" for a in cvr],
+                f"📝 *CVR bajo* ({len(cvr)}) — entran pero no compran:",
+                [
+                    f"• *{_esc(a['family_name'])}* (ROAS {a['roas']:.2f})\n"
+                    f"  → {a.get('recomendacion', 'revisar descripción o ficha')}"
+                    for a in cvr
+                ],
             )
         if acos:
             self._enviar_digest(
                 f"💸 *ACOS alto* ({len(acos)}) — costo de publicidad supera el máximo del tier:",
-                [f"• *{_esc(a['family_name'])}*: ACOS {a.get('acos', 0)*100:.1f}% en {_esc(a.get('campania', ''))}" for a in acos],
+                [
+                    f"• *{_esc(a['family_name'])}* ({_esc(a.get('campania', ''))}) ACOS {a.get('acos', 0)*100:.1f}%\n"
+                    f"  → {a.get('recomendacion', 'revisar puja o pausar')}"
+                    for a in acos
+                ],
             )
 
     def _enviar_digest(self, titulo: str, lineas: list) -> None:

@@ -197,8 +197,10 @@ class ReportAgent:
             clave = tuple(sorted(grupo["item_ids"]))
             alerta = alertas_dict.get(clave, {})
             diagnostico = alerta.get("alerta", "roas_bajo").replace("_", " ").title()
-            accion = "Revisar foto/título" if "ctr" in diagnostico.lower() else (
-                "Revisar descripción/ficha" if "cvr" in diagnostico.lower() else "Evaluar pausa o cambio de tier"
+            accion = alerta.get("recomendacion") or (
+                "Revisar foto/título" if "ctr" in diagnostico.lower() else (
+                    "Revisar descripción/ficha" if "cvr" in diagnostico.lower() else "Evaluar pausa o cambio de tier"
+                )
             )
 
             ws.cell(row=fila, column=1, value=grupo["item_ids"][0] if grupo["item_ids"] else "")
