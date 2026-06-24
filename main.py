@@ -17,6 +17,7 @@ from agents.analyst import Analyst
 from agents.collector import Collector
 from agents.copywriter import Copywriter
 from agents.report_agent import ReportAgent
+from agents.research_agent import ResearchAgent
 from agents.stock_agent import StockAgent
 from agents.structurer import Structurer
 from agents.telegram_agent import TelegramAgent
@@ -194,7 +195,7 @@ def modo_collect() -> None:
         try:
             items_data = ml.get_items_multiget(
                 item_ids[:20],
-                attributes="id,title,price,available_quantity,status,shipping",
+                attributes="id,title,price,available_quantity,status,shipping,sold_quantity,listing_type_id",
             )
         except Exception:
             items_data = []
@@ -204,6 +205,8 @@ def modo_collect() -> None:
         unidades = 0
         variantes_disp = 0
         envio_gratis = False
+        sold_total = 0
+        listing_type = ""
 
         if items_data:
             precios = [i.get("price", 0) for i in items_data if i.get("price")]
@@ -214,28 +217,42 @@ def modo_collect() -> None:
             envio_gratis = any(
                 (i.get("shipping") or {}).get("free_shipping", False) for i in items_data
             )
+            sold_total = sum(i.get("sold_quantity", 0) for i in items_data)
+            listing_type = items_data[0].get("listing_type_id", "")
 
         ticket = reglas.clasificar_ticket(precio) if precio else "medio"
         campania_rec = f"testeo_{ticket}"
 
-        if unidades >= 10:
-            prioridad = "Alta"
-            motivo = (
-                f"Publicación activa sin Ads — {unidades} uds en {variantes_disp} talles/colores disponibles. "
-                f"Stock suficiente. Entrar a {campania_rec} con presupuesto mínimo."
-            )
-        elif unidades >= 5:
-            prioridad = "Media"
-            motivo = (
-                f"Publicación activa sin Ads — {unidades} uds en {variantes_disp} talles/colores. "
-                f"Stock justo. Reponer antes de escalar; entrar a {campania_rec} solo si repone."
-            )
+        # Motivo real: evaluar potencial basado en ventas históricas + stock + listing
+        listing_label = {"gold_special": "Premium (gold special)", "gold_pro": "Gold Pro", "free": "Gratis"}.get(listing_type, listing_type)
+        envio_str = "con envío gratis" if envio_gratis else "sin envío gratis"
+
+        if sold_total >= 50:
+            razon_ventas = f"ya vendió {sold_total} unidades históricas — tiene demanda probada"
+            prioridad = "Alta" if unidades >= 10 else "Media"
+        elif sold_total >= 10:
+            razon_ventas = f"vendió {sold_total} unidades históricas — track record incipiente"
+            prioridad = "Alta" if unidades >= 10 else "Media"
+        elif sold_total > 0:
+            razon_ventas = f"solo {sold_total} ventas históricas — producto nuevo o poco traccionado"
+            prioridad = "Media" if unidades >= 10 else "Baja"
         else:
+            razon_ventas = "sin ventas registradas — producto nuevo sin track record"
             prioridad = "Baja"
-            motivo = (
-                f"Publicación activa sin Ads — solo {unidades} uds disponibles. "
-                f"Reponer stock primero. No conviene poner en Ads con tan poco inventario."
-            )
+
+        if unidades < 5:
+            prioridad = "Baja"
+            razon_stock = f"solo {unidades} uds disponibles — reponer antes de poner en Ads"
+        elif unidades < 10:
+            razon_stock = f"{unidades} uds en {variantes_disp} talles/colores — stock justo, reponer antes de escalar"
+        else:
+            razon_stock = f"{unidades} uds en {variantes_disp} talles/colores disponibles — stock suficiente"
+
+        motivo = (
+            f"Publicación activa {envio_str} ({listing_label}) — {razon_ventas}. "
+            f"Stock: {razon_stock}. "
+            f"Si tiene ventas orgánicas recientes en ML: entrar a {campania_rec} con presupuesto mínimo."
+        )
 
         candidatas_sin_ads[str(family_id)] = {
             "family_name": titulo,
@@ -246,6 +263,8 @@ def modo_collect() -> None:
             "stock_total": unidades,
             "variantes_disponibles": variantes_disp,
             "envio_gratis": "✅ Sí" if envio_gratis else "No",
+            "sold_quantity": sold_total,
+            "listing_type": listing_label,
             "prioridad": prioridad,
             "motivo": motivo,
         }
@@ -334,6 +353,93 @@ def modo_check_approvals() -> None:
     _guardar_json("state.json", state)
 
 
+def modo_research() -> None:
+    """Research mensual: tendencias ML Argentina + oportunidades de catálogo.
+    Genera hoja Tendencias en un Excel aparte y manda resumen por Telegram."""
+    load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
+
+    ml = _crear_ml_client()
+    agent = ResearchAgent(ml, site_id="MLA")
+    oportunidades = agent.investigar()
+    _guardar_tokens_ml(ml)
+
+    semana_str = date.today().strftime("%d/%m/%Y")
+    report_agent = ReportAgent()
+    ruta_xlsx = report_agent.generar_research(oportunidades, semana_str)
+
+    telegram = TelegramAgent()
+    gaps = [o for o in oportunidades if o["fit_shaffe"] == "gap"]
+    potencial = [o for o in oportunidades if o["fit_shaffe"] == "potencial"]
+    tiene = [o for o in oportunidades if o["fit_shaffe"] == "tiene"]
+
+    resumen = (
+        f"🔍 *Research mensual SHAFFE — {semana_str}*\n\n"
+        f"📊 {len(oportunidades)} tendencias/productos analizados en ML Argentina\n"
+        f"🆕 *{len(gaps)} gaps de catálogo* — categorías en tendencia que no tenés\n"
+        f"🔄 {len(potencial)} oportunidades adyacentes — para explorar\n"
+        f"✅ {len(tiene)} ya los tenés — verificar posicionamiento\n\n"
+        f"Detalle completo en el Excel adjunto — hoja *Tendencias Research*."
+    )
+    telegram._enviar_mensaje(resumen)
+    telegram.enviar_archivo(ruta_xlsx, caption=f"🔍 Research mensual SHAFFE Ads — {semana_str}")
+
+    print(f"Research completado: {len(oportunidades)} oportunidades. Excel: {ruta_xlsx}")
+
+
+def modo_check_approvals() -> None:
+    load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
+
+    state = _cargar_json("state.json")
+    acciones = state.get("acciones_pendientes", [])
+    if not acciones:
+        print("No hay acciones pendientes de aprobación.")
+        return
+
+    campaign_ids = _cargar_json("campaign_ids.json")
+    changes_history = _cargar_json("changes_history.json")
+    telegram = TelegramAgent()
+    decisiones = telegram.obtener_aprobaciones(acciones, timeout_seg=240)
+
+    aprobadas = [acciones[i] for i, aprobado in decisiones.items() if aprobado]
+    if aprobadas:
+        ml = _crear_ml_client()
+        executor = Executor(ml, campaign_ids)
+        resultados = executor.ejecutar(aprobadas)
+        _guardar_tokens_ml(ml)
+
+        # Registrar en historial los movimientos ejecutados
+        hoy = date.today().isoformat()
+        fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
+        for accion in aprobadas:
+            if accion.get("tipo") == "mover_tier":
+                entrada = {
+                    "fecha": hoy,
+                    "mla": accion["item_ids"][0] if accion["item_ids"] else "",
+                    "publicacion": accion.get("family_name", ""),
+                    "cambio": f"{accion.get('campania_origen', accion.get('tier_origen', ''))} → {accion.get('campania_destino', accion.get('tier_destino', ''))}",
+                    "roas_antes": accion.get("roas_reciente"),
+                    "roas_despues_7d": None,
+                    "resultado": "pendiente",
+                    "tier_origen": accion.get("tier_origen", ""),
+                    "tier_destino": accion.get("tier_destino", ""),
+                }
+                changes_history.append(entrada)
+                if accion.get("tier_destino") == "oro":
+                    for item_id in accion.get("item_ids", []):
+                        fecha_entrada_oro[item_id] = hoy
+                    if "grupo_id" in accion:
+                        fecha_entrada_oro[str(accion["grupo_id"])] = hoy
+
+        _guardar_json("changes_history.json", changes_history)
+        print(f"Ejecutadas {len(resultados)} acciones aprobadas.")
+    else:
+        print("Sin aprobaciones nuevas todavía.")
+
+    pendientes_restantes = [a for i, a in enumerate(acciones) if i not in decisiones]
+    state["acciones_pendientes"] = pendientes_restantes
+    _guardar_json("state.json", state)
+
+
 def main() -> None:
     load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
     modo = sys.argv[1] if len(sys.argv) > 1 else "collect"
@@ -341,8 +447,10 @@ def main() -> None:
         modo_collect()
     elif modo == "check-approvals":
         modo_check_approvals()
+    elif modo == "research":
+        modo_research()
     else:
-        print(f"Modo desconocido: {modo}. Usar 'collect' o 'check-approvals'.")
+        print(f"Modo desconocido: {modo}. Usar 'collect', 'check-approvals' o 'research'.")
         sys.exit(1)
 
 

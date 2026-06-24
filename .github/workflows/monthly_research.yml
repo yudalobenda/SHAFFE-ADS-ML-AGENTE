@@ -1,19 +1,15 @@
-name: SHAFFE Ads - Procesar aprobaciones
+name: SHAFFE Ads - Research mensual tendencias
 
 on:
   schedule:
-    # Corre 3 veces el lunes: 11am, 2pm y 5pm ART (14, 17, 20 UTC)
-    # Así captura clicks en cualquier momento del día después del collect de las 9am
-    - cron: '0 14 * * 1'
-    - cron: '0 17 * * 1'
-    - cron: '0 20 * * 1'
+    - cron: '0 12 1 * *' # primer día del mes, 9am ART (12:00 UTC)
   workflow_dispatch: {}
 
 permissions:
   contents: write
 
 jobs:
-  check-approvals:
+  research:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +20,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - run: python main.py check-approvals
+      - run: python main.py research
         env:
           ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
           ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
@@ -33,10 +29,10 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-      - name: Persistir estado, tokens y historial
+      - name: Persistir tokens ML
         run: |
           git config user.name "shaffe-ads-bot"
           git config user.email "bot@shaffe.local"
-          git add memory/state.json memory/ml_tokens.json memory/changes_history.json
-          git diff --cached --quiet || git commit -m "chore: estado tras procesar aprobaciones"
+          git add memory/ml_tokens.json
+          git diff --cached --quiet || git commit -m "chore: tokens tras research mensual"
           git push

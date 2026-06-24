@@ -288,9 +288,9 @@ class ReportAgent:
         ws["A2"] = "Publicaciones activas sin campaña de Ads. Ventas orgánicas en 30 días: verificar en ML (requiere orders API)."
 
         _header(ws, 4, [
-            "MLA", "Título publicación", "Precio ($)", "Tier según ticket",
-            "Ventas 30 días (*)", "Stock actual", "Variantes disp.", "Envío gratis?",
-            "Campaña recomendada", "Prioridad", "Motivo y recomendación del agente",
+            "MLA", "Título publicación", "Precio ($)", "Tipo listing", "Tier según ticket",
+            "Ventas históricas (total)", "Ventas 30 días (*)", "Stock actual", "Variantes disp.", "Envío gratis?",
+            "Campaña recomendada", "Prioridad", "Motivo y por qué conviene subirla a Ads",
         ])
 
         # color de prioridad
@@ -303,16 +303,23 @@ class ReportAgent:
             ws.cell(row=fila, column=2, value=grupo.get("family_name", ""))
             precio = grupo.get("precio", 0)
             ws.cell(row=fila, column=3, value=f"${precio:,.0f}" if precio else "Ver ML")
-            ws.cell(row=fila, column=4, value=grupo.get("ticket", "?").capitalize())
-            ws.cell(row=fila, column=5, value="(*) Ver en ML")
-            ws.cell(row=fila, column=6, value=grupo.get("stock_total", "N/D"))
-            ws.cell(row=fila, column=7, value=grupo.get("variantes_disponibles", "N/D"))
-            ws.cell(row=fila, column=8, value=grupo.get("envio_gratis", "N/D"))
-            ws.cell(row=fila, column=9, value=grupo.get("campania_recomendada", "testeo"))
-            ws.cell(row=fila, column=10, value=prioridad)
-            ws.cell(row=fila, column=10).fill = PatternFill("solid", fgColor=colores_prioridad.get(prioridad, _GRIS))
-            ws.cell(row=fila, column=11, value=grupo.get("motivo", ""))
-            ws.cell(row=fila, column=11).alignment = Alignment(wrap_text=True)
+            ws.cell(row=fila, column=4, value=grupo.get("listing_type", "N/D"))
+            ws.cell(row=fila, column=5, value=grupo.get("ticket", "?").capitalize())
+            sold = grupo.get("sold_quantity", 0)
+            ws.cell(row=fila, column=6, value=sold)
+            if sold >= 50:
+                ws.cell(row=fila, column=6).fill = PatternFill("solid", fgColor=_VERDE)
+            elif sold >= 10:
+                ws.cell(row=fila, column=6).fill = PatternFill("solid", fgColor=_AMARILLO)
+            ws.cell(row=fila, column=7, value="(*) Ver en ML")
+            ws.cell(row=fila, column=8, value=grupo.get("stock_total", "N/D"))
+            ws.cell(row=fila, column=9, value=grupo.get("variantes_disponibles", "N/D"))
+            ws.cell(row=fila, column=10, value=grupo.get("envio_gratis", "N/D"))
+            ws.cell(row=fila, column=11, value=grupo.get("campania_recomendada", "testeo"))
+            ws.cell(row=fila, column=12, value=prioridad)
+            ws.cell(row=fila, column=12).fill = PatternFill("solid", fgColor=colores_prioridad.get(prioridad, _GRIS))
+            ws.cell(row=fila, column=13, value=grupo.get("motivo", ""))
+            ws.cell(row=fila, column=13).alignment = Alignment(wrap_text=True)
             fila += 1
 
         ws.cell(row=fila + 1, column=1, value="(*) Las ventas orgánicas de los últimos 30 días requieren la orders API de ML — verificar manualmente en el panel de vendedor.")
@@ -377,6 +384,47 @@ class ReportAgent:
             fila += 1
 
         _autowidth(ws)
+
+    # ------------------------------------------------------------------ #
+    # Reporte de research mensual (archivo separado)
+    # ------------------------------------------------------------------ #
+    def generar_research(self, oportunidades: list, mes: str) -> str:
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Tendencias Research"
+
+        ws["A1"] = "TENDENCIAS Y OPORTUNIDADES DE CATÁLOGO - Reporte mensual"
+        ws["A1"].font = Font(bold=True, size=13)
+        ws["A2"] = f"MercadoLibre Argentina — {mes}. Generado automáticamente por el agente."
+
+        _header(ws, 4, [
+            "Categoría / Producto", "Tendencia / Keyword", "Top MLA",
+            "Precio prom ($)", "Ventas estimadas", "Competencia",
+            "Fit con Shaffe", "Recomendación",
+        ])
+
+        colores_fit = {"gap": _VERDE, "potencial": _AMARILLO, "tiene": _GRIS}
+
+        for fila, o in enumerate(oportunidades, start=5):
+            ws.cell(row=fila, column=1, value=o.get("categoria", ""))
+            ws.cell(row=fila, column=2, value=o.get("keyword", ""))
+            ws.cell(row=fila, column=3, value=o.get("top_producto", ""))
+            ws.cell(row=fila, column=4, value=o.get("precio_prom", ""))
+            ws.cell(row=fila, column=5, value=o.get("ventas_estimadas", ""))
+            ws.cell(row=fila, column=6, value=o.get("competencia", ""))
+            fit = o.get("fit_shaffe", "")
+            etiqueta = {"gap": "🆕 No tenés — oportunidad", "potencial": "🔄 Adyacente", "tiene": "✅ Ya tenés"}.get(fit, fit)
+            ws.cell(row=fila, column=7, value=etiqueta)
+            ws.cell(row=fila, column=7).fill = PatternFill("solid", fgColor=colores_fit.get(fit, _GRIS))
+            ws.cell(row=fila, column=8, value=o.get("recomendacion", ""))
+            ws.cell(row=fila, column=8).alignment = Alignment(wrap_text=True)
+
+        _autowidth(ws)
+        nombre = f"shaffe_research_{date.today().strftime('%Y-%m')}.xlsx"
+        ruta = os.path.join(BASE_DIR, "logs", nombre)
+        os.makedirs(os.path.dirname(ruta), exist_ok=True)
+        wb.save(ruta)
+        return ruta
 
     # ------------------------------------------------------------------ #
     # Hoja 6: Historial de Cambios
