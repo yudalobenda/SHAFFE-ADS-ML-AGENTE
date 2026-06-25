@@ -66,6 +66,73 @@ def _actualizar_historial(historial_por_grupo: dict, grupo_id, roas: float) -> l
     return [h["roas"] for h in historial]
 
 
+def _cerrar_loop_retrospectivo(
+    changes_history: list, historial_roas: dict, grupos: dict
+) -> list:
+    """Para cada movimiento de tier con ≥ 7 días, calcula el ROAS promedio
+    en los 7 días siguientes al cambio (usando roas_history) y lo guarda.
+    Devuelve las entradas que se actualizaron en esta corrida."""
+    hoy = date.today()
+
+    # Reverse lookup: item_id → family_id (como string, clave del historial)
+    item_a_family: dict = {}
+    for family_id, grupo in grupos.items():
+        for item_id in grupo["item_ids"]:
+            item_a_family[item_id] = str(family_id)
+
+    actualizadas = []
+    for entrada in changes_history:
+        if entrada.get("roas_despues_7d") is not None:
+            continue
+        fecha_str = entrada.get("fecha", "")
+        try:
+            fecha_cambio = date.fromisoformat(fecha_str)
+        except (ValueError, TypeError):
+            continue
+        if (hoy - fecha_cambio).days < 7:
+            continue
+
+        mla = entrada.get("mla", "")
+        family_id = item_a_family.get(mla, mla)
+        historia = historial_roas.get(family_id, historial_roas.get(mla, []))
+
+        # ROAS en la ventana de 7 días posteriores al cambio
+        fecha_inicio = fecha_cambio.isoformat()
+        fecha_fin = (fecha_cambio + timedelta(days=7)).isoformat()
+        roas_post = [
+            h["roas"] for h in historia
+            if fecha_inicio < h["fecha"] <= fecha_fin and isinstance(h.get("roas"), (int, float))
+        ]
+
+        # Fallback: ROAS actual del grupo si no hay historia en esa ventana
+        if not roas_post:
+            g = grupos.get(family_id) or grupos.get(mla)
+            if g:
+                roas_post = [g["metricas"].get("roas", 0.0)]
+
+        if not roas_post:
+            continue
+
+        roas_despues = round(sum(roas_post) / len(roas_post), 2)
+        roas_antes = entrada.get("roas_antes") or 0
+        entrada["roas_despues_7d"] = roas_despues
+
+        if roas_antes > 0:
+            cambio_pct = (roas_despues - roas_antes) / roas_antes * 100
+            if cambio_pct >= 10:
+                entrada["resultado"] = f"mejoró (+{cambio_pct:.0f}%)"
+            elif cambio_pct <= -10:
+                entrada["resultado"] = f"empeoró ({cambio_pct:.0f}%)"
+            else:
+                entrada["resultado"] = f"neutro ({cambio_pct:+.0f}%)"
+        else:
+            entrada["resultado"] = "sin ROAS previo"
+
+        actualizadas.append(entrada)
+
+    return actualizadas
+
+
 def _calcular_dias_en_oro(fecha_entrada_oro: dict, clave: str) -> int:
     """Días transcurridos desde que el producto entró a una campaña Oro."""
     fecha_str = fecha_entrada_oro.get(clave)
@@ -101,6 +168,12 @@ def modo_collect() -> None:
     copywriter = Copywriter()
 
     grupos = collector.recolectar(campaign_ids["campañas"])
+
+    # Cierre del loop: actualizar resultados de movimientos de hace 7+ días
+    retro_actualizadas = _cerrar_loop_retrospectivo(changes_history, historial_roas, grupos)
+    if retro_actualizadas:
+        _guardar_json("changes_history.json", changes_history)
+        print(f"Retrospectiva: {len(retro_actualizadas)} movimiento(s) evaluado(s).")
 
     acciones: list = []
     alertas_urgentes: list = []
@@ -281,6 +354,17 @@ def modo_collect() -> None:
     if alertas_urgentes:
         telegram.enviar_alertas_urgentes(alertas_urgentes)
 
+    if retro_actualizadas:
+        mejoraron = sum(1 for e in retro_actualizadas if "mejoró" in (e.get("resultado") or ""))
+        empeoraron = sum(1 for e in retro_actualizadas if "empeoró" in (e.get("resultado") or ""))
+        neutros = len(retro_actualizadas) - mejoraron - empeoraron
+        tasa = mejoraron / len(retro_actualizadas) * 100
+        telegram._enviar_mensaje(
+            f"📈 *Retrospectiva — decisiones de hace 7 días*\n"
+            f"✅ Mejoraron: {mejoraron}  ❌ Empeoraron: {empeoraron}  ➖ Neutros: {neutros}\n"
+            f"Tasa de acierto: *{tasa:.0f}%* — detalle en el Excel, hoja Historial Cambios."
+        )
+
     telegram.enviar_reporte(acciones, run_id=run_id)
 
     # Reporte Excel
@@ -291,6 +375,7 @@ def modo_collect() -> None:
         alertas_urgentes=alertas_urgentes,
         candidatas_sin_ads=candidatas_sin_ads,
         changes_history=changes_history,
+        retro_semana=retro_actualizadas,
         semana=semana_str,
     )
     telegram.enviar_archivo(ruta_xlsx, caption=f"📊 Reporte semanal SHAFFE Ads — {semana_str}")

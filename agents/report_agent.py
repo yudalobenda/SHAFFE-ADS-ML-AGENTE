@@ -58,12 +58,13 @@ class ReportAgent:
         candidatas_sin_ads: dict,
         changes_history: list,
         semana: str,
+        retro_semana: list | None = None,
     ) -> str:
         """Genera el xlsx y devuelve la ruta del archivo creado."""
         wb = openpyxl.Workbook()
         wb.remove(wb.active)
 
-        self._hoja_resumen(wb, grupos, acciones, semana)
+        self._hoja_resumen(wb, grupos, acciones, semana, retro_semana or [])
         self._hoja_problema(wb, grupos, acciones, semana)
         self._hoja_urgentes(wb, alertas_urgentes, semana)
         self._hoja_sin_ads(wb, candidatas_sin_ads, semana)
@@ -79,7 +80,7 @@ class ReportAgent:
     # ------------------------------------------------------------------ #
     # Hoja 1: Resumen Ejecutivo
     # ------------------------------------------------------------------ #
-    def _hoja_resumen(self, wb, grupos: dict, acciones: list, semana: str) -> None:
+    def _hoja_resumen(self, wb, grupos: dict, acciones: list, semana: str, retro_semana: list | None = None) -> None:
         ws = wb.create_sheet("Resumen Ejecutivo")
 
         ws["A1"] = "SHAFFE - Reporte Semanal MercadoLibre Ads"
@@ -185,6 +186,39 @@ class ReportAgent:
             ws.cell(row=fila, column=7).fill = _semaforo_fill(estado)
             ws.cell(row=fila, column=8).alignment = Alignment(wrap_text=True)
             fila += 1
+
+        # Retrospectiva: resumen de decisiones evaluadas esta semana
+        if retro_semana:
+            mejoraron = [e for e in retro_semana if "mejoró" in (e.get("resultado") or "")]
+            empeoraron = [e for e in retro_semana if "empeoró" in (e.get("resultado") or "")]
+            neutros    = [e for e in retro_semana if "neutro" in (e.get("resultado") or "")]
+
+            fila += 2
+            ws.cell(row=fila - 1, column=1, value="RETROSPECTIVA — Decisiones de la semana pasada (7 días después)").font = Font(bold=True)
+            _header(ws, fila, ["Publicación", "Cambio realizado", "ROAS antes", "ROAS 7 días después", "Variación", "Resultado"], color="2E4057")
+            fila += 1
+            for entrada in retro_semana:
+                roas_a = entrada.get("roas_antes") or 0
+                roas_d = entrada.get("roas_despues_7d") or 0
+                variacion = f"{((roas_d - roas_a) / roas_a * 100):+.0f}%" if roas_a else "N/A"
+                resultado = entrada.get("resultado", "")
+                ws.cell(row=fila, column=1, value=entrada.get("publicacion", ""))
+                ws.cell(row=fila, column=2, value=entrada.get("cambio", ""))
+                ws.cell(row=fila, column=3, value=round(roas_a, 2))
+                ws.cell(row=fila, column=4, value=round(roas_d, 2))
+                ws.cell(row=fila, column=5, value=variacion)
+                ws.cell(row=fila, column=6, value=resultado)
+                color = _VERDE if "mejoró" in resultado else (_ROJO if "empeoró" in resultado else _GRIS)
+                for col in range(1, 7):
+                    ws.cell(row=fila, column=col).fill = PatternFill("solid", fgColor=color)
+                fila += 1
+
+            # Resumen de la retrospectiva
+            ws.cell(row=fila + 1, column=1,
+                value=f"Resumen: {len(mejoraron)} mejoraron ✅ · {len(empeoraron)} empeoraron ❌ · {len(neutros)} neutros — "
+                      f"Tasa de acierto: {len(mejoraron)/len(retro_semana)*100:.0f}%"
+            ).font = Font(bold=True)
+            fila += 2
 
         _autowidth(ws)
 
@@ -433,19 +467,51 @@ class ReportAgent:
         ws = wb.create_sheet("Historial Cambios")
         ws["A1"] = "HISTORIAL ACUMULATIVO DE CAMBIOS - Shaffe MercadoLibre Ads"
         ws["A1"].font = Font(bold=True, size=12)
-        ws["A2"] = "Cada semana el agente agrega una fila por cada cambio ejecutado. Registro histórico para aprender."
+        ws["A2"] = "Verde = mejoró el ROAS tras el movimiento · Rojo = empeoró · Gris = neutro o pendiente"
 
-        _header(ws, 4, ["Fecha", "MLA", "Publicación", "Cambio realizado", "ROAS antes", "ROAS después (7 días)", "Resultado", "Tier origen", "Tier destino"])
+        _header(ws, 4, [
+            "Fecha", "MLA", "Publicación", "Cambio realizado",
+            "ROAS antes", "ROAS después (7 días)", "Variación %", "Resultado",
+            "Tier origen", "Tier destino",
+        ])
+
+        # Resumen acumulado al inicio
+        evaluados = [c for c in changes_history if c.get("roas_despues_7d") is not None]
+        mejoraron = sum(1 for c in evaluados if "mejoró" in (c.get("resultado") or ""))
+        empeoraron = sum(1 for c in evaluados if "empeoró" in (c.get("resultado") or ""))
+        ws["A3"] = (
+            f"Historial total: {len(changes_history)} movimientos · "
+            f"{len(evaluados)} evaluados · "
+            f"Aciertos: {mejoraron} ✅ · Fallos: {empeoraron} ❌ · "
+            f"Tasa: {mejoraron/len(evaluados)*100:.0f}%" if evaluados else
+            f"Historial total: {len(changes_history)} movimientos · Sin evaluaciones aún"
+        )
+        ws["A3"].font = Font(bold=True)
 
         for fila, cambio in enumerate(changes_history, start=5):
+            roas_a = cambio.get("roas_antes")
+            roas_d = cambio.get("roas_despues_7d")
+            resultado = cambio.get("resultado", "pendiente")
+
+            if roas_a and roas_d:
+                variacion = f"{((roas_d - roas_a) / roas_a * 100):+.0f}%"
+            else:
+                variacion = "—"
+
             ws.cell(row=fila, column=1, value=cambio.get("fecha", ""))
             ws.cell(row=fila, column=2, value=cambio.get("mla", ""))
             ws.cell(row=fila, column=3, value=cambio.get("publicacion", ""))
             ws.cell(row=fila, column=4, value=cambio.get("cambio", ""))
-            ws.cell(row=fila, column=5, value=cambio.get("roas_antes"))
-            ws.cell(row=fila, column=6, value=cambio.get("roas_despues_7d"))
-            ws.cell(row=fila, column=7, value=cambio.get("resultado", "pendiente"))
-            ws.cell(row=fila, column=8, value=cambio.get("tier_origen", ""))
-            ws.cell(row=fila, column=9, value=cambio.get("tier_destino", ""))
+            ws.cell(row=fila, column=5, value=round(roas_a, 2) if roas_a else None)
+            ws.cell(row=fila, column=6, value=round(roas_d, 2) if roas_d else None)
+            ws.cell(row=fila, column=7, value=variacion)
+            ws.cell(row=fila, column=8, value=resultado)
+            ws.cell(row=fila, column=9, value=cambio.get("tier_origen", ""))
+            ws.cell(row=fila, column=10, value=cambio.get("tier_destino", ""))
+
+            if roas_d is not None:
+                color = _VERDE if "mejoró" in resultado else (_ROJO if "empeoró" in resultado else _GRIS)
+                for col in range(1, 11):
+                    ws.cell(row=fila, column=col).fill = PatternFill("solid", fgColor=color)
 
         _autowidth(ws)
