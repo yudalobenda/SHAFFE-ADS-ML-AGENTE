@@ -297,7 +297,6 @@ def modo_collect() -> None:
 
     state["acciones_pendientes"] = acciones
     state["run_id"] = run_id
-    state["telegram_offset"] = None  # resetear al iniciar nueva corrida
     state["ultima_corrida"] = "collect"
     _guardar_json("state.json", state)
     _guardar_json("roas_history.json", historial_roas)
@@ -355,8 +354,8 @@ def modo_check_approvals() -> None:
     changes_history = _cargar_json("changes_history.json")
 
     telegram = TelegramAgent()
-    decisiones, nuevo_offset = telegram.obtener_aprobaciones(
-        acciones, run_id=run_id, offset=telegram_offset
+    decisiones, _comandos, nuevo_offset = telegram.drenar_updates(
+        run_id=run_id, offset=telegram_offset
     )
 
     # Persistir offset inmediatamente para no procesar los mismos updates otra vez
@@ -404,6 +403,78 @@ def modo_check_approvals() -> None:
     _guardar_json("state.json", state)
 
 
+def modo_listen() -> None:
+    """Escucha mensajes de texto en Telegram y dispara collect/research a pedido.
+    También procesa botones pendientes si los hay (misma cola de updates).
+    Se llama cada hora desde el workflow listen.yml."""
+    load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
+
+    state = _cargar_json("state.json")
+    offset = state.get("telegram_offset")
+    run_id = state.get("run_id", "")
+    acciones = state.get("acciones_pendientes", [])
+
+    telegram = TelegramAgent()
+    decisiones, comandos, nuevo_offset = telegram.drenar_updates(
+        run_id=run_id, offset=offset
+    )
+
+    # Procesar botones pendientes que hayan llegado (igual que check-approvals)
+    if decisiones and acciones:
+        campaign_ids = _cargar_json("campaign_ids.json")
+        changes_history = _cargar_json("changes_history.json")
+        aprobadas = [acciones[i] for i, aprobado in decisiones.items() if aprobado]
+        if aprobadas:
+            ml = _crear_ml_client()
+            executor = Executor(ml, campaign_ids)
+            executor.ejecutar(aprobadas)
+            _guardar_tokens_ml(ml)
+            hoy = date.today().isoformat()
+            fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
+            for accion in aprobadas:
+                if accion.get("tipo") == "mover_tier":
+                    changes_history.append({
+                        "fecha": hoy,
+                        "mla": accion["item_ids"][0] if accion["item_ids"] else "",
+                        "publicacion": accion.get("family_name", ""),
+                        "cambio": f"{accion.get('campania_origen', '')} → {accion.get('campania_destino', '')}",
+                        "roas_antes": accion.get("roas_reciente"),
+                        "roas_despues_7d": None,
+                        "resultado": "pendiente",
+                        "tier_origen": accion.get("tier_origen", ""),
+                        "tier_destino": accion.get("tier_destino", ""),
+                    })
+                    if accion.get("tier_destino") == "oro":
+                        for item_id in accion.get("item_ids", []):
+                            fecha_entrada_oro[item_id] = hoy
+            _guardar_json("changes_history.json", changes_history)
+            pendientes = [a for i, a in enumerate(acciones) if i not in decisiones]
+            state["acciones_pendientes"] = pendientes
+
+    # Persistir offset antes de correr collect/research
+    state["telegram_offset"] = nuevo_offset
+    _guardar_json("state.json", state)
+
+    # Ejecutar el comando pedido por texto (tomar solo el último si hay varios)
+    if not comandos:
+        print("Sin comandos nuevos esta corrida.")
+        return
+
+    comando = comandos[-1]
+    if comando == "collect":
+        telegram._enviar_mensaje("⏳ ¡Pedido recibido! Generando reporte... en un momento te lo mando.")
+        modo_collect()
+        # collect guarda su propio state; restaurar el offset que ya avanzamos
+        state_post = _cargar_json("state.json")
+        state_post["telegram_offset"] = nuevo_offset
+        _guardar_json("state.json", state_post)
+        print("Listen: collect ejecutado a pedido.")
+    elif comando == "research":
+        telegram._enviar_mensaje("⏳ ¡Pedido recibido! Buscando tendencias en ML Argentina...")
+        modo_research()
+        print("Listen: research ejecutado a pedido.")
+
+
 def main() -> None:
     load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
     modo = sys.argv[1] if len(sys.argv) > 1 else "collect"
@@ -413,8 +484,10 @@ def main() -> None:
         modo_check_approvals()
     elif modo == "research":
         modo_research()
+    elif modo == "listen":
+        modo_listen()
     else:
-        print(f"Modo desconocido: {modo}. Usar 'collect', 'check-approvals' o 'research'.")
+        print(f"Modo desconocido: {modo}. Usar 'collect', 'check-approvals', 'research' o 'listen'.")
         sys.exit(1)
 
 

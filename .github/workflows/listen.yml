@@ -1,0 +1,38 @@
+name: SHAFFE Ads - Escuchar comandos Telegram
+
+on:
+  schedule:
+    - cron: '0 * * * *' # cada hora, todos los días
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  listen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -r requirements.txt
+
+      - run: python main.py listen
+        env:
+          ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
+          ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
+          ML_SELLER_ID: ${{ secrets.ML_SELLER_ID }}
+          ML_REDIRECT_URI: ${{ secrets.ML_REDIRECT_URI }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      - name: Persistir estado y tokens
+        run: |
+          git config user.name "shaffe-ads-bot"
+          git config user.email "bot@shaffe.local"
+          git add memory/state.json memory/ml_tokens.json memory/roas_history.json memory/changes_history.json
+          git diff --cached --quiet || git commit -m "chore: estado tras listen"
+          git push

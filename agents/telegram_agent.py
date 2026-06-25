@@ -1,16 +1,19 @@
 """Agente de notificaciones: reporte semanal por Telegram con botones de aprobación.
 
-Mensajes enviados cada lunes:
+Mensajes enviados cada lunes (o a pedido):
 1. Resumen ejecutivo (sin botones)
 2. Alertas urgentes si las hay (sin botones, se envían inmediatamente al detectarlas)
 3. Alertas informativas CTR/CVR/tier_dividido (sin botones)
 4. Acciones de CAMPAÑAS — mover tier, presupuesto (con botones)
 5. Acciones de STOCK/PROMOS — agregar a promo, pausar (con botones)
-6. Archivo Excel como documento adjunto"""
+6. Archivo Excel como documento adjunto
+
+Comandos por texto que el bot entiende (enviar al chat):
+  "reporte" / "info" / "pasame la info" / "dame el reporte"  → dispara collect
+  "research" / "tendencias"                                   → dispara research"""
 from __future__ import annotations
 
 import os
-import time
 
 import requests
 
@@ -201,18 +204,26 @@ class TelegramAgent:
         return f"❔ *{nombre_e}*: {tipo}"
 
     # ------------------------------------------------------------------ #
-    # Aprobaciones
+    # Drain unificado: botones + mensajes de texto
     # ------------------------------------------------------------------ #
-    def obtener_aprobaciones(
-        self, acciones: list, run_id: str = "", offset: int | None = None
-    ) -> tuple[dict, int | None]:
-        """Drena callbacks pendientes (non-blocking, timeout=0).
-        Solo acepta callbacks cuyo run_id coincida con el de la corrida actual.
-        Devuelve (decisiones, nuevo_offset).
-        Persistir el offset en state.json para no re-procesar updates anteriores."""
-        decisiones: dict = {}
+    def drenar_updates(
+        self, run_id: str = "", offset: int | None = None
+    ) -> tuple[dict, list[str], int | None]:
+        """Drena TODOS los updates pendientes de Telegram (non-blocking).
 
-        params: dict = {"timeout": 0, "allowed_updates": ["callback_query"]}
+        Procesa en un solo pase:
+          - callback_query → decisiones de aprobación de botones
+          - message.text   → comandos de texto ("reporte", "research", etc.)
+
+        Devuelve: (decisiones, comandos, nuevo_offset)
+          decisiones: {idx_accion: True/False}
+          comandos:   lista de strings "collect" | "research" (puede estar vacía)
+          nuevo_offset: persistir en state.json para no re-procesar
+        """
+        decisiones: dict = {}
+        comandos: list[str] = []
+
+        params: dict = {"timeout": 0}
         if offset is not None:
             params["offset"] = offset
 
@@ -222,33 +233,58 @@ class TelegramAgent:
         new_offset = offset
         for update in resp.json().get("result", []):
             new_offset = update["update_id"] + 1
+
+            # --- botones ---
             callback = update.get("callback_query")
-            if not callback:
-                continue
-            data = callback["data"]
-            parts = data.split(":")
-
-            # Formato con run_id: "aprobar:RUN_ID:INDEX" (3 partes)
-            # Formato legacy sin run_id: "aprobar:INDEX" (2 partes)
-            if len(parts) == 3:
-                accion_str, cb_run_id, idx_str = parts
-                if run_id and cb_run_id != run_id:
-                    # Callback de una corrida anterior — avisar y descartar
-                    self._responder_callback(callback["id"], "⚠️ Acción vieja, volvé a presionar en el mensaje de hoy")
+            if callback:
+                data = callback["data"]
+                parts = data.split(":")
+                if len(parts) == 3:
+                    accion_str, cb_run_id, idx_str = parts
+                    if run_id and cb_run_id != run_id:
+                        self._responder_callback(
+                            callback["id"],
+                            "⚠️ Acción de una corrida anterior — presioná el botón en el mensaje de hoy",
+                        )
+                        continue
+                elif len(parts) == 2:
+                    accion_str, idx_str = parts
+                else:
                     continue
-            elif len(parts) == 2:
-                accion_str, idx_str = parts
-            else:
+                try:
+                    idx = int(idx_str)
+                    decisiones[idx] = accion_str == "aprobar"
+                    self._responder_callback(callback["id"])
+                except (ValueError, KeyError):
+                    pass
                 continue
 
-            try:
-                idx = int(idx_str)
-                decisiones[idx] = accion_str == "aprobar"
-                self._responder_callback(callback["id"])
-            except (ValueError, KeyError):
-                pass
+            # --- mensajes de texto ---
+            message = update.get("message", {})
+            texto = (message.get("text") or "").strip()
+            if not texto:
+                continue
+            chat_id_msg = str(message.get("chat", {}).get("id", ""))
+            if chat_id_msg != self.chat_id:
+                continue  # solo procesar mensajes del chat autorizado
+            comando = self._detectar_comando(texto)
+            if comando:
+                comandos.append(comando)
 
-        return decisiones, new_offset
+        return decisiones, comandos, new_offset
+
+    def _detectar_comando(self, texto: str) -> str | None:
+        """Detecta si el texto es un comando para el agente."""
+        t = texto.lower()
+        collect_kw = {"reporte", "info", "pasame", "dame", "collect", "análisis", "analisis", "ejecuta", "corre"}
+        research_kw = {"research", "tendencias", "oportunidades"}
+        for kw in collect_kw:
+            if kw in t:
+                return "collect"
+        for kw in research_kw:
+            if kw in t:
+                return "research"
+        return None
 
     def _responder_callback(self, callback_query_id: str, texto: str = "") -> None:
         payload: dict = {"callback_query_id": callback_query_id}
