@@ -35,4 +35,5 @@ jobs:
           git config user.email "bot@shaffe.local"
           git add memory/ml_tokens.json
           git diff --cached --quiet || git commit -m "chore: tokens tras research mensual"
+          git pull --rebase origin main
           git push
