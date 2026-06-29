@@ -40,8 +40,8 @@ ROAS_PLATA_A_ORO     = 6.5   # ROAS mínimo sostenido para subir a oro (todos lo
 ROAS_DEGRADAR_ORO    = 5.5   # en oro: si ROAS < 5.5 sostenido → bajar a plata
 ROAS_DEGRADAR_PLATA  = 4.0   # en plata: si ROAS < 4.0 sostenido → sacar de ads
 
-DIAS_SOSTENIDO_SUBIR = 3     # días consecutivos de ROAS bueno para confirmar subida
-DIAS_CAIDA_BAJAR     = 3     # días consecutivos de ROAS malo para confirmar bajada
+DIAS_SOSTENIDO_SUBIR = 1     # collects consecutivos con ROAS bueno para confirmar subida
+DIAS_CAIDA_BAJAR     = 1     # collects consecutivos con ROAS malo para confirmar bajada
 DIAS_SIN_TOCAR_ORO   = 15    # días mínimos sin ajustes tras confirmar producto en Oro
 HORAS_GRACIA_NUEVA_PUB = 48  # horas de indexación orgánica antes de entrar a Ads
 
