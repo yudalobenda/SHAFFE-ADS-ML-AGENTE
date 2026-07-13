@@ -33,11 +33,18 @@ class Analyst:
             "alertas": alertas,
         }
 
-    def decidir_movimiento_tier(self, grupo_id, nombre_campania: str, historial_roas: list, dias_en_oro: int = 0) -> dict | None:
+    def decidir_movimiento_tier(
+        self,
+        grupo_id,
+        nombre_campania: str,
+        historial_roas: list,
+        dias_en_oro: int = 0,
+        dias_en_tier_actual: int = 999,
+    ) -> dict | None:
         if self._tiene_aprendizaje_bloqueante(grupo_id, "subir_tier") or self._tiene_aprendizaje_bloqueante(grupo_id, "bajar_tier"):
             return None
 
-        destino = reglas.evaluar_movimiento_tier(nombre_campania, historial_roas, dias_en_oro)
+        destino = reglas.evaluar_movimiento_tier(nombre_campania, historial_roas, dias_en_oro, dias_en_tier_actual)
         if destino is None or destino == nombre_campania:
             return None
 

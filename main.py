@@ -144,6 +144,18 @@ def _calcular_dias_en_oro(fecha_entrada_oro: dict, clave: str) -> int:
         return 999
 
 
+def _calcular_dias_en_tier(fecha_entrada_campania: dict, clave: str) -> int:
+    """Días transcurridos desde que el producto entró a su tier actual.
+    Devuelve 999 si no hay registro (producto rastreado antes de esta regla → no bloquear)."""
+    fecha_str = fecha_entrada_campania.get(clave)
+    if not fecha_str:
+        return 999
+    try:
+        return (date.today() - date.fromisoformat(fecha_str)).days
+    except ValueError:
+        return 999
+
+
 def modo_collect() -> None:
     load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 
@@ -159,6 +171,7 @@ def modo_collect() -> None:
         raise RuntimeError("Falta advertiser_id o site_id en memory/campaign_ids.json")
 
     fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
+    fecha_entrada_campania: dict = state.setdefault("fecha_entrada_campania", {})
 
     ml = _crear_ml_client()
     collector = Collector(ml, site_id, advertiser_id)
@@ -232,8 +245,23 @@ def modo_collect() -> None:
         unidades_totales, variantes_disponibles = collector.obtener_stock(grupo["item_ids"])
         poco_stock = reglas.es_poco_stock(unidades_totales, variantes_disponibles)
 
+        gasto = grupo["metricas"].get("cost", 0.0)
+        tiene_presupuesto = reglas.tiene_presupuesto_real(gasto, analisis["impresiones"])
+
         dias_en_oro = _calcular_dias_en_oro(fecha_entrada_oro, str(family_id))
-        decision = analyst.decidir_movimiento_tier(family_id, nombre_campania_actual, serie_roas, dias_en_oro)
+        dias_en_tier_actual = _calcular_dias_en_tier(fecha_entrada_campania, str(family_id))
+
+        # Solo evaluar movimiento de tier si ML le asignó presupuesto real a la publicación.
+        # El presupuesto es de la campaña completa; si otras publicaciones lo consumieron,
+        # esta queda sin datos válidos aunque la campaña haya gastado.
+        if not tiene_presupuesto:
+            print(f"  [sin presupuesto real] {grupo['family_name']}: ${gasto:.0f} ARS gastados, {analisis['impresiones']} impr — sin evaluar movimiento de tier")
+            decision = None
+        else:
+            decision = analyst.decidir_movimiento_tier(
+                family_id, nombre_campania_actual, serie_roas,
+                dias_en_oro, dias_en_tier_actual
+            )
 
         if decision:
             if decision["accion"] == "pausar":
@@ -250,8 +278,8 @@ def modo_collect() -> None:
                     grupo["item_ids"], grupo["family_name"], ticket,
                     decision["tier_origen"], decision["tier_destino"], decision["roas_reciente"],
                 )
-                # Asegurarse de que campania_destino venga del analyst (ya tiene el nombre completo correcto)
                 accion_mover["campania_destino"] = decision["campania_destino"]
+                accion_mover["grupo_id"] = str(family_id)  # necesario para actualizar fecha_entrada_campania en check-approvals
                 if poco_stock and reglas.es_subida_tier(decision["tier_origen"], decision["tier_destino"]):
                     accion_mover["poco_stock"] = True
                 acciones.append(accion_mover)
@@ -456,8 +484,10 @@ def modo_check_approvals() -> None:
 
         hoy = date.today().isoformat()
         fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
+        fecha_entrada_campania: dict = state.setdefault("fecha_entrada_campania", {})
         for accion in aprobadas:
-            if accion.get("tipo") == "mover_tier":
+            tipo = accion.get("tipo")
+            if tipo == "mover_tier":
                 changes_history.append({
                     "fecha": hoy,
                     "mla": accion["item_ids"][0] if accion["item_ids"] else "",
@@ -469,11 +499,19 @@ def modo_check_approvals() -> None:
                     "tier_origen": accion.get("tier_origen", ""),
                     "tier_destino": accion.get("tier_destino", ""),
                 })
+                # Registrar cuándo entró al nuevo tier (para la regla de tiempo mínimo en tier)
+                grupo_key = str(accion.get("grupo_id", accion["item_ids"][0] if accion["item_ids"] else ""))
+                fecha_entrada_campania[grupo_key] = hoy
                 if accion.get("tier_destino") == "oro":
                     for item_id in accion.get("item_ids", []):
                         fecha_entrada_oro[item_id] = hoy
                     if "grupo_id" in accion:
                         fecha_entrada_oro[str(accion["grupo_id"])] = hoy
+            elif tipo == "agregar_a_testeo":
+                # También registrar la fecha de entrada al primer tier
+                grupo_key = str(accion["item_ids"][0] if accion.get("item_ids") else "")
+                if grupo_key:
+                    fecha_entrada_campania[grupo_key] = hoy
 
         _guardar_json("changes_history.json", changes_history)
         print(f"Ejecutadas {len(resultados)} acciones aprobadas.")
@@ -516,8 +554,10 @@ def modo_listen() -> None:
             _guardar_tokens_ml(ml)
             hoy = date.today().isoformat()
             fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
+            fecha_entrada_campania: dict = state.setdefault("fecha_entrada_campania", {})
             for accion in aprobadas:
-                if accion.get("tipo") == "mover_tier":
+                tipo = accion.get("tipo")
+                if tipo == "mover_tier":
                     changes_history.append({
                         "fecha": hoy,
                         "mla": accion["item_ids"][0] if accion["item_ids"] else "",
@@ -529,9 +569,15 @@ def modo_listen() -> None:
                         "tier_origen": accion.get("tier_origen", ""),
                         "tier_destino": accion.get("tier_destino", ""),
                     })
+                    grupo_key = str(accion.get("grupo_id", accion["item_ids"][0] if accion["item_ids"] else ""))
+                    fecha_entrada_campania[grupo_key] = hoy
                     if accion.get("tier_destino") == "oro":
                         for item_id in accion.get("item_ids", []):
                             fecha_entrada_oro[item_id] = hoy
+                elif tipo == "agregar_a_testeo":
+                    grupo_key = str(accion["item_ids"][0] if accion.get("item_ids") else "")
+                    if grupo_key:
+                        fecha_entrada_campania[grupo_key] = hoy
             _guardar_json("changes_history.json", changes_history)
             pendientes = [a for i, a in enumerate(acciones) if i not in decisiones]
             state["acciones_pendientes"] = pendientes

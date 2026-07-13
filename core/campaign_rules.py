@@ -45,6 +45,21 @@ DIAS_CAIDA_BAJAR     = 1     # collects consecutivos con ROAS malo para confirma
 DIAS_SIN_TOCAR_ORO   = 15    # días mínimos sin ajustes tras confirmar producto en Oro
 HORAS_GRACIA_NUEVA_PUB = 48  # horas de indexación orgánica antes de entrar a Ads
 
+# Tiempo mínimo en el tier actual antes de poder subir
+# (asegura que el producto consolide orgánico + envíos antes del ascenso)
+DIAS_MIN_EN_TIER_SUBIR        = 7   # días calendario para subida normal
+DIAS_MIN_EN_TIER_SUBIR_RAPIDO = 5   # días si el ROAS es ≥ 2× el objetivo del tier
+ROAS_FACTOR_SUBIDA_RAPIDA     = 2.0 # multiplicador sobre roas_target para habilitar subida rápida
+
+# Presupuesto mínimo recibido para que el ROAS sea una señal válida (ventana de 30 días).
+# En ML Ads el presupuesto es de la campaña completa: si otras publicaciones lo consumen,
+# esta queda sin presupuesto real aunque la campaña tenga plata. El gasto por publicación
+# es la única señal confiable de que ML realmente le asignó recursos.
+# Dato real SHAFFE: el único producto sin ventas tuvo $516 ARS de gasto;
+# el mínimo de los que sí vendieron fue $2.755 ARS → umbral en $2.000.
+GASTO_MIN_EVALUAR       = 2_000  # ARS; si gastó menos que esto, ML no le dio presupuesto real
+IMPRESIONES_MIN_EVALUAR = 500    # respaldo simbólico; en la práctica siempre correlaciona con gasto
+
 # Alerta de caída urgente (fuera del ciclo semanal)
 DIAS_CAIDA_URGENTE = 3  # N días consecutivos cayendo en producto que venía bien
 
@@ -96,7 +111,12 @@ def roas_target_to_acos_target(roas_target: float) -> float:
     return (1 / roas_target) * 100
 
 
-def evaluar_movimiento_tier(nombre_campania_actual: str, historial_roas: list, dias_en_oro: int = 0) -> str | None:
+def evaluar_movimiento_tier(
+    nombre_campania_actual: str,
+    historial_roas: list,
+    dias_en_oro: int = 0,
+    dias_en_tier_actual: int = 999,
+) -> str | None:
     """Evalúa si un producto debe moverse de campaña.
 
     Devuelve:
@@ -106,6 +126,8 @@ def evaluar_movimiento_tier(nombre_campania_actual: str, historial_roas: list, d
 
     historial_roas: ROAS diarios, más reciente al final.
     dias_en_oro: días que lleva el producto en una campaña Oro (para regla de 15 días).
+    dias_en_tier_actual: días en el tier actual; bloquea subidas si no supera el mínimo.
+                         Default 999 = producto rastreado antes de esta regla → no bloquear.
     """
     if not historial_roas:
         return None
@@ -119,26 +141,37 @@ def evaluar_movimiento_tier(nombre_campania_actual: str, historial_roas: list, d
     ultimos_subir = historial_roas[-DIAS_SOSTENIDO_SUBIR:]
     ultimos_bajar = historial_roas[-DIAS_CAIDA_BAJAR:]
 
+    # Días mínimos en el tier actual para permitir subida
+    # Si el ROAS supera 2× el objetivo del tier, se acepta el mínimo reducido
+    roas_actual = historial_roas[-1]
+    roas_obj = roas_target_campania(nombre_campania_actual)
+    dias_min_subir = (
+        DIAS_MIN_EN_TIER_SUBIR_RAPIDO
+        if roas_actual >= roas_obj * ROAS_FACTOR_SUBIDA_RAPIDA
+        else DIAS_MIN_EN_TIER_SUBIR
+    )
+
     if tier_actual == "testeo":
-        # Salto directo a Oro si ROAS ya supera el umbral de Oro
+        if dias_en_tier_actual < dias_min_subir:
+            return None  # aún no consolidó suficiente tiempo en testeo
         if len(ultimos_subir) >= DIAS_SOSTENIDO_SUBIR and all(r >= ROAS_PLATA_A_ORO for r in ultimos_subir):
             return f"oro_{ticket}"
-        # Subida normal a Plata
         if len(ultimos_subir) >= DIAS_SOSTENIDO_SUBIR and all(r > ROAS_TESTEO_A_PLATA for r in ultimos_subir):
             return f"plata_{ticket}"
         return None
 
     if tier_actual == "plata":
-        # Subida a Oro
-        if len(ultimos_subir) >= DIAS_SOSTENIDO_SUBIR and all(r >= ROAS_PLATA_A_ORO for r in ultimos_subir):
-            return f"oro_{ticket}"
-        # Degradación: sacar de ads
+        # Bajada: rápida, no espera tiempo mínimo
         if len(ultimos_bajar) >= DIAS_CAIDA_BAJAR and all(r < ROAS_DEGRADAR_PLATA for r in ultimos_bajar):
             return "pausar"
+        # Subida: requiere tiempo mínimo en plata
+        if dias_en_tier_actual < dias_min_subir:
+            return None
+        if len(ultimos_subir) >= DIAS_SOSTENIDO_SUBIR and all(r >= ROAS_PLATA_A_ORO for r in ultimos_subir):
+            return f"oro_{ticket}"
         return None
 
     if tier_actual == "oro":
-        # Degradación a Plata
         if len(ultimos_bajar) >= DIAS_CAIDA_BAJAR and all(r < ROAS_DEGRADAR_ORO for r in ultimos_bajar):
             return f"plata_{ticket}"
         return None
@@ -192,6 +225,14 @@ def alertas_metricas(impresiones: int, clics: int, conversiones: int, acos: floa
     if acos is not None and acos_max is not None and acos > acos_max:
         alertas.append("acos_alto")
     return alertas
+
+
+def tiene_presupuesto_real(costo: float, impresiones: int) -> bool:
+    """True si ML realmente le asignó presupuesto a esta publicación.
+    El presupuesto es de la campaña: si otras publicaciones lo consumen, esta queda sin
+    recursos aunque la campaña tenga plata. Con gasto < $2.000 ARS en 30 días, ML no le
+    dio presupuesto real y el ROAS no es una señal válida para decidir movimientos de tier."""
+    return costo >= GASTO_MIN_EVALUAR or impresiones >= IMPRESIONES_MIN_EVALUAR
 
 
 def es_poco_stock(unidades_totales: int, variantes_disponibles: int) -> bool:
