@@ -1,0 +1,254 @@
+[
+  {
+    "campania": "oro_alto",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 14609,
+        "roas": 9.11
+      },
+      {
+        "gasto_dia": 13359,
+        "roas": 7.52
+      },
+      {
+        "gasto_dia": 4275,
+        "roas": 2.96
+      },
+      {
+        "gasto_dia": 3457,
+        "roas": 14.24
+      }
+    ],
+    "roas_objetivo": 7.5,
+    "diagnostico": "saturacion",
+    "gasto_dia_actual": 14609,
+    "gasto_dia_sugerido": 37000,
+    "delta_pct": 153,
+    "motivo": "Gasto casi se cuadruplico en el mes ($12.5k -> $49.5k/dia) y el ROAS de la semana mas reciente (4.98x) es el peor de las 4 - muy por debajo del objetivo (7.5x). Cuando gastaba $36k/dia (hace 1-2 semanas) el ROAS rondaba 7.8x, en objetivo. Volver a esa zona en vez de seguir escalando."
+  },
+  {
+    "campania": "oro_medio",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 0,
+        "roas": 0
+      },
+      {
+        "gasto_dia": 2413,
+        "roas": 0.0
+      },
+      {
+        "gasto_dia": 22884,
+        "roas": 3.03
+      },
+      {
+        "gasto_dia": 40003,
+        "roas": 4.19
+      }
+    ],
+    "roas_objetivo": 6.5,
+    "diagnostico": "en_cero",
+    "gasto_dia_actual": 0,
+    "gasto_dia_sugerido": 0,
+    "delta_pct": null,
+    "motivo": "Ya la llevaste a $0/dia esta ultima semana - coincide con que el ROAS venia cayendo semana a semana (3.98x -> 2.87x -> 0.66x -> 0x). No hace falta bajar nada, ya esta hecho. Si se reactiva, hacerlo solo con los productos que sí rinden (Remera Lisa una vez reactivada, Pantalon Jogging ya bajado a Plata)."
+  },
+  {
+    "campania": "oro_bajo",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 44218,
+        "roas": 5.46
+      },
+      {
+        "gasto_dia": 36609,
+        "roas": 6.23
+      },
+      {
+        "gasto_dia": 32263,
+        "roas": 7.86
+      },
+      {
+        "gasto_dia": 18462,
+        "roas": 7.11
+      }
+    ],
+    "roas_objetivo": 8.0,
+    "diagnostico": "estable",
+    "gasto_dia_actual": 44218,
+    "gasto_dia_sugerido": 15000,
+    "delta_pct": -66,
+    "motivo": "Gasto y ROAS volatiles pero sin tendencia clara (7.00x / 4.69x / 6.49x / 5.83x). La semana mas reciente rinde bien (7.00x cerca del objetivo 8.0x) con gasto moderado. Mantener el nivel actual, sin necesidad de cambios grandes."
+  },
+  {
+    "campania": "plata_alto",
+    "vacia": true,
+    "semanas": [
+      {
+        "gasto_dia": 0,
+        "roas": 0
+      },
+      {
+        "gasto_dia": 0,
+        "roas": 0
+      },
+      {
+        "gasto_dia": 0,
+        "roas": 0
+      },
+      {
+        "gasto_dia": 0,
+        "roas": 0
+      }
+    ],
+    "roas_objetivo": 4.0,
+    "diagnostico": "vacia",
+    "gasto_dia_actual": 0,
+    "gasto_dia_sugerido": 4000,
+    "delta_pct": null,
+    "motivo": "Sin actividad. Reservar presupuesto de arranque cuando entre el primer producto (bajada desde Oro o subida desde Testeo)."
+  },
+  {
+    "campania": "plata_medio",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 65721,
+        "roas": 4.66
+      },
+      {
+        "gasto_dia": 87514,
+        "roas": 3.46
+      },
+      {
+        "gasto_dia": 47632,
+        "roas": 8.81
+      },
+      {
+        "gasto_dia": 36518,
+        "roas": 5.72
+      }
+    ],
+    "roas_objetivo": 4.0,
+    "diagnostico": "saturacion_fuerte",
+    "gasto_dia_actual": 65721,
+    "gasto_dia_sugerido": 48000,
+    "delta_pct": -27,
+    "motivo": "Desglosado por publicacion (no solo la campana): Campera Guata es el 80% del gasto y ES el problema real de saturacion propia - paso de $21k/dia (ROAS 5.39x) a $45k/dia (ROAS 9.81x, su pico) a $70-82k/dia (ROAS cayo a 3.5-3.8x). Los otros 2 productos de esta campana ya estan recomendados para pausar (ver tabla de campana) y suman poco gasto (19% combinado) pero uno de ellos (Pantalon Babucha Friza) tambien se desplomo esta semana a 0.82x. Importante: bajar el presupuesto de la campana Y pausar esos 2 productos tienen que hacerse JUNTOS - si solo se pausan los 2 flojos y se deja el presupuesto en $90k, ML va a concentrar todo ese monto en Campera Guata (ya saturada) y probablemente empeora mas su ROAS en vez de mejorarlo. El objetivo ($48k) apunta a la zona donde Campera Guata sola tuvo su mejor ROAS (~$45k/dia), dejando algo de margen para el producto que baja desde Oro Medio (Pantalon Jogging Babucha)."
+  },
+  {
+    "campania": "plata_bajo",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 8490,
+        "roas": 4.36
+      },
+      {
+        "gasto_dia": 20462,
+        "roas": 4.2
+      },
+      {
+        "gasto_dia": 27393,
+        "roas": 5.6
+      },
+      {
+        "gasto_dia": 20039,
+        "roas": 3.54
+      }
+    ],
+    "roas_objetivo": 4.0,
+    "diagnostico": "escalar",
+    "gasto_dia_actual": 8490,
+    "gasto_dia_sugerido": 42000,
+    "delta_pct": 395,
+    "motivo": "Gasto estable (~$34-35k/dia ultimas 3 semanas) con ROAS consistentemente arriba del objetivo (4.5x-5.9x, siempre por encima de 4.0x), sin señales de saturacion. Es la campana con mas margen real para escalar sin resignar eficiencia."
+  },
+  {
+    "campania": "testeo_alto",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 23431,
+        "roas": 2.6
+      },
+      {
+        "gasto_dia": 17358,
+        "roas": 2.05
+      },
+      {
+        "gasto_dia": 10593,
+        "roas": 2.67
+      },
+      {
+        "gasto_dia": 7180,
+        "roas": 7.69
+      }
+    ],
+    "roas_objetivo": 3.0,
+    "diagnostico": "techo",
+    "gasto_dia_actual": 23431,
+    "gasto_dia_sugerido": 28000,
+    "delta_pct": 19,
+    "motivo": "Rendimientos decrecientes claros: con $13k/dia el ROAS era 6.18x, al subir a $28-29k/dia bajo a ~3x (todavia dentro de lo tolerado en Testeo, pero ya en el piso). Ya toco su techo de eficiencia actual - mantener el nivel, no seguir escalando."
+  },
+  {
+    "campania": "testeo_medio",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 27833,
+        "roas": 1.18
+      },
+      {
+        "gasto_dia": 27300,
+        "roas": 3.31
+      },
+      {
+        "gasto_dia": 28872,
+        "roas": 3.98
+      },
+      {
+        "gasto_dia": 23294,
+        "roas": 4.09
+      }
+    ],
+    "roas_objetivo": 3.0,
+    "diagnostico": "alerta",
+    "gasto_dia_actual": 27833,
+    "gasto_dia_sugerido": 22000,
+    "delta_pct": -21,
+    "motivo": "Senal de alerta: el ROAS se desplomo a 1.37x en la ultima semana justo cuando el gasto fue el mas alto del mes ($32.6k/dia) - las 3 semanas anteriores rindio 3.86x-4.38x, sano. Antes de subir mas presupuesto, revisar que cambio esta semana (¿entro algun producto flojo? ¿se reactivo algo con mala ficha?). Mientras tanto, volver al nivel de las semanas sanas."
+  },
+  {
+    "campania": "testeo_bajo",
+    "vacia": false,
+    "semanas": [
+      {
+        "gasto_dia": 86842,
+        "roas": 3.28
+      },
+      {
+        "gasto_dia": 47574,
+        "roas": 2.51
+      },
+      {
+        "gasto_dia": 18450,
+        "roas": 4.11
+      },
+      {
+        "gasto_dia": 27874,
+        "roas": 2.84
+      }
+    ],
+    "roas_objetivo": 3.0,
+    "diagnostico": "frenar_ritmo",
+    "gasto_dia_actual": 86842,
+    "gasto_dia_sugerido": 60000,
+    "delta_pct": -31,
+    "motivo": "El gasto se triplico en el mes ($28.5k -> $93.6k/dia). El pico de eficiencia fue con $34k/dia (ROAS 6.66x); al escalar tan fuerte el ROAS bajo a 3.68x - todavia arriba del piso tolerado (3.0x) pero con la tendencia claramente a la baja. No es una alarma roja, pero frenar el ritmo de escalada antes de seguir multiplicando el gasto."
+  }
+]

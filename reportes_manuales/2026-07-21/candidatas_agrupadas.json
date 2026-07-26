@@ -1,0 +1,431 @@
+[
+  {
+    "nombre": "Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 113,
+    "sold_total_historico": 121,
+    "precio_max": 36825,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Calza Leggings Mujer Lisa Lycra Deportiva Running Gym Shaffe",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 24,
+    "sold_total_historico": 24,
+    "precio_max": 25000,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle",
+    "n_skus_activos_sin_ads": 3,
+    "stock_total": 141,
+    "sold_total_historico": 22,
+    "precio_max": 19701,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Beige Rayas",
+    "n_skus_activos_sin_ads": 3,
+    "stock_total": 5,
+    "sold_total_historico": 13,
+    "precio_max": 30492,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Camisa Hombre De Vestir Entallada Manga Larga Lisa Shaffe Co",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 235,
+    "sold_total_historico": 12,
+    "precio_max": 58950,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Negro Rayas",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 3,
+    "sold_total_historico": 11,
+    "precio_max": 30492,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Remera Hombre Algodón Waffle Manga Corta Shaffe Bordó Waffle",
+    "n_skus_activos_sin_ads": 4,
+    "stock_total": 39,
+    "sold_total_historico": 10,
+    "precio_max": 19900,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Remera Hombre Algodón Waffle Manga Corta Shaffe Verde Militar Waffle",
+    "n_skus_activos_sin_ads": 4,
+    "stock_total": 33,
+    "sold_total_historico": 8,
+    "precio_max": 19900,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo M Negro",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 2,
+    "sold_total_historico": 7,
+    "precio_max": 41000,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Verde Rayas",
+    "n_skus_activos_sin_ads": 3,
+    "stock_total": 7,
+    "sold_total_historico": 7,
+    "precio_max": 30492,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo M Blanco Letras",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 5,
+    "sold_total_historico": 6,
+    "precio_max": 41000,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa Xl Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 63,
+    "sold_total_historico": 6,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo S Bordó",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 3,
+    "sold_total_historico": 4,
+    "precio_max": 41000,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo L Bordó",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 1,
+    "sold_total_historico": 3,
+    "precio_max": 45500,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo M Bordó",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 8,
+    "sold_total_historico": 3,
+    "precio_max": 41000,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo S Negro",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 4,
+    "sold_total_historico": 3,
+    "precio_max": 41000,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo Xl Bordó",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 1,
+    "sold_total_historico": 2,
+    "precio_max": 41000,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa Xl Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 7,
+    "sold_total_historico": 2,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Negro Lisa S Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 148,
+    "sold_total_historico": 2,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Camisa Lino Mujer Algodon Manga Corta Oversize Clasica Negro Rayas",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 1,
+    "sold_total_historico": 2,
+    "precio_max": 29700,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Remera Hombre Algodón Waffle Manga Corta Shaffe Gris Waffle",
+    "n_skus_activos_sin_ads": 3,
+    "stock_total": 25,
+    "sold_total_historico": 2,
+    "precio_max": 19900,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_pro"
+    ]
+  },
+  {
+    "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo S Blanco Letras",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 4,
+    "sold_total_historico": 1,
+    "precio_max": 41000,
+    "ticket": "alto",
+    "campania_recomendada": "testeo_alto",
+    "envio_gratis": true,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa Xl Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 2,
+    "sold_total_historico": 1,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Negro Lisa M Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 83,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa S Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 95,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa S Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 32,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa M Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 71,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa L Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 81,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa M Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 3,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa M Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 73,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa L Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 10,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa S Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 33,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  },
+  {
+    "nombre": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa L Algodón",
+    "n_skus_activos_sin_ads": 1,
+    "stock_total": 7,
+    "sold_total_historico": 0,
+    "precio_max": 22500,
+    "ticket": "medio",
+    "campania_recomendada": "testeo_medio",
+    "envio_gratis": false,
+    "listing_types": [
+      "gold_special"
+    ]
+  }
+]

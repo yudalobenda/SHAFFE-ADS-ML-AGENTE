@@ -1,0 +1,150 @@
+{
+  "W1_0-7d": {
+    "dias": 7,
+    "campanias": {
+      "testeo_bajo": {
+        "cost": 607895.6599999999,
+        "ingresos": 1992453.98
+      },
+      "testeo_alto": {
+        "cost": 164017.03999999998,
+        "ingresos": 426852.0
+      },
+      "plata_bajo": {
+        "cost": 59432.399999999994,
+        "ingresos": 259214.0
+      },
+      "plata_medio": {
+        "cost": 460050.04,
+        "ingresos": 2142242.7199999997
+      },
+      "oro_bajo": {
+        "cost": 309529.24,
+        "ingresos": 1690441.3199999998
+      },
+      "testeo_medio": {
+        "cost": 194828.15,
+        "ingresos": 230379.89
+      },
+      "oro_medio": {
+        "cost": 0.0,
+        "ingresos": 0.0
+      },
+      "oro_alto": {
+        "cost": 102262.65000000002,
+        "ingresos": 931424.9
+      }
+    }
+  },
+  "W2_7-14d": {
+    "dias": 7,
+    "campanias": {
+      "testeo_bajo": {
+        "cost": 333016.32,
+        "ingresos": 835635.1799999999
+      },
+      "testeo_alto": {
+        "cost": 121509.03,
+        "ingresos": 249400.0
+      },
+      "plata_bajo": {
+        "cost": 143231.55,
+        "ingresos": 601600.0
+      },
+      "plata_medio": {
+        "cost": 612599.44,
+        "ingresos": 2119055.0
+      },
+      "oro_bajo": {
+        "cost": 256262.25,
+        "ingresos": 1595289.24
+      },
+      "testeo_medio": {
+        "cost": 191096.94999999995,
+        "ingresos": 631598.3300000001
+      },
+      "oro_medio": {
+        "cost": 16892.010000000002,
+        "ingresos": 0.0
+      },
+      "oro_alto": {
+        "cost": 93515.88,
+        "ingresos": 703046.72
+      }
+    }
+  },
+  "W3_14-21d": {
+    "dias": 7,
+    "campanias": {
+      "testeo_bajo": {
+        "cost": 129147.91,
+        "ingresos": 531130.2
+      },
+      "testeo_alto": {
+        "cost": 74153.78,
+        "ingresos": 198000.0
+      },
+      "plata_bajo": {
+        "cost": 191751.85,
+        "ingresos": 1074282.38
+      },
+      "plata_medio": {
+        "cost": 333426.8,
+        "ingresos": 2937630.0
+      },
+      "oro_bajo": {
+        "cost": 225842.71000000002,
+        "ingresos": 1775669.2300000002
+      },
+      "testeo_medio": {
+        "cost": 202100.68000000002,
+        "ingresos": 803438.97
+      },
+      "oro_medio": {
+        "cost": 160184.82,
+        "ingresos": 485770.95999999996
+      },
+      "oro_alto": {
+        "cost": 29928.02,
+        "ingresos": 88500.0
+      }
+    }
+  },
+  "W4_21-30d": {
+    "dias": 9,
+    "campanias": {
+      "testeo_bajo": {
+        "cost": 250866.69999999998,
+        "ingresos": 711705.0
+      },
+      "testeo_alto": {
+        "cost": 64621.07000000001,
+        "ingresos": 496980.0
+      },
+      "plata_bajo": {
+        "cost": 180353.86000000002,
+        "ingresos": 639045.0
+      },
+      "plata_medio": {
+        "cost": 328661.85,
+        "ingresos": 1881258.15
+      },
+      "oro_bajo": {
+        "cost": 166158.72999999998,
+        "ingresos": 1181452.64
+      },
+      "testeo_medio": {
+        "cost": 209646.89,
+        "ingresos": 857456.5399999999
+      },
+      "oro_medio": {
+        "cost": 360024.14,
+        "ingresos": 1508326.3399999996
+      },
+      "oro_alto": {
+        "cost": 31111.4,
+        "ingresos": 442895.58
+      }
+    }
+  }
+}

@@ -4,3 +4,4 @@ __pycache__/
 logs/*.json
 logs/*.xlsx
 !logs/.gitkeep
+analisis_manual_output.json

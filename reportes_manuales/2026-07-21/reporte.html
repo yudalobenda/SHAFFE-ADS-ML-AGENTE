@@ -1,0 +1,1645 @@
+<title>Reporte Ads SHAFFE &middot; 2026-07-21</title>
+<style>
+:root {
+  --bg: #EEF0F2;
+  --surface: #FFFFFF;
+  --surface-2: #F6F7F8;
+  --border: #DCE1E6;
+  --ink: #1A2024;
+  --ink-muted: #5C6570;
+  --accent: #2B4570;
+  --accent-soft: #E4E9F2;
+  --good: #24703F;
+  --good-soft: #E3F1E8;
+  --warn: #96590A;
+  --warn-soft: #FBEEDA;
+  --bad: #A02E27;
+  --bad-soft: #F8E4E2;
+  --info: #5D4494;
+  --info-soft: #EFE8F7;
+  --shadow: 0 1px 2px rgba(20,24,28,0.06), 0 4px 16px rgba(20,24,28,0.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151A;
+    --surface: #1B1F26;
+    --surface-2: #20252D;
+    --border: #2B313B;
+    --ink: #E9ECEF;
+    --ink-muted: #9AA3AD;
+    --accent: #93A9D6;
+    --accent-soft: #26314A;
+    --good: #5FBE80;
+    --good-soft: #1C3324;
+    --warn: #E3AC4E;
+    --warn-soft: #3A2E17;
+    --bad: #E48078;
+    --bad-soft: #3A211F;
+    --info: #B39EDB;
+    --info-soft: #2B2440;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151A; --surface: #1B1F26; --surface-2: #20252D; --border: #2B313B;
+  --ink: #E9ECEF; --ink-muted: #9AA3AD; --accent: #93A9D6; --accent-soft: #26314A;
+  --good: #5FBE80; --good-soft: #1C3324; --warn: #E3AC4E; --warn-soft: #3A2E17;
+  --bad: #E48078; --bad-soft: #3A211F; --info: #B39EDB; --info-soft: #2B2440;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+}
+:root[data-theme="light"] {
+  --bg: #EEF0F2; --surface: #FFFFFF; --surface-2: #F6F7F8; --border: #DCE1E6;
+  --ink: #1A2024; --ink-muted: #5C6570; --accent: #2B4570; --accent-soft: #E4E9F2;
+  --good: #24703F; --good-soft: #E3F1E8; --warn: #96590A; --warn-soft: #FBEEDA;
+  --bad: #A02E27; --bad-soft: #F8E4E2; --info: #5D4494; --info-soft: #EFE8F7;
+  --shadow: 0 1px 2px rgba(20,24,28,0.06), 0 4px 16px rgba(20,24,28,0.05);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 40px 20px 80px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; }
+
+header.page-head {
+  margin-bottom: 32px;
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+h1 {
+  font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.page-sub {
+  color: var(--ink-muted);
+  font-size: 15px;
+  max-width: 62ch;
+}
+
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.kpi-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+.kpi-val {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.kpi-val.good { color: var(--good); }
+.kpi-val.bad { color: var(--bad); }
+
+.callout {
+  background: var(--warn-soft);
+  border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--border));
+  border-left: 4px solid var(--warn);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 24px 0 32px;
+}
+.callout-title {
+  font-weight: 700;
+  color: var(--warn);
+  margin-bottom: 6px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.callout p { margin: 0; color: var(--ink); max-width: 76ch; }
+.callout p + p { margin-top: 8px; }
+
+nav.jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 36px;
+}
+nav.jump a {
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+nav.jump a:hover { border-color: var(--accent); }
+
+h2.section-title {
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-size: 22px;
+  margin: 48px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+.camp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  scroll-margin-top: 20px;
+}
+.camp-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.camp-head h3 {
+  font-family: Georgia, "Iowan Old Style", serif;
+  margin: 0;
+  font-size: 19px;
+}
+.camp-sub {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+.camp-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.empty-msg {
+  padding: 18px 20px;
+  color: var(--ink-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; }
+thead th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+th.num, td.num { text-align: right; }
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--surface-2); }
+td { padding: 12px 16px; vertical-align: top; }
+td.num {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-size: 13.5px;
+}
+.roas-val { font-weight: 600; }
+.roas-obj { display: block; color: var(--ink-muted); font-size: 11px; }
+.col-prod { min-width: 220px; }
+.prod-name { font-weight: 600; }
+.prod-meta { font-size: 12px; color: var(--ink-muted); margin-top: 3px; }
+.col-nota { color: var(--ink-muted); font-size: 13px; min-width: 280px; max-width: 380px; }
+.stock-warn {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 10px;
+  color: var(--warn);
+  font-family: -apple-system, sans-serif;
+  text-transform: uppercase;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.badge-icon { font-size: 12px; }
+.badge-good { background: var(--good-soft); color: var(--good); }
+.badge-bad { background: var(--bad-soft); color: var(--bad); }
+.badge-warn { background: var(--warn-soft); color: var(--warn); }
+.badge-neutral { background: var(--surface-2); color: var(--ink-muted); }
+.badge-info { background: var(--info-soft); color: var(--info); }
+
+.season-tag {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.season-invierno { background: var(--info-soft); color: var(--info); }
+.season-calida { background: var(--warn-soft); color: var(--warn); }
+.season-todo_ano { background: var(--surface-2); color: var(--ink-muted); }
+
+.camp-budget {
+  padding: 10px 20px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.budget-chip {
+  font-size: 12.5px;
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+.budget-good { color: var(--good); }
+.budget-bad { color: var(--bad); }
+.budget-neutral { color: var(--ink-muted); }
+.cand-crossref {
+  margin: 0;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  background: var(--info-soft);
+  border-bottom: 1px solid var(--border);
+}
+.cand-crossref a { color: var(--info); }
+
+.week-trend {
+  display: flex;
+  gap: 10px;
+}
+.week-cell {
+  text-align: center;
+  min-width: 62px;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+.week-cell:last-child { background: var(--accent-soft); }
+.week-g {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 600;
+}
+.week-r {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.week-lbl {
+  font-size: 9.5px;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+.budget-badge-wrap { display: block; margin-top: 6px; }
+
+footer {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--ink-muted);
+  font-size: 12.5px;
+}
+</style>
+
+<div class="wrap">
+  <header class="page-head">
+    <div class="eyebrow">SHAFFE &middot; MercadoLibre Ads &middot; Reporte manual</div>
+    <h1>Estado de campanas &mdash; 2026-07-21</h1>
+    <p class="page-sub">Analisis campana por campana de las 9 campanas activas (Oro / Plata / Testeo &times; Alto / Medio / Bajo), con lo que cambiar, sumar y sacar de cada una, mas las publicaciones fuera de Ads que conviene incorporar. Ventana de metricas: ultimos 30 dias.</p>
+  </header>
+
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-label">Productos activos</div><div class="kpi-val">34</div></div>
+    <div class="kpi"><div class="kpi-label">Gasto 30d</div><div class="kpi-val">$5.855.134</div></div>
+    <div class="kpi"><div class="kpi-label">Ingresos atrib. 30d</div><div class="kpi-val good">$26.910.633</div></div>
+    <div class="kpi"><div class="kpi-label">ROAS de cuenta</div><div class="kpi-val">4.60x</div></div>
+    <div class="kpi"><div class="kpi-label">Unidades vendidas</div><div class="kpi-val">1114</div></div>
+    <div class="kpi"><div class="kpi-label">Subir de tier</div><div class="kpi-val good">5</div></div>
+    <div class="kpi"><div class="kpi-label">Bajar / pausar</div><div class="kpi-val bad">2</div></div>
+    <div class="kpi"><div class="kpi-label">Presupuesto total sugerido</div><div class="kpi-val bad">-7.1%</div></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Contexto: fin de temporada de invierno</div>
+    <p>Las recomendaciones de abajo ya tienen en cuenta que estamos saliendo del invierno. Donde la regla automatica dice "subir de tier" o "escalar presupuesto" en una prenda 100% invernal (guata, frisa, corderito, termica, polar) con poco stock, la marco para <strong>liquidar con promo en vez de reinvertir</strong> &mdash; no tiene sentido comprometer presupuesto de Oro/Plata en algo que se agota en semanas y no se repone hasta el ano que viene.</p>
+    <p>Del otro lado, entre las publicaciones sin Ads aparecen bermudas y camisas de lino con buen stock: son la oportunidad de anticiparse a la proxima temporada calida, y las marco como prioridad alta aunque su historial de ventas todavia sea chico.</p>
+  </div>
+
+  <div class="callout" style="background:var(--info-soft);border-left-color:var(--info);">
+    <div class="callout-title" style="color:var(--info);">Correccion: publicaciones pausadas no son lo mismo que publicaciones con mala ficha</div>
+    <p>De las 35 publicaciones activas en campanas, <strong>4 estan 100% en hold o pausadas</strong> (0 variantes compitiendo) y <strong>18 tienen una mezcla</strong> de talles activos y pausados/hold. Antes esto se me paso por alto y le atribui "0 ventas, mala foto" a productos que en realidad ni siquiera estan corriendo &mdash; ya corregido abajo, y cada fila de las tablas ahora muestra su estado real (Activo / Parcial X de Y / Pausado 100%).</p>
+    <p>Tambien saque la recomendacion de "bajar puja" que habia puesto en un producto: en ML Ads el roas_target y el budget son de toda la campana, no existe un ajuste por publicacion individual (lo unico que se puede hacer por item es sacarlo de la campana).</p>
+    <p><strong>Correccion adicional (variantes):</strong> el catalogo de SHAFFE tiene dos formatos distintos - la mayoria de los productos publican cada talle/color como un item_id separado, pero algunos (confirmado en Pantalon De Vestir Gabardina Chino y Jogger Basico) cargan las variantes DENTRO de un mismo item_id usando el campo nativo de ML "variations". El pipeline actual solo cuenta item_ids, no mira adentro de "variations" - eso hizo que marcara esos productos como "1 sola variante" cuando en realidad tienen 21 y 8 combinaciones de talle/color respectivamente, con stock sano. Se corrigieron a mano estos 2 casos verificando el detalle real de cada item; no se descarta que haya mas productos con este mismo formato sin auditar todavia.</p>
+  </div>
+
+  <nav class="jump">
+    <a href="#presupuesto">Presupuesto</a>
+    <a href="#ctr">CTR con potencial</a>
+    <a href="#candidatas">Sumar a Ads</a>
+    <a href="#oro_alto">Oro · Alto</a><a href="#oro_medio">Oro · Medio</a><a href="#oro_bajo">Oro · Bajo</a><a href="#plata_alto">Plata · Alto</a><a href="#plata_medio">Plata · Medio</a><a href="#plata_bajo">Plata · Bajo</a><a href="#testeo_alto">Testeo · Alto</a><a href="#testeo_medio">Testeo · Medio</a><a href="#testeo_bajo">Testeo · Bajo</a>
+    <a href="#tier-dividido">Tier dividido</a>
+  </nav>
+
+  <h2 class="section-title" id="presupuesto">Cuanto presupuesto poner en cada campana</h2>
+  <p class="page-sub" style="margin-bottom:16px;">No pude leer el presupuesto configurado en ML porque el endpoint de campanas sigue caido (ver nota al pie), asi que lo estimo por el gasto real. <strong>Corregido a pedido tuyo:</strong> la primera version de esto usaba el gasto de los ultimos 30 dias dividido 30, pero vos fuiste subiendo y bajando presupuesto a mano durante el mes, asi que ese promedio tapaba los cambios. Ahora miro 4 ventanas de ~7 dias (mas reciente a la izquierda de cada celda) para ver la tendencia real de gasto y ROAS, y las uso para diagnosticar: varias campanas muestran saturacion clara (subiste el gasto y el ROAS bajo en la misma proporcion). Total de cuenta esta semana: <strong>$271.144/dia</strong> &rarr; sugerido <strong>$252.000/dia (-7.1%)</strong>.</p>
+  <p class="page-sub" style="margin-bottom:16px;"><strong>Importante:</strong> en campanas donde tambien recomiendo pausar publicaciones (ver tabla de esa campana), el recorte de presupuesto y las pausas se aplican <strong>juntos</strong> - si solo se pausan las publicaciones flojas y el presupuesto de la campana queda igual, ML va a redirigir toda esa plata al producto que sigue activo, empujandolo a un nivel de gasto todavia mas alto (caso real: Plata Medio, ver su nota abajo). Y una aclaracion sobre las publicaciones nuevas: ninguna candidata de la seccion anterior entra directo a una campana de Plata u Oro - por diseño del sistema, todo producto nuevo entra primero a Testeo del ticket que corresponda; lo que sí baja a Plata/Oro en las tablas de abajo son productos que ya estaban en una campana y se mueven de tier.</p>
+  <section class="camp-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Campana</th><th>Evolucion (gasto/dia y ROAS, 4 semanas)</th><th class="num">Presupuesto sugerido</th><th>Diagnostico</th></tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Oro · Alto</div>
+            <div class="prod-meta">Saturado - bajar &middot; obj. ROAS 7.5x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$3.457</div><div class="week-r">14.24x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$4.275</div><div class="week-r">2.96x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$13.359</div><div class="week-r">7.52x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$14.609</div><div class="week-r">9.11x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$37.000/dia<span class="budget-badge-wrap"><span class="badge badge-good"><span class="badge-icon">&uarr;</span>+153%</span></span></td>
+          <td class="col-nota">Gasto casi se cuadruplico en el mes ($12.5k -> $49.5k/dia) y el ROAS de la semana mas reciente (4.98x) es el peor de las 4 - muy por debajo del objetivo (7.5x). Cuando gastaba $36k/dia (hace 1-2 semanas) el ROAS rondaba 7.8x, en objetivo. Volver a esa zona en vez de seguir escalando.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Oro · Medio</div>
+            <div class="prod-meta">Ya en $0 &middot; obj. ROAS 6.5x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$40.003</div><div class="week-r">4.19x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$22.884</div><div class="week-r">3.03x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$2.413</div><div class="week-r">0.00x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$0</div><div class="week-r">0.00x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$0/dia<span class="budget-badge-wrap"><span class="badge badge-neutral"><span class="badge-icon">=</span>Ya en $0</span></span></td>
+          <td class="col-nota">Ya la llevaste a $0/dia esta ultima semana - coincide con que el ROAS venia cayendo semana a semana (3.98x -> 2.87x -> 0.66x -> 0x). No hace falta bajar nada, ya esta hecho. Si se reactiva, hacerlo solo con los productos que sí rinden (Remera Lisa una vez reactivada, Pantalon Jogging ya bajado a Plata).</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Oro · Bajo</div>
+            <div class="prod-meta">Estable &middot; obj. ROAS 8.0x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$18.462</div><div class="week-r">7.11x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$32.263</div><div class="week-r">7.86x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$36.609</div><div class="week-r">6.23x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$44.218</div><div class="week-r">5.46x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$15.000/dia<span class="budget-badge-wrap"><span class="badge badge-bad"><span class="badge-icon">&times;</span>-66%</span></span></td>
+          <td class="col-nota">Gasto y ROAS volatiles pero sin tendencia clara (7.00x / 4.69x / 6.49x / 5.83x). La semana mas reciente rinde bien (7.00x cerca del objetivo 8.0x) con gasto moderado. Mantener el nivel actual, sin necesidad de cambios grandes.</td>
+        </tr>
+        <tr>
+          <td class="col-prod"><div class="prod-name">Plata · Alto</div></td>
+          <td>&mdash;</td>
+          <td class="num">&mdash;</td>
+          <td class="num">&mdash;</td>
+          <td class="col-nota">Vacia hoy, sin gasto en las ultimas 4 semanas. Reservar $3.000-5.000/dia cuando reciba productos que bajen de Oro o suban desde Testeo.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Plata · Medio</div>
+            <div class="prod-meta">Muy saturado - bajar &middot; obj. ROAS 4.0x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$36.518</div><div class="week-r">5.72x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$47.632</div><div class="week-r">8.81x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$87.514</div><div class="week-r">3.46x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$65.721</div><div class="week-r">4.66x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$48.000/dia<span class="budget-badge-wrap"><span class="badge badge-bad"><span class="badge-icon">&times;</span>-27%</span></span></td>
+          <td class="col-nota">Desglosado por publicacion (no solo la campana): Campera Guata es el 80% del gasto y ES el problema real de saturacion propia - paso de $21k/dia (ROAS 5.39x) a $45k/dia (ROAS 9.81x, su pico) a $70-82k/dia (ROAS cayo a 3.5-3.8x). Los otros 2 productos de esta campana ya estan recomendados para pausar (ver tabla de campana) y suman poco gasto (19% combinado) pero uno de ellos (Pantalon Babucha Friza) tambien se desplomo esta semana a 0.82x. Importante: bajar el presupuesto de la campana Y pausar esos 2 productos tienen que hacerse JUNTOS - si solo se pausan los 2 flojos y se deja el presupuesto en $90k, ML va a concentrar todo ese monto en Campera Guata (ya saturada) y probablemente empeora mas su ROAS en vez de mejorarlo. El objetivo ($48k) apunta a la zona donde Campera Guata sola tuvo su mejor ROAS (~$45k/dia), dejando algo de margen para el producto que baja desde Oro Medio (Pantalon Jogging Babucha).</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Plata · Bajo</div>
+            <div class="prod-meta">Escalar &middot; obj. ROAS 4.0x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$20.039</div><div class="week-r">3.54x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$27.393</div><div class="week-r">5.60x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$20.462</div><div class="week-r">4.20x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$8.490</div><div class="week-r">4.36x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$42.000/dia<span class="budget-badge-wrap"><span class="badge badge-good"><span class="badge-icon">&uarr;</span>+395%</span></span></td>
+          <td class="col-nota">Gasto estable (~$34-35k/dia ultimas 3 semanas) con ROAS consistentemente arriba del objetivo (4.5x-5.9x, siempre por encima de 4.0x), sin señales de saturacion. Es la campana con mas margen real para escalar sin resignar eficiencia.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Testeo · Alto</div>
+            <div class="prod-meta">Toco el techo &middot; obj. ROAS 3.0x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$7.180</div><div class="week-r">7.69x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$10.593</div><div class="week-r">2.67x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$17.358</div><div class="week-r">2.05x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$23.431</div><div class="week-r">2.60x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$28.000/dia<span class="budget-badge-wrap"><span class="badge badge-good"><span class="badge-icon">&uarr;</span>+19%</span></span></td>
+          <td class="col-nota">Rendimientos decrecientes claros: con $13k/dia el ROAS era 6.18x, al subir a $28-29k/dia bajo a ~3x (todavia dentro de lo tolerado en Testeo, pero ya en el piso). Ya toco su techo de eficiencia actual - mantener el nivel, no seguir escalando.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Testeo · Medio</div>
+            <div class="prod-meta">Alerta esta semana &middot; obj. ROAS 3.0x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$23.294</div><div class="week-r">4.09x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$28.872</div><div class="week-r">3.98x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$27.300</div><div class="week-r">3.31x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$27.833</div><div class="week-r">1.18x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$22.000/dia<span class="budget-badge-wrap"><span class="badge badge-bad"><span class="badge-icon">&times;</span>-21%</span></span></td>
+          <td class="col-nota">Senal de alerta: el ROAS se desplomo a 1.37x en la ultima semana justo cuando el gasto fue el mas alto del mes ($32.6k/dia) - las 3 semanas anteriores rindio 3.86x-4.38x, sano. Antes de subir mas presupuesto, revisar que cambio esta semana (¿entro algun producto flojo? ¿se reactivo algo con mala ficha?). Mientras tanto, volver al nivel de las semanas sanas.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Testeo · Bajo</div>
+            <div class="prod-meta">Frenar el ritmo &middot; obj. ROAS 3.0x</div>
+          </td>
+          <td><div class="week-trend"><div class="week-cell"><div class="week-g">$27.874</div><div class="week-r">2.84x</div><div class="week-lbl">hace 3-4 sem</div></div><div class="week-cell"><div class="week-g">$18.450</div><div class="week-r">4.11x</div><div class="week-lbl">hace 2-3 sem</div></div><div class="week-cell"><div class="week-g">$47.574</div><div class="week-r">2.51x</div><div class="week-lbl">hace 1-2 sem</div></div><div class="week-cell"><div class="week-g">$86.842</div><div class="week-r">3.28x</div><div class="week-lbl">esta semana</div></div></div></td>
+          <td class="num">$60.000/dia<span class="budget-badge-wrap"><span class="badge badge-bad"><span class="badge-icon">&times;</span>-31%</span></span></td>
+          <td class="col-nota">El gasto se triplico en el mes ($28.5k -> $93.6k/dia). El pico de eficiencia fue con $34k/dia (ROAS 6.66x); al escalar tan fuerte el ROAS bajo a 3.68x - todavia arriba del piso tolerado (3.0x) pero con la tendencia claramente a la baja. No es una alarma roja, pero frenar el ritmo de escalada antes de seguir multiplicando el gasto.</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <h2 class="section-title" id="ctr">Publicaciones con mas potencial si arreglas la foto</h2>
+  <p class="page-sub" style="margin-bottom:16px;">De las publicaciones activas (excluyendo las 7 que estan 100% en hold/pausadas), estas son las que tienen el CTR mas bajo <strong>a pesar de</strong> tener volumen real de impresiones (5.000+) y demanda comprobada (ROAS positivo o ventas atribuidas) &mdash; es decir, donde ya sabemos que el producto convierte, el cuello de botella es que casi nadie hace clic. Es donde mas impacto tiene cambiar la foto principal.</p>
+  <section class="camp-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Producto</th><th class="num">CTR</th><th class="num">Impresiones</th><th class="num">Clics</th><th class="num">ROAS</th><th class="num">Unid. vendidas</th></tr>
+        </thead>
+        <tbody>
+          
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Pack X3 Remeras Hombre Algodón Básicas Lisa Manga Corta</div>
+        <div class="prod-meta">Oro Alto &middot; 29/30 variantes activas</div>
+      </td>
+      <td class="num">0.07%</td>
+      <td class="num">56535</td>
+      <td class="num">42</td>
+      <td class="num">18.61x</td>
+      <td class="num">2</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co</div>
+        <div class="prod-meta">Oro Alto &middot; 1/1 variantes activas</div>
+      </td>
+      <td class="num">0.11%</td>
+      <td class="num">390185</td>
+      <td class="num">443</td>
+      <td class="num">7.90x</td>
+      <td class="num">17</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Canguro Hombre Friza Con Capucha Abrigado Hoodie</div>
+        <div class="prod-meta">Testeo Medio &middot; 8/16 variantes activas</div>
+      </td>
+      <td class="num">0.12%</td>
+      <td class="num">907799</td>
+      <td class="num">1111</td>
+      <td class="num">3.52x</td>
+      <td class="num">20</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Pantalon Babucha Hombre Recto Deportivo Con Vivo Lateral</div>
+        <div class="prod-meta">Testeo Medio &middot; 14/16 variantes activas</div>
+      </td>
+      <td class="num">0.13%</td>
+      <td class="num">750343</td>
+      <td class="num">995</td>
+      <td class="num">3.29x</td>
+      <td class="num">8</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano</div>
+        <div class="prod-meta">Testeo Medio &middot; 10/12 variantes activas</div>
+      </td>
+      <td class="num">0.16%</td>
+      <td class="num">252617</td>
+      <td class="num">405</td>
+      <td class="num">3.39x</td>
+      <td class="num">5</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra</div>
+        <div class="prod-meta">Plata Bajo &middot; 20/20 variantes activas</div>
+      </td>
+      <td class="num">0.17%</td>
+      <td class="num">707673</td>
+      <td class="num">1235</td>
+      <td class="num">4.35x</td>
+      <td class="num">33</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe</div>
+        <div class="prod-meta">Oro Alto &middot; 27/45 variantes activas</div>
+      </td>
+      <td class="num">0.18%</td>
+      <td class="num">286770</td>
+      <td class="num">510</td>
+      <td class="num">7.25x</td>
+      <td class="num">18</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe </div>
+        <div class="prod-meta">Testeo Medio &middot; 1/1 variantes activas</div>
+      </td>
+      <td class="num">0.20%</td>
+      <td class="num">617934</td>
+      <td class="num">1232</td>
+      <td class="num">2.75x</td>
+      <td class="num">17</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Pantalon Jogging Hombre Babucha Algodn Rustico Corte Recto</div>
+        <div class="prod-meta">Oro Medio &middot; 6/15 variantes activas</div>
+      </td>
+      <td class="num">0.24%</td>
+      <td class="num">885234</td>
+      <td class="num">2167</td>
+      <td class="num">3.45x</td>
+      <td class="num">48</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Campera Hombre Inflable Liviana Abrigada Tipo Uniqlo Guata</div>
+        <div class="prod-meta">Plata Medio &middot; 19/33 variantes activas</div>
+      </td>
+      <td class="num">0.25%</td>
+      <td class="num">2431421</td>
+      <td class="num">6014</td>
+      <td class="num">5.36x</td>
+      <td class="num">182</td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <h2 class="section-title" id="candidatas">Publicaciones para sumar a Ads</h2>
+  <p class="page-sub" style="margin-bottom:16px;">33 productos activos en ML sin publicidad hoy, agrupados por producto base (algunas variantes de color/talle no tienen family_id propio porque nunca corrieron en Ads, asi que se agruparon manualmente por nombre). Ordenados por prioridad y ventas historicas &mdash; la columna "Recomendacion" dice a que campana entra cada uno.</p>
+  <section class="camp-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Producto</th><th class="num">Ventas hist.</th><th class="num">Stock</th><th>Temporada</th><th>Prioridad</th><th>Recomendacion</th></tr>
+        </thead>
+        <tbody>
+          
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $36.825</div>
+      </td>
+      <td class="num">121</td>
+      <td class="num">113u</td>
+      <td><span class="season-tag season-calida">temporada calida</span></td>
+      <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>Prioridad alta</span></td>
+      <td class="col-nota">Prenda de temporada calida - estamos saliendo del invierno, es EL candidato para anticiparse a primavera/verano. Meter presupuesto ya, aunque las ventas historicas sean moderadas (121), para tener tiempo de aprender antes de la temporada fuerte. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Calza Leggings Mujer Lisa Lycra Deportiva Running Gym Shaffe</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $25.000</div>
+      </td>
+      <td class="num">24</td>
+      <td class="num">24u</td>
+      <td><span class="season-tag season-calida">temporada calida</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">24 ventas, deportivo/todo el ano. Entrar con presupuesto chico. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle</div>
+        <div class="prod-meta">3 SKUs activos sin ads &middot; $19.701</div>
+      </td>
+      <td class="num">22</td>
+      <td class="num">141u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas moderadas repartidas en varios colores (2-22 por color), pero remera es todo el ano. Conviene consolidar todos los colores en un solo grupo de ads en vez de meter cada variante suelta. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Beige Rayas</div>
+        <div class="prod-meta">3 SKUs activos sin ads &middot; $30.492</div>
+      </td>
+      <td class="num">13</td>
+      <td class="num">5u</td>
+      <td><span class="season-tag season-calida">temporada calida</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas historicas bajas todavia, pero lino es tela de temporada calida - igual que la bermuda, conviene validar con presupuesto chico de cara a la temporada que viene. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Camisa Hombre De Vestir Entallada Manga Larga Lisa Shaffe Co</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $58.950</div>
+      </td>
+      <td class="num">12</td>
+      <td class="num">235u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">12 ventas, stock grande (235u), prenda de vestir todo el ano. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Negro Rayas</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $30.492</div>
+      </td>
+      <td class="num">11</td>
+      <td class="num">3u</td>
+      <td><span class="season-tag season-calida">temporada calida</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas historicas bajas todavia, pero lino es tela de temporada calida - igual que la bermuda, conviene validar con presupuesto chico de cara a la temporada que viene. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remera Hombre Algodón Waffle Manga Corta Shaffe Bordó Waffle</div>
+        <div class="prod-meta">4 SKUs activos sin ads &middot; $19.900</div>
+      </td>
+      <td class="num">10</td>
+      <td class="num">39u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas moderadas repartidas en varios colores (2-22 por color), pero remera es todo el ano. Conviene consolidar todos los colores en un solo grupo de ads en vez de meter cada variante suelta. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remera Hombre Algodón Waffle Manga Corta Shaffe Verde Militar Waffle</div>
+        <div class="prod-meta">4 SKUs activos sin ads &middot; $19.900</div>
+      </td>
+      <td class="num">8</td>
+      <td class="num">33u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas moderadas repartidas en varios colores (2-22 por color), pero remera es todo el ano. Conviene consolidar todos los colores en un solo grupo de ads en vez de meter cada variante suelta. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Verde Rayas</div>
+        <div class="prod-meta">3 SKUs activos sin ads &middot; $30.492</div>
+      </td>
+      <td class="num">7</td>
+      <td class="num">7u</td>
+      <td><span class="season-tag season-calida">temporada calida</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas historicas bajas todavia, pero lino es tela de temporada calida - igual que la bermuda, conviene validar con presupuesto chico de cara a la temporada que viene. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Camisa Lino Mujer Algodon Manga Corta Oversize Clasica Negro Rayas</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $29.700</div>
+      </td>
+      <td class="num">2</td>
+      <td class="num">1u</td>
+      <td><span class="season-tag season-calida">temporada calida</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas historicas bajas todavia, pero lino es tela de temporada calida - igual que la bermuda, conviene validar con presupuesto chico de cara a la temporada que viene. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remera Hombre Algodón Waffle Manga Corta Shaffe Gris Waffle</div>
+        <div class="prod-meta">3 SKUs activos sin ads &middot; $19.900</div>
+      </td>
+      <td class="num">2</td>
+      <td class="num">25u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Prioridad media</span></td>
+      <td class="col-nota">Ventas moderadas repartidas en varios colores (2-22 por color), pero remera es todo el ano. Conviene consolidar todos los colores en un solo grupo de ads en vez de meter cada variante suelta. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo M Negro</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $41.000</div>
+      </td>
+      <td class="num">7</td>
+      <td class="num">2u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo M Blanco Letras</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $41.000</div>
+      </td>
+      <td class="num">6</td>
+      <td class="num">5u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa Xl Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">6</td>
+      <td class="num">63u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo S Bordó</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $41.000</div>
+      </td>
+      <td class="num">4</td>
+      <td class="num">3u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo L Bordó</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $45.500</div>
+      </td>
+      <td class="num">3</td>
+      <td class="num">1u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo M Bordó</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $41.000</div>
+      </td>
+      <td class="num">3</td>
+      <td class="num">8u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo S Negro</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $41.000</div>
+      </td>
+      <td class="num">3</td>
+      <td class="num">4u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo Xl Bordó</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $41.000</div>
+      </td>
+      <td class="num">2</td>
+      <td class="num">1u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa Xl Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">2</td>
+      <td class="num">7u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Negro Lisa S Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">2</td>
+      <td class="num">148u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Nuevo S Blanco Letras</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $41.000</div>
+      </td>
+      <td class="num">1</td>
+      <td class="num">4u</td>
+      <td><span class="season-tag season-invierno">invierno</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Variantes sueltas con muy poco stock por talle (1-8u) y ventas minimas cada una. Es frisa (invierno) con la temporada cerrando - mejor liquidar lo que ya esta publicado con promo directa que meter presupuesto de ads nuevo. &rarr; entrar a <strong>Testeo Alto</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa Xl Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">1</td>
+      <td class="num">2u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Negro Lisa M Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">83u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa S Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">95u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa S Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">32u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa M Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">71u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa L Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">81u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa M Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">3u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa M Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">73u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Beige Lisa L Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">10u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa S Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">33u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+    <tr>
+      <td class="col-prod">
+        <div class="prod-name">Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Blanco Lisa L Algodón</div>
+        <div class="prod-meta">1 SKU activos sin ads &middot; $22.500</div>
+      </td>
+      <td class="num">0</td>
+      <td class="num">7u</td>
+      <td><span class="season-tag season-todo_ano">todo el ano</span></td>
+      <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Prioridad baja</span></td>
+      <td class="col-nota">Stock enorme repartido en muchos colores/talles pero CASI SIN VENTAS organicas (0 en la mayoria). Antes de meter plata en ads hay que revisar foto/precio/ficha - ni siquiera el organico esta funcionando. &rarr; entrar a <strong>Testeo Medio</strong>.</td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <h2 class="section-title">Campana por campana</h2>
+  <p class="page-sub" style="margin-bottom:16px;">Cada tarjeta trae su presupuesto sugerido y, si corresponde, que candidatas de la seccion anterior entran ahi.</p>
+  
+    <section class="camp-card" id="oro_alto">
+      <div class="camp-head">
+        <h3>Oro · Alto</h3>
+        <span class="camp-sub">Ticket $33.000+ · ROAS obj. 7.5x · ACOS max 15%</span>
+        <span class="camp-count">4 productos</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-good">Presupuesto sugerido: $37.000/dia (+153% vs. los $14.609/dia de esta ultima semana) &mdash; Saturado - bajar</span></div>
+      
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe</div>
+            <div class="prod-meta">45 SKUs &middot; $92.921 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">7.25x</span><span class="roas-obj">obj 7.5x</span></td>
+          <td class="num">14%<span class="roas-obj"> max 15%</span></td>
+          <td class="num">411u / 33 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 27/45</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener en Oro</span></td>
+          <td class="col-nota">ROAS 7.1 esta a un paso del objetivo (7.5) y el stock es solido (393u). 26 de 45 variantes activas, el resto en hold (normal, talles agotados puntuales). Mejorar foto para subir el CTR, sin tocar tier ni presupuesto.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pack X3 Remeras Hombre Algodón Básicas Lisa Manga Corta</div>
+            <div class="prod-meta">30 SKUs &middot; $4.454 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">18.61x</span><span class="roas-obj">obj 7.5x</span></td>
+          <td class="num">5%<span class="roas-obj"> max 15%</span></td>
+          <td class="num">312u / 29 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 29/30</span></td>
+          <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>Subir a Oro Medio</span></td>
+          <td class="col-nota">ROAS 19.15, stock enorme (314u/29 talles). Remeras basicas son producto todo el año - subir sin reparos.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Chaleco Hombre Inflable Guata Capucha Desmontable Abrigado</div>
+            <div class="prod-meta">35 SKUs &middot; $40.350 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">10.05x</span><span class="roas-obj">obj 7.5x</span></td>
+          <td class="num">10%<span class="roas-obj"> max 15%</span></td>
+          <td class="num">52u / 30 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 29/35</span></td>
+          <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>Subir a Oro con presupuesto conservador</span></td>
+          <td class="col-nota">ROAS 8.04 y buen stock (55u en 31 talles), 30 de 35 variantes activas - cumple sobrado para subir a Oro. Es chaleco con guata (invierno) asi que subir si, pero con roas_target conservador dado que quedan pocas semanas de temporada fria.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co</div>
+            <div class="prod-meta">1 SKUs &middot; $88.570 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">7.90x</span><span class="roas-obj">obj 7.5x</span></td>
+          <td class="num">13%<span class="roas-obj"> max 15%</span></td>
+          <td class="num">79u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Corregido: este producto SI tiene mas variantes (21 combinaciones talle/color) pero cargadas como 'variations' dentro del mismo item_id, no como item_ids separados (patron distinto al resto del catalogo, el pipeline no lo desglosa). Stock real: 79u repartidas en 20 de 21 combinaciones con stock - sano y bien distribuido, no hay depleccion. ACOS 15% justo en el limite del tier: vigilar, no hace falta promo.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="camp-card" id="oro_medio">
+      <div class="camp-head">
+        <h3>Oro · Medio</h3>
+        <span class="camp-sub">Ticket $18.000-$32.999 · ROAS obj. 6.5x · ACOS max 18%</span>
+        <span class="camp-count">3 productos</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-neutral">Ya esta en $0/dia esta semana &mdash; sin cambio sugerido</span></div>
+      
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalon Jogging Hombre Babucha Algodn Rustico Corte Recto</div>
+            <div class="prod-meta">15 SKUs &middot; $437.025 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">3.45x</span><span class="roas-obj">obj 6.5x</span></td>
+          <td class="num">29%<span class="roas-obj"> max 18%</span></td>
+          <td class="num">21u / 5 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 6/15</span></td>
+          <td><span class="badge badge-bad"><span class="badge-icon">&times;</span>Bajar a Plata Medio</span></td>
+          <td class="col-nota">ROAS 3.45 muy por debajo del objetivo (6.5), ACOS 29%. Solo 6 de 15 variantes activas (el resto en hold) - el ROAS ya refleja eso, no cambia la decision. Bajar de tier.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Buzo Hombre Canguro Oversize Wafle Liso Liviano Hoodie</div>
+            <div class="prod-meta">4 SKUs &middot; $66.565 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">1.02x</span><span class="roas-obj">obj 6.5x</span></td>
+          <td class="num">98%<span class="roas-obj"> max 18%</span></td>
+          <td class="num">32u / 4 talles</td>
+          <td><span class="season-tag season-calida" style="color:var(--bad);background:var(--bad-soft);">Pausado 100%</span></td>
+          <td><span class="badge badge-info"><span class="badge-icon">%</span>Ya esta pausado - reactivar solo con foto nueva</span></td>
+          <td class="col-nota">Las 4 variantes tienen status 'paused' ahora mismo: no es que este quemando presupuesto sin vender hoy, ya lo pausaron (a mano o automatico) despues de acumular ROAS 0.81 y ACOS 123% en algun momento de los ultimos 30 dias. No hace falta bajar de tier ni pausar de nuevo. Si se quiere reactivar, hacerlo con foto/precio nuevos primero - la version anterior ya demostro que no funciona.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Remera Hombre Lisa Algodon Clasica Basica Slim Fit Shaffe</div>
+            <div class="prod-meta">25 SKUs &middot; $1.294 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">251.82x</span><span class="roas-obj">obj 6.5x</span></td>
+          <td class="num">0%<span class="roas-obj"> max 18%</span></td>
+          <td class="num">203u / 20 talles</td>
+          <td><span class="season-tag season-calida" style="color:var(--bad);background:var(--bad-soft);">Pausado 100%</span></td>
+          <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Reactivar y confirmar antes de subir</span></td>
+          <td class="col-nota">Las 25 variantes estan pausadas/hold ahora mismo (0 activas) pese al ROAS 221x - ese numero es historico de cuando corria, con gasto muy bajo ($1.469) y mayormente atribucion indirecta. No es un 'mantener' real porque hoy no esta compitiendo. Antes de pensar en subir a Oro: reactivarlo y confirmar que ese ROAS se sostiene con mas volumen.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="camp-card" id="oro_bajo">
+      <div class="camp-head">
+        <h3>Oro · Bajo</h3>
+        <span class="camp-sub">Ticket < $18.000 · ROAS obj. 8.0x · ACOS max 15%</span>
+        <span class="camp-count">3 productos</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-bad">Presupuesto sugerido: $15.000/dia (-66% vs. los $44.218/dia de esta ultima semana) &mdash; Estable</span></div>
+      
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha</div>
+            <div class="prod-meta">9 SKUs &middot; $369.145 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">5.96x</span><span class="roas-obj">obj 8.0x</span></td>
+          <td class="num">17%<span class="roas-obj"> max 15%</span></td>
+          <td class="num">131u / 8 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 8/9</span></td>
+          <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>Subir a Oro Bajo</span></td>
+          <td class="col-nota">ROAS 6.35 muy por encima del objetivo (4.0), ACOS 16%. Piloto de lluvia se usa todo el año (mas aun en primavera con lluvias) - sin reparo estacional, subir de tier.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Calza Térmica Niño Lycra Negra Escolar Abrigada Nene</div>
+            <div class="prod-meta">7 SKUs &middot; $238.452 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">8.01x</span><span class="roas-obj">obj 8.0x</span></td>
+          <td class="num">12%<span class="roas-obj"> max 15%</span></td>
+          <td class="num">84u / 7 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 7/7</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener en Oro</span></td>
+          <td class="col-nota">ROAS 8.01 en el objetivo, ACOS 12% ok. Uso escolar/frio sostiene demanda unas semanas mas aunque termine el invierno - no escalar mucho mas, el ciclo esta por cerrar.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Remera Termica Niño Manga Larga Super Abrigada Escolar</div>
+            <div class="prod-meta">12 SKUs &middot; $256.093 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">6.92x</span><span class="roas-obj">obj 8.0x</span></td>
+          <td class="num">14%<span class="roas-obj"> max 15%</span></td>
+          <td class="num">176u / 12 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 12/12</span></td>
+          <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>Subir a Oro Bajo (presupuesto moderado)</span></td>
+          <td class="col-nota">ROAS 7.03 muy bueno, buen stock (177u/12 talles). Uso escolar sostiene demanda mas alla del invierno estricto - subir de tier, con presupuesto moderado porque el frio va bajando.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="camp-card empty" id="plata_alto">
+      <div class="camp-head">
+        <h3>Plata · Alto</h3>
+        <span class="camp-sub">Sala de observacion · ROAS obj. 4.0x · ACOS max 25%</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-neutral">Sin presupuesto activo &mdash; reservar $3.000-5.000/dia cuando entre el primer producto</span></div>
+      
+      <p class="empty-msg">Sin publicaciones activas en este momento. Campana lista para recibir productos que bajen de Oro o suban desde Testeo.</p>
+    </section>
+
+    <section class="camp-card" id="plata_medio">
+      <div class="camp-head">
+        <h3>Plata · Medio</h3>
+        <span class="camp-sub">Sala de observacion · ROAS obj. 4.0x · ACOS max 25%</span>
+        <span class="camp-count">1 producto</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-bad">Presupuesto sugerido: $48.000/dia (-27% vs. los $65.721/dia de esta ultima semana) &mdash; Muy saturado - bajar</span></div>
+      
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Campera Hombre Inflable Liviana Abrigada Tipo Uniqlo Guata</div>
+            <div class="prod-meta">33 SKUs &middot; $1.447.236 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">5.36x</span><span class="roas-obj">obj 4.0x</span></td>
+          <td class="num">19%<span class="roas-obj"> max 25%</span></td>
+          <td class="num">327u / 29 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 19/33</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener, NO subir a Oro todavia</span></td>
+          <td class="col-nota">ROAS 5.14 solido, ACOS 19% ok - cumple el umbral para subir a Oro. Pero es campera con guata (100% invierno) y tiene 316 unidades en stock: con la temporada terminando, subir presupuesto ahora arriesga quedar con sobrestock invernal en primavera. Consolidar ventas actuales, no escalar, y preparar promo de liquidacion en 3-4 semanas.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="camp-card" id="plata_bajo">
+      <div class="camp-head">
+        <h3>Plata · Bajo</h3>
+        <span class="camp-sub">Sala de observacion · ROAS obj. 4.0x · ACOS max 25%</span>
+        <span class="camp-count">3 productos</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-good">Presupuesto sugerido: $42.000/dia (+395% vs. los $8.490/dia de esta ultima semana) &mdash; Escalar</span></div>
+      
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra</div>
+            <div class="prod-meta">20 SKUs &middot; $244.600 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">4.35x</span><span class="roas-obj">obj 4.0x</span></td>
+          <td class="num">23%<span class="roas-obj"> max 25%</span></td>
+          <td class="num">123u / 20 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 20/20</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener, candidato a Oro</span></td>
+          <td class="col-nota">ROAS 4.34, ACOS 23% ok. Jogger de lycra es prenda todo el año, sin condicionante estacional - dejar sumar dias para confirmar subida a Oro.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Polera Hombre Morley Slim Cuello Alto Manga Larga Abrigada</div>
+            <div class="prod-meta">10 SKUs &middot; $4.070 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">6.39x</span><span class="roas-obj">obj 4.0x</span></td>
+          <td class="num">16%<span class="roas-obj"> max 25%</span></td>
+          <td class="num">60u / 8 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 8/10</span></td>
+          <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>Subir a Plata con presupuesto chico</span></td>
+          <td class="col-nota">ROAS 6.22 buenisimo, pero es polera abrigada de cuello alto - 100% invierno. Subirla ahora significa comprometer mas presupuesto a semanas del fin de temporada. Subir de tier si, pero con roas_target conservador, no a fondo.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Calza Termica Hombre Larga Deportiva Primera Piel Gym</div>
+            <div class="prod-meta">1 SKUs &middot; $258.923 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">4.52x</span><span class="roas-obj">obj 4.0x</span></td>
+          <td class="num">22%<span class="roas-obj"> max 25%</span></td>
+          <td class="num">108u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">ROAS 4.64 ok (obj 4.0x). Es talle unico con 119u en stock - no es poco stock, no hace falta promo. Corregido a pedido del usuario: 1 variante disponible en un producto que siempre fue de 1 sola variante no es señal de agotamiento.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="camp-card" id="testeo_alto">
+      <div class="camp-head">
+        <h3>Testeo · Alto</h3>
+        <span class="camp-sub">Laboratorio · ROAS tolerado 2.5-3.5x</span>
+        <span class="camp-count">5 productos</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-good">Presupuesto sugerido: $28.000/dia (+19% vs. los $23.431/dia de esta ultima semana) &mdash; Toco el techo</span></div>
+      <p class="cand-crossref">Candidatas a sumar aca (ver seccion <a href="#candidatas">Sumar a Ads</a>): Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe, Camisa Hombre De Vestir Entallada Manga Larga Lisa Shaffe Co.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Campera De Guata Inflada Hombre Invierno, Lluvia, Shaffe Co </div>
+            <div class="prod-meta">1 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">295u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalon Jean Baggy Nena Cintura Alta Adolescente</div>
+            <div class="prod-meta">12 SKUs &middot; $112.848 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">3.56x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">28%</td>
+          <td class="num">18u / 8 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 8/12</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener en Testeo</span></td>
+          <td class="col-nota">ROAS 3.33 dentro de lo tolerado. Seguir observando.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalon Mujer Baggy Babucha Friza Jogger Suelto</div>
+            <div class="prod-meta">16 SKUs &middot; $271.759 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">2.99x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">33%</td>
+          <td class="num">73u / 15 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 12/16</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener en Testeo</span></td>
+          <td class="col-nota">ROAS 3.17, dentro de lo tolerado pero con CVR bajo (entra gente, no compra). Mejorar ficha/descripcion antes de subir de tier.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Shaffe </div>
+            <div class="prod-meta">1 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">82u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Buzo Hoodie Frizado Oversize Hombre Canguro Capucha Shaffe</div>
+            <div class="prod-meta">1 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">59u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="camp-card" id="testeo_medio">
+      <div class="camp-head">
+        <h3>Testeo · Medio</h3>
+        <span class="camp-sub">Laboratorio · ROAS tolerado 2.5-3.5x</span>
+        <span class="camp-count">9 productos</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-bad">Presupuesto sugerido: $22.000/dia (-21% vs. los $27.833/dia de esta ultima semana) &mdash; Alerta esta semana</span></div>
+      <p class="cand-crossref">Candidatas a sumar aca (ver seccion <a href="#candidatas">Sumar a Ads</a>): Calza Leggings Mujer Lisa Lycra Deportiva Running Gym Shaffe, Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle, Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Beige Rayas, Camisa Lino Hombre Manga Corta Rayada Clasica Algodon Negro Rayas.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Buzo Canguro Hombre Friza Con Capucha Abrigado Hoodie</div>
+            <div class="prod-meta">16 SKUs &middot; $212.862 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">3.52x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">28%</td>
+          <td class="num">33u / 6 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 8/16</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener, vigilar</span></td>
+          <td class="col-nota">ROAS 3.5 justo en el limite. Seguir observando 3-4 dias mas.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalon Babucha Hombre Recto Deportivo Con Vivo Lateral</div>
+            <div class="prod-meta">16 SKUs &middot; $94.261 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">3.29x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">30%</td>
+          <td class="num">39u / 14 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 14/16</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener, vigilar CVR</span></td>
+          <td class="col-nota">ROAS 3.0 en el piso del rango tolerado, con CVR bajo. Mejorar ficha antes de pensar en subir.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Chaleco Hombre Polar Con Bolsillos Termico Antipilling</div>
+            <div class="prod-meta">10 SKUs &middot; $54.759 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">4.64x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">22%</td>
+          <td class="num">4u / 2 talles <span class="stock-warn">poco stock</span></td>
+          <td><span class="season-tag season-invierno">Parcial 2/10</span></td>
+          <td><span class="badge badge-info"><span class="badge-icon">%</span>No subir - liquidar con promo</span></td>
+          <td class="col-nota">ROAS 4.72 activaria subida a Plata, pero solo 4 unidades en 2 talles y es chaleco polar termico (invierno). Con la temporada terminando, mejor promo para liquidar que reinvertir presupuesto.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Campera Mujer Deportiva Entallada Elastizada Gym Urbano</div>
+            <div class="prod-meta">26 SKUs &middot; $57.994 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">2.04x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">49%</td>
+          <td class="num">35u / 12 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 2/26</span></td>
+          <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Reactivar mas variantes antes de decidir</span></td>
+          <td class="col-nota">Solo 2 de 26 variantes estan activas (el resto en hold) - el ROAS 2.77 esta calculado casi todo con esas 2. Antes de bajar el pulgar por bajo ROAS, revisar por que 24 talles/colores estan en hold (stock puntual o problema de precio/ficha) y reactivar los que tengan stock real. Campera deportiva de uso todo el año, sin apuro estacional.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe</div>
+            <div class="prod-meta">18 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">346u / 18 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 18/18</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano</div>
+            <div class="prod-meta">12 SKUs &middot; $43.489 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">3.39x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">30%</td>
+          <td class="num">35u / 10 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 10/12</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener en Testeo</span></td>
+          <td class="col-nota">ROAS 3.39 ok. Seguir observando.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe </div>
+            <div class="prod-meta">1 SKUs &middot; $239.749 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">2.75x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">36%</td>
+          <td class="num">149u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener en Testeo</span></td>
+          <td class="col-nota">Corregido: este producto SI tiene mas variantes (8 combinaciones talle/color) cargadas como 'variations' dentro del mismo item_id. Stock real: 148u, las 8 combinaciones con algo de stock (aunque desparejo: un talle/color concentra 104u, el resto entre 2-9u cada uno - vale la pena reponer los mas bajos, pero no es 'poco stock' del producto en general). ROAS 3.0 justo en el piso del rango tolerado.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalón Cargo Parachute Oversize De Mujer Con Bolsillos</div>
+            <div class="prod-meta">1 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">18u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Remera Oversize Hombre Algodón Shaffe Ng Clasicc</div>
+            <div class="prod-meta">1 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">820u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="camp-card" id="testeo_bajo">
+      <div class="camp-head">
+        <h3>Testeo · Bajo</h3>
+        <span class="camp-sub">Laboratorio · ROAS tolerado 2.5-3.5x</span>
+        <span class="camp-count">6 productos</span>
+      </div>
+      <div class="camp-budget"><span class="budget-chip budget-bad">Presupuesto sugerido: $60.000/dia (-31% vs. los $86.842/dia de esta ultima semana) &mdash; Frenar el ritmo</span></div>
+      
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">ROAS</th>
+              <th class="num">ACOS</th>
+              <th class="num">Stock</th>
+              <th>Estado</th>
+              <th>Decision</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5</div>
+            <div class="prod-meta">1 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">543u / 1 talles</td>
+          <td><span class="season-tag season-todo_ano">Activo 1/1</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pack X2 Gorro Lana Invierno Hombre Térmico Corderito</div>
+            <div class="prod-meta">2 SKUs &middot; $40.634 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">5.15x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">19%</td>
+          <td class="num">0u / 0 talles <span class="stock-warn">poco stock</span></td>
+          <td><span class="season-tag season-calida" style="color:var(--bad);background:var(--bad-soft);">Pausado 100%</span></td>
+          <td><span class="badge badge-bad"><span class="badge-icon">&times;</span>Ya esta en hold: reponer antes de subir</span></td>
+          <td class="col-nota">La regla marca subida a Plata por ROAS 5.15, pero el stock total es CERO y las 2 variantes ya estan en hold (ML las saco sola por falta de stock) - no hay nada para vender ni nada que subir de tier. Dejarlo asi hasta reponer. Si no se repone por fin de temporada, queda en hold hasta el invierno que viene.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Remera Termica Hombre Manga Larga Primera Piel Ajustada</div>
+            <div class="prod-meta">6 SKUs &middot; $659.013 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">3.05x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">33%</td>
+          <td class="num">71u / 4 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 4/6</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener en Testeo</span></td>
+          <td class="col-nota">ROAS 3.12 ok. Remera termica de uso deportivo/frio, no puramente estacional - sin apuro.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Remera Hombre Algodon Oversize Manga Corta Estampada</div>
+            <div class="prod-meta">35 SKUs &middot; $0 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">25u / 4 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 3/35</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener</span></td>
+          <td class="col-nota">Sin cambios sugeridos por ahora.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Remera Oversize Hombre Básica De Algodón Estilo Streetwear</div>
+            <div class="prod-meta">16 SKUs &middot; $975 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">0.00x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">-</td>
+          <td class="num">431u / 13 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 13/16</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Foto principal urgente</span></td>
+          <td class="col-nota">0 ventas pese a buen stock (431u). Cambiar foto antes de evaluar cualquier movimiento de tier.</td>
+        </tr>
+        <tr>
+          <td class="col-prod">
+            <div class="prod-name">Pantalón Cargo Hombre Convertible 2 En 1 Trekking Elastizado</div>
+            <div class="prod-meta">30 SKUs &middot; $517.093 gastado (30d)</div>
+          </td>
+          <td class="num"><span class="roas-val">3.04x</span><span class="roas-obj">obj 3.0x</span></td>
+          <td class="num">33%</td>
+          <td class="num">56u / 24 talles</td>
+          <td><span class="season-tag season-invierno">Parcial 18/30</span></td>
+          <td><span class="badge badge-neutral"><span class="badge-icon">=</span>Mantener, candidato a temporada calida</span></td>
+          <td class="col-nota">ROAS 2.98, casi en el piso pero sin alertas. Es cargo convertible/trekking - buen candidato a sostener de cara a la salida del invierno.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  <h2 class="section-title" id="tier-dividido">Tier dividido &mdash; requiere decision manual</h2>
+  <section class="camp-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Producto</th><th class="num">ROAS</th><th class="num">ACOS</th><th class="num">Stock</th><th>Decision</th><th>Nota</th></tr>
+        </thead>
+        <tbody>
+          
+    <tr>
+      <td class="col-prod"><div class="prod-name">Vaso Térmico Acero Inoxidable 900ml Con Pico Frío Calor</div><div class="prod-meta">4 SKUs &middot; repartido entre plata_medio y testeo_bajo</div></td>
+      <td class="num">2.65x</td>
+      <td class="num">38%</td>
+      <td class="num">0u / 0 talles</td>
+      <td><span class="badge badge-bad"><span class="badge-icon">&times;</span>Ya esta en hold - unificar cuando se reponga</span></td>
+      <td class="col-nota">Variantes del mismo producto repartidas en 2 campanas distintas - inconsistencia real que el sistema no resuelve solo. Las 4 variantes ya estan en hold (stock 0, ML las saco sola). ROAS 2.50 historico ya estaba bajo el objetivo. Al reponer stock, unificar todo en una sola campana antes de reactivar. No es un accesorio estacional (vaso termico se usa todo el ano), el problema es solo stock + rendimiento.</td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Generado a partir de metricas reales de ML Ads (ultimos 30 dias) y stock actual via API de Items. No se ejecuto ninguna accion sobre la cuenta: todo lo de arriba son recomendaciones a aprobar manualmente en el panel de ML. El presupuesto sugerido esta calculado sobre el gasto real porque la API de lectura/escritura de campanas (`GET .../product_ads/campaigns`) sigue devolviendo 404 desde el 15/07 &mdash; comparar estos numeros contra el presupuesto configurado real en el panel antes de aplicar el ajuste.
+  </footer>
+</div>
