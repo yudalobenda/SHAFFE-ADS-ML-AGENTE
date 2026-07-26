@@ -21,6 +21,7 @@ class Executor:
         self.ml = ml_client
         self.campaign_ids = campaign_ids
         self.advertiser_id = campaign_ids.get("advertiser_id")
+        self.site_id = campaign_ids.get("site_id")
 
     def ejecutar(self, acciones_aprobadas: list) -> list:
         resultados = [self._ejecutar_una(accion) for accion in acciones_aprobadas]
@@ -70,11 +71,11 @@ class Executor:
 
     def _ajustar_presupuesto(self, accion: dict) -> None:
         campania_id = self.campaign_ids["campañas"][accion["campania"]]
-        self.ml.update_campaign_budget(self.advertiser_id, campania_id, accion["presupuesto_nuevo"])
+        self.ml.update_campaign_budget(self.site_id, campania_id, accion["presupuesto_nuevo"])
 
     def _ajustar_roas_target(self, accion: dict) -> None:
         campania_id = self.campaign_ids["campañas"][accion["campania"]]
-        self.ml.update_campaign_roas_target(self.advertiser_id, campania_id, accion["roas_target_nuevo"])
+        self.ml.update_campaign_roas_target(self.site_id, campania_id, accion["roas_target_nuevo"])
 
     def _agregar_a_campania(self, accion: dict) -> None:
         campania_id = self.campaign_ids["campañas"][accion["campania"]]
@@ -87,8 +88,8 @@ class Executor:
         self._por_cada_item(accion["item_ids"], lambda item_id: self.ml.add_item_to_promotion(item_id, promotion_id))
 
     def _pausar(self, accion: dict) -> None:
-        campania_id = self.campaign_ids["campañas"][accion["campania"]]
-        self._por_cada_item(accion["item_ids"], lambda item_id: self.ml.pause_item(self.advertiser_id, campania_id, item_id))
+        # pause_item identifica el ad solo por item_id + site_id (sin campaign_id en la ruta)
+        self._por_cada_item(accion["item_ids"], lambda item_id: self.ml.pause_item(self.site_id, item_id))
 
     def _guardar_log(self, resultados: list) -> None:
         os.makedirs(LOGS_DIR, exist_ok=True)

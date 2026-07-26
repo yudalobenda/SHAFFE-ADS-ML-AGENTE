@@ -9,7 +9,7 @@ import core.campaign_rules as reglas
 
 class StockAgent:
     def evaluar(self, item_ids: list, family_name: str, campania: str, unidades_totales: int, variantes_disponibles: int, fin_de_temporada: bool) -> dict | None:
-        if not reglas.es_poco_stock(unidades_totales, variantes_disponibles):
+        if not reglas.es_poco_stock(unidades_totales, variantes_disponibles, len(item_ids)):
             return None
 
         if fin_de_temporada:

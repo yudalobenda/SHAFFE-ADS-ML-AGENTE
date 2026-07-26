@@ -235,8 +235,19 @@ def tiene_presupuesto_real(costo: float, impresiones: int) -> bool:
     return costo >= GASTO_MIN_EVALUAR or impresiones >= IMPRESIONES_MIN_EVALUAR
 
 
-def es_poco_stock(unidades_totales: int, variantes_disponibles: int) -> bool:
-    return (
-        unidades_totales < STOCK_BAJO_UNIDADES
-        or variantes_disponibles <= STOCK_BAJO_VARIANTES
-    )
+def es_poco_stock(unidades_totales: int, variantes_disponibles: int, total_variantes: int | None = None) -> bool:
+    """Poco stock si las unidades totales son bajas, O si de varias variantes
+    posibles quedan muy pocas disponibles (señal de que se vendieron talles/
+    colores y el producto se está agotando).
+
+    OJO: la señal de "variantes disponibles bajas" solo aplica si el producto
+    tuvo alguna vez más variantes que STOCK_BAJO_VARIANTES. Un producto que
+    siempre fue talle único / 1 sola variante (total_variantes <= 2) no está
+    "agotándose" por tener 1 de 1 disponible - simplemente tiene su única
+    variante en stock. Sin total_variantes (compat con llamadas viejas), se
+    mantiene el comportamiento anterior (puede dar falso positivo en talle único)."""
+    if unidades_totales < STOCK_BAJO_UNIDADES:
+        return True
+    if total_variantes is not None and total_variantes <= STOCK_BAJO_VARIANTES:
+        return False
+    return variantes_disponibles <= STOCK_BAJO_VARIANTES

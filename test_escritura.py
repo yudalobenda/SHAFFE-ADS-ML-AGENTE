@@ -60,7 +60,7 @@ def obtener_ad_prueba(ml: MLClient) -> dict | None:
 
 def obtener_estado_campania(ml: MLClient) -> dict | None:
     try:
-        data = ml.get_campaigns(ADVERTISER_ID)
+        data = ml.get_campaigns(SITE_ID, ADVERTISER_ID)
         campanas = data if isinstance(data, list) else data.get("results", [])
         for c in campanas:
             if str(c.get("id")) == CAMPANIA_ID_PRUEBA:
