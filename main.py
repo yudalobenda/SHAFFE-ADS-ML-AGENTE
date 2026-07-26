@@ -15,6 +15,7 @@ from datetime import date, timedelta
 from dotenv import load_dotenv
 
 import core.campaign_rules as reglas
+from agents.ai_analyst import AIAnalyst
 from agents.analyst import Analyst
 from agents.collector import Collector
 from agents.copywriter import Copywriter
@@ -156,6 +157,33 @@ def _calcular_dias_en_tier(fecha_entrada_campania: dict, clave: str) -> int:
         return 999
 
 
+_TELEGRAM_MAX_CHARS = 3500
+
+
+def _enviar_mensaje_largo(telegram: TelegramAgent, texto: str) -> None:
+    """Parte el texto en mensajes de Telegram si excede el límite de la API,
+    cortando por párrafo para no partir una recomendación a la mitad."""
+    if len(texto) <= _TELEGRAM_MAX_CHARS:
+        telegram._enviar_mensaje(texto)
+        return
+
+    partes: list[str] = []
+    actual = ""
+    for parrafo in texto.split("\n\n"):
+        candidato = f"{actual}\n\n{parrafo}" if actual else parrafo
+        if len(candidato) > _TELEGRAM_MAX_CHARS and actual:
+            partes.append(actual)
+            actual = parrafo
+        else:
+            actual = candidato
+    if actual:
+        partes.append(actual)
+
+    for i, parte in enumerate(partes):
+        prefijo = "" if i == 0 else f"(cont. {i + 1}/{len(partes)})\n"
+        telegram._enviar_mensaje(prefijo + parte)
+
+
 def modo_collect() -> None:
     load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 
@@ -243,7 +271,7 @@ def modo_collect() -> None:
             })
 
         unidades_totales, variantes_disponibles = collector.obtener_stock(grupo["item_ids"])
-        poco_stock = reglas.es_poco_stock(unidades_totales, variantes_disponibles)
+        poco_stock = reglas.es_poco_stock(unidades_totales, variantes_disponibles, len(grupo["item_ids"]))
 
         gasto = grupo["metricas"].get("cost", 0.0)
         tiene_presupuesto = reglas.tiene_presupuesto_real(gasto, analisis["impresiones"])
@@ -377,6 +405,24 @@ def modo_collect() -> None:
     run_id = str(int(time.time()))
 
     telegram = TelegramAgent()
+
+    # Análisis IA (OpenAI, opcional): reusa `grupos` ya recolectado, no vuelve
+    # a llamar a la API de ML. Nunca debe tirar abajo la corrida semanal si
+    # falla — es un agregado, no reemplaza el análisis determinístico de arriba.
+    ai_analyst = AIAnalyst()
+    if ai_analyst.disponible():
+        try:
+            campanias_reales = ml.get_campaigns(site_id, advertiser_id)
+            if isinstance(campanias_reales, dict):
+                campanias_reales = campanias_reales.get("results", [])
+            fecha_hasta = date.today().isoformat()
+            fecha_desde = (date.today() - timedelta(days=14)).isoformat()
+            ventas_reales = ml.ventas_reales_por_item(fecha_desde, fecha_hasta)
+            analisis_ia = ai_analyst.generar_analisis(campanias_reales, grupos, ventas_reales)
+            if analisis_ia:
+                _enviar_mensaje_largo(telegram, "🤖 *Análisis IA (OpenAI)*\n\n" + analisis_ia)
+        except Exception as e:
+            print(f"  [ai_analyst] Falló el análisis IA, se omite esta corrida: {e}")
 
     # Alertas urgentes van primero, sin esperar el batch semanal
     if alertas_urgentes:

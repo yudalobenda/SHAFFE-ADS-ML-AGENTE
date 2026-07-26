@@ -1,7 +1,7 @@
 """Cliente de la API de MercadoLibre Ads: auth con refresh token + operaciones.
 
 Verificado en vivo contra la cuenta real de SHAFFE (advertiser_id=21757, site MLA):
-- get_advertisers / get_campaigns: confirmados, funcionan tal cual están.
+- get_advertisers, get_campaigns, get_campaign, get_ad: confirmados, funcionan.
 - search_ads / search_ads_todas: confirmado. OJO: los filtros de query
   (campaign_id, status, item_id, text) NO funcionan en este endpoint — siempre
   devuelve los ads de toda la cuenta paginados. Hay que pedir todo y filtrar
@@ -12,12 +12,33 @@ Verificado en vivo contra la cuenta real de SHAFFE (advertiser_id=21757, site ML
   acos, roas. NO válidas: cvr, ctr, conversions, impressions, sold_quantity.
   date_from/date_to: máximo 90 días de diferencia.
 
-NO verificado contra la API real (no se probó para no tocar campañas/ítems
-reales sin autorización explícita): update_campaign_roas_target,
-update_campaign_budget, add_item_to_campaign, remove_item_from_campaign,
-pause_item, add_item_to_promotion. Confirmar el path/payload exacto (ideal:
-probar primero sobre una campaña de prueba o pausada) antes de que el agente
-ejecute la primera acción real de este tipo.
+IMPORTANTE (21/07/2026) — ML deprecó las rutas legacy de campañas (sin /search)
+en algún momento entre feb y mayo 2026; devuelven 404 "resource not found" para
+CUALQUIER método (GET incluido), lo que hizo parecer por mucho tiempo que todo
+el recurso estaba caído o sin permisos. Las rutas correctas actuales:
+  - Lista:      GET  /marketplace/advertising/{site_id}/advertisers/{advertiser_id}/product_ads/campaigns/search
+  - Individual:  GET  /marketplace/advertising/{site_id}/product_ads/campaigns/{campaign_id}   (SIN /advertisers/{id} en el medio)
+  - Ad/item:     GET  /marketplace/advertising/{site_id}/product_ads/ads/{item_id}             (SIN /advertisers/{id} ni campaign_id)
+Con estas rutas, la LECTURA de campañas y ads individuales funciona perfecto.
+
+ESCRITURA — ya no es un problema de ruta, es un problema de permiso real:
+- PUT a /marketplace/advertising/{site_id}/product_ads/campaigns/{campaign_id}
+  (budget o roas_target) devuelve 401 explícito: {"error":"mclics.campaigns.exceptions.UnauthorizedException",
+  "message":"User does not have permission to write."} — la app (client_id de
+  este proyecto) no tiene el permiso de escritura habilitado para Product Ads.
+  Hay que gestionarlo en el panel de Developers de ML (revisar si el producto
+  "Advertising"/Product Ads necesita aprobación o certificación aparte del
+  scope de OAuth genérico "write" que ya se pide en la auth URL).
+- PUT a /marketplace/advertising/{site_id}/product_ads/ads/{item_id} (pausar/
+  activar) devuelve 503 de forma consistente (probado 5 veces en distintos
+  momentos, no parece un timeout puntual) — ruta correcta pero el backend de
+  ML está fallando o el permiso da un error distinto (503 en vez de 401) para
+  este endpoint puntual. Revisar de nuevo más adelante por si es transitorio.
+
+add_item_to_campaign, remove_item_from_campaign: TODAVÍA sin verificar (no se
+probaron rutas alternativas post-deprecación). Antes de usarlos, aplicar la
+misma lógica: probar primero GET/HEAD de algo relacionado para encontrar la
+ruta viva, después recién probar escritura.
 """
 from __future__ import annotations
 
@@ -94,8 +115,26 @@ class MLClient:
     def get_advertisers(self) -> dict:
         return self._request("GET", "/advertising/advertisers", params={"product_id": "PADS"})
 
-    def get_campaigns(self, advertiser_id: str) -> dict:
-        return self._request("GET", f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns")
+    def get_campaigns(self, site_id: str, advertiser_id: str) -> dict:
+        """Lista todas las campañas del advertiser con budget/roas_target/status
+        reales. Requiere /search al final (la ruta legacy sin /search fue
+        deprecada por ML, devuelve 404). Confirmado en vivo 21/07/2026."""
+        return self._request(
+            "GET",
+            f"/marketplace/advertising/{site_id}/advertisers/{advertiser_id}/product_ads/campaigns/search",
+        )
+
+    def get_campaign(self, site_id: str, campaign_id: str) -> dict:
+        """Campaña individual. OJO: esta ruta NO lleva /advertisers/{id} en el
+        medio (a diferencia de get_campaigns) - confirmado en vivo 21/07/2026."""
+        return self._request("GET", f"/marketplace/advertising/{site_id}/product_ads/campaigns/{campaign_id}")
+
+    def get_ad(self, site_id: str, item_id: str) -> dict:
+        """Detalle de un ad individual (status, campaign_id, price, etc.), sin
+        pasar por advertisers ni campaign_id en la ruta. Confirmado en vivo
+        21/07/2026 - trae el status real (active/hold/paused) de una sola
+        variante, útil para no tener que traer todo ads/search."""
+        return self._request("GET", f"/marketplace/advertising/{site_id}/product_ads/ads/{item_id}")
 
     ADS_METRICS = "clicks,prints,cost,direct_amount,indirect_amount,units_quantity,acos,roas"
 
@@ -131,19 +170,23 @@ class MLClient:
                 break
         return resultados
 
-    def update_campaign_roas_target(self, advertiser_id: str, campaign_id: str, roas_target: float) -> dict:
-        """NO verificado contra la API real. roas_target documentado entre 1x y 35x."""
+    def update_campaign_roas_target(self, site_id: str, campaign_id: str, roas_target: float) -> dict:
+        """Ruta confirmada correcta (el GET del mismo endpoint funciona), pero
+        el PUT devuelve 401 'User does not have permission to write' -
+        confirmado en vivo 21/07/2026. La app todavía no tiene el permiso de
+        escritura habilitado para Product Ads (gestionar en ML Developers).
+        roas_target documentado entre 1x y 35x."""
         return self._request(
             "PUT",
-            f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}",
+            f"/marketplace/advertising/{site_id}/product_ads/campaigns/{campaign_id}",
             json={"roas_target": roas_target},
         )
 
-    def update_campaign_budget(self, advertiser_id: str, campaign_id: str, daily_budget: float) -> dict:
-        """NO verificado contra la API real."""
+    def update_campaign_budget(self, site_id: str, campaign_id: str, daily_budget: float) -> dict:
+        """Mismo endpoint y mismo bloqueo de permiso (401) que update_campaign_roas_target."""
         return self._request(
             "PUT",
-            f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}",
+            f"/marketplace/advertising/{site_id}/product_ads/campaigns/{campaign_id}",
             json={"budget": daily_budget},
         )
 
@@ -163,12 +206,16 @@ class MLClient:
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items/{item_id}",
         )
 
-    def pause_item(self, advertiser_id: str, campaign_id: str, item_id: str) -> dict:
-        """NO verificado contra la API real."""
+    def pause_item(self, site_id: str, item_id: str, status: str = "paused") -> dict:
+        """Ruta confirmada correcta (el GET del mismo endpoint -- get_ad --
+        funciona), pero el PUT devuelve 503 de forma consistente (probado 5
+        veces en momentos distintos, no parece un timeout puntual) -
+        confirmado en vivo 21/07/2026. Sin campaign_id en la ruta: el ad se
+        identifica solo por item_id + site_id."""
         return self._request(
             "PUT",
-            f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items/{item_id}",
-            json={"status": "paused"},
+            f"/marketplace/advertising/{site_id}/product_ads/ads/{item_id}",
+            json={"status": status},
         )
 
     # --- Items / stock (API de Items estándar, no Ads) ---
@@ -203,3 +250,48 @@ class MLClient:
         return self._request(
             "GET", f"/users/{self.seller_id}/items/search", params={"status": status, "limit": 100}
         )
+
+    def search_orders_todas(self, date_from: str, date_to: str, status: str = "paid") -> list:
+        """Todas las órdenes del seller en el rango de fechas (paginado).
+        Confirmado en vivo 26/07/2026: GET /orders/search con seller + rango
+        de order.date_created, cada resultado trae order_items[].item.id y
+        .quantity. date_from/date_to: fecha ISO (YYYY-MM-DD), se les agrega
+        horario UTC automáticamente. Se usa para cruzar con las métricas de
+        Ads antes de recomendar sacar un producto (ver regla 7 de
+        agents/ANALISIS_INSTRUCCIONES.md): "ventas directas" en Ads no cuenta
+        ventas indirectas ni orgánicas, un producto con 0 en Ads puede estar
+        vendiendo bien igual."""
+        resultados: list = []
+        offset = 0
+        limit = 50
+        while True:
+            data = self._request(
+                "GET",
+                "/orders/search",
+                params={
+                    "seller": self.seller_id,
+                    "order.status": status,
+                    "order.date_created.from": f"{date_from}T00:00:00.000-00:00",
+                    "order.date_created.to": f"{date_to}T23:59:59.000-00:00",
+                    "limit": limit,
+                    "offset": offset,
+                },
+            )
+            resultados.extend(data.get("results", []))
+            total = data.get("paging", {}).get("total", len(resultados))
+            offset += limit
+            if offset >= total or offset >= 1000:  # ML no pagina en profundidad más allá de esto
+                break
+        return resultados
+
+    def ventas_reales_por_item(self, date_from: str, date_to: str, status: str = "paid") -> dict:
+        """item_id -> unidades vendidas reales (todas las órdenes, sea que
+        vengan de un click de Ads o no) en el rango de fechas."""
+        unidades: dict = {}
+        for orden in self.search_orders_todas(date_from, date_to, status=status):
+            for item_orden in orden.get("order_items", []):
+                item_id = (item_orden.get("item") or {}).get("id")
+                if not item_id:
+                    continue
+                unidades[item_id] = unidades.get(item_id, 0) + item_orden.get("quantity", 0)
+        return unidades
