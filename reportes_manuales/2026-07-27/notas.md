@@ -28,5 +28,25 @@ Primera vez que se genera el panel manual usando el `ai_analyst.py` recién arma
 - **Ver [[project_shaffe_ads_agent]] y `core/ml_client.py`**: si se necesita que un reporte cuadre exacto con el total oficial de ML, hay que sumar aparte el historial de campañas eliminadas (no hay endpoint para listarlas, solo aparecen si ya se sabe el campaign_id de antes por `ads/search`) — no hay forma de "descubrirlas" de cero.
 - **Bug propio encontrado y corregido en el mismo momento**: la tabla de "ROAS real vs objetivo" de este panel comparaba contra `campanias_reales.json[].roas_target` (la palanca algorítmica que carga ML, ej. Oro Medio en 3.8x) en vez del objetivo de negocio real (`campaign_rules.roas_target_campania()`, ej. Oro Medio = 6.5x) — la tabla de "Qué cambiar ahora" sí usaba el valor correcto desde el principio, quedó inconsistente entre las dos secciones del mismo panel. Corregido: ahora ambas tablas usan el objetivo de negocio, y la palanca de ML se muestra aparte como dato de referencia ("palanca ML: X"). **Regla para no repetir el error**: nunca usar el `roas_target` que devuelve la API de ML como el objetivo de evaluación — siempre `campaign_rules.roas_target_campania(nombre_campania)`.
 
+## Oro Medio pausada — aclaración (mismo día)
+El usuario preguntó qué hacer con las recomendaciones de Oro Medio si la campaña está pausada (no gasta, no genera). Aclarado: el `necesitan_accion` sale de la ventana de 30 días, que incluye días en que sí estuvo activa antes de pausarla — no es urgente hoy. Lo único pendiente es una decisión a futuro: si se reactiva, el Pantalón Jogging Recto (ROAS 2.75 vs objetivo 6.5) no debería volver a Oro tal cual — o se arregla la ficha antes, o se manda a Plata Medio (objetivo 4.0, mucho más alcanzable). Motivo de la pausa confirmado por el usuario: no había publicaciones buenas para meter ahí. Candidato más cercano a subir a Oro Medio hoy: Campera Inflable Liviana (hoy en Plata Medio, ROAS 5.69, todavía por debajo del objetivo 6.5).
+
+## Descripciones actualizadas — primeros renglones (mismo día, 27/07 tarde)
+A pedido del usuario ("mientras me ocupo de las fotos, cambiale algo a la descripción"), se reescribieron los primeros renglones de los 16 productos que el panel marcó con recomendación de foto (`ctr_bajo` como motivo). Mismo criterio que la sesión del 21/07: reescribir solo la apertura, dejar specs/talles/cuidados intactos.
+
+**Se agregaron 2 métodos nuevos a `core/ml_client.py`** (no existían): `get_item_description()` / `update_item_description()` — confirmado en vivo que `PUT /items/{id}/description` con `{"plain_text": ...}` funciona sin problema (API de Items estándar, nada que ver con el bloqueo de escritura de Product Ads).
+
+**Resultado: 149/186 variantes actualizadas** (`resultado_descripciones.json` tiene el detalle). Las que no se pudieron actualizar son todas variantes con status `closed` (35 en total, confirmado con `get_item().status` en varias) — no editables, no visibles para clientes, mismo patrón que el 21/07 (ahí fueron 25/205). Nada para arreglar ahí.
+
+**Hallazgos reales corregidos en las descripciones:**
+- **Sweater Oversize Mujer** tenía una referencia vieja a "DIA DEL PADRE" (junio) — sacada.
+- **Pantalón Cargo Parachute Oversize Mujer** tenía errores de tipeo/gramática serios ("aprovenchando", "disfrutas", sin tildes) en la apertura — reescrita.
+- **Buzo Hoodie Frizado Oversize Hombre** tenía la descripción completamente vacía — se le puso una desde cero.
+- **Bermuda Hombre Corte Chino** no tenía ningún párrafo de producto, arrancaba directo con el texto institucional de la marca — se le agregó una apertura real.
+- **Buzo Hoodie Frisa Canguro Mujer** arrancaba con una lista de bullets genérica sin gancho — se reemplazó por un párrafo de apertura.
+- El resto (10 productos) ya tenían una apertura decente (varios ya tocados el 21/07) — se les hizo un refresh liviano de la primera línea, sin cambios estructurales.
+
+Detalle línea por línea en `items_para_descripcion.json` (item_ids por producto), `descripciones_actuales.json` (texto antes del cambio) y `resultado_descripciones.json` (qué se actualizó/qué no).
+
 ## Pendiente de decisión del usuario
-Los mismos puntos que en `HANDOFF.md` del 25/07 siguen abiertos (ticket de soporte ML, roas_target de testeo_bajo, fotos del Buzo Canguro), más lo nuevo de esta sesión: agregar "prueba pantalon" a `campaign_ids.json`.
+Los mismos puntos que en `HANDOFF.md` del 25/07 siguen abiertos (ticket de soporte ML, roas_target de testeo_bajo, fotos del Buzo Canguro — el usuario se está ocupando de esto último), más lo nuevo de esta sesión: agregar "prueba pantalon" a `campaign_ids.json`.

@@ -233,6 +233,16 @@ class MLClient:
     def get_item(self, item_id: str) -> dict:
         return self._request("GET", f"/items/{item_id}")
 
+    def get_item_description(self, item_id: str) -> dict:
+        """Confirmado en vivo 21/07 y 27/07: devuelve {"text", "plain_text", ...}."""
+        return self._request("GET", f"/items/{item_id}/description")
+
+    def update_item_description(self, item_id: str, plain_text: str) -> dict:
+        """Confirmado en vivo: PUT /items/{id}/description con {"plain_text": ...}
+        reemplaza la descripción completa del item (API de Items estándar, no
+        Ads — nada que ver con el bloqueo de escritura de Product Ads)."""
+        return self._request("PUT", f"/items/{item_id}/description", json={"plain_text": plain_text})
+
     def get_items_multiget(self, item_ids: list, attributes: str = "id,status,available_quantity,price") -> list:
         """Confirmado en vivo: GET /items?ids=A,B,C (máx. 20 ids por llamada),
         devuelve [{"code": 200, "body": {...}}, ...]. SHAFFE publica cada
