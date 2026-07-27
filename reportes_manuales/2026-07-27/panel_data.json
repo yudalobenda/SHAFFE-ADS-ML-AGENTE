@@ -13,82 +13,90 @@
     {
       "campania": "plata_medio",
       "budget": 45000.0,
-      "roas_target": 4.2,
+      "roas_target": 4.0,
       "status": "active",
       "gasto_30d": 1596638,
       "ingresos_30d": 9084872,
       "roas_real": 5.69,
-      "n_productos": 1
+      "n_productos": 1,
+      "roas_lever_ml": 4.2
     },
     {
       "campania": "testeo_bajo",
       "budget": 50000.0,
-      "roas_target": 2.8,
+      "roas_target": 3.0,
       "status": "active",
       "gasto_30d": 1347595,
       "ingresos_30d": 4442231,
       "roas_real": 3.3,
-      "n_productos": 6
+      "n_productos": 6,
+      "roas_lever_ml": 2.8
     },
     {
       "campania": "oro_bajo",
       "budget": 12000.0,
-      "roas_target": 6.0,
+      "roas_target": 8.0,
       "status": "active",
       "gasto_30d": 836210,
       "ingresos_30d": 6028055,
       "roas_real": 7.21,
-      "n_productos": 3
+      "n_productos": 3,
+      "roas_lever_ml": 6.0
     },
     {
       "campania": "testeo_medio",
       "budget": 23000.0,
-      "roas_target": 2.8,
+      "roas_target": 3.0,
       "status": "active",
       "gasto_30d": 731776,
       "ingresos_30d": 2156285,
       "roas_real": 2.95,
-      "n_productos": 14
+      "n_productos": 14,
+      "roas_lever_ml": 2.8
     },
     {
       "campania": "plata_bajo",
       "budget": 30000.0,
-      "roas_target": 3.3,
+      "roas_target": 4.0,
       "status": "active",
       "gasto_30d": 583322,
       "ingresos_30d": 2797309,
       "roas_real": 4.8,
-      "n_productos": 3
+      "n_productos": 3,
+      "roas_lever_ml": 3.3
     },
     {
       "campania": "testeo_alto",
       "budget": 30000.0,
-      "roas_target": 2.8,
+      "roas_target": 3.0,
       "status": "active",
       "gasto_30d": 572472,
       "ingresos_30d": 1879712,
       "roas_real": 3.28,
-      "n_productos": 5
+      "n_productos": 5,
+      "roas_lever_ml": 2.8
     },
     {
       "campania": "oro_alto",
       "budget": 38000.0,
-      "roas_target": 5.5,
+      "roas_target": 7.5,
       "status": "active",
       "gasto_30d": 435559,
       "ingresos_30d": 3308536,
       "roas_real": 7.6,
-      "n_productos": 4
+      "n_productos": 4,
+      "roas_lever_ml": 5.5
     },
     {
       "campania": "oro_medio",
       "budget": 35000.0,
-      "roas_target": 3.8,
+      "roas_target": 6.5,
       "status": "paused",
       "gasto_30d": 259134,
       "ingresos_30d": 733694,
       "roas_real": 2.83,
-      "n_productos": 3
+      "n_productos": 3,
+      "roas_lever_ml": 3.8
     }
   ],
   "necesitan_accion": [

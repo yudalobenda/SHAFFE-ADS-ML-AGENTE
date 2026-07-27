@@ -186,10 +186,15 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border
     <div class="kpi"><div class="kpi-label">Oportunidades</div><div class="kpi-val good">7</div></div>
 </div>
 
+  <div class="callout">
+    <div class="callout-title">Correccion: el objetivo que importa no es la palanca de ML</div>
+    <p>La tabla de campanas de abajo compara el ROAS real contra <strong>el objetivo de negocio</strong> (7.5x/6.5x/8.0x segun ticket Oro, 4.0x Plata, 3.0x Testeo &mdash; la tabla original de <code>campaign_rules.py</code>), no contra el <code>roas_target</code> que esta cargado en el panel de ML. Ese numero de ML es solo una palanca algoritmica que arranca baja a proposito y muestra aparte como referencia. La diferencia es grande en algunos casos: <strong>Oro Medio</strong> tiene la palanca de ML en 3.8x (se veia "cerca" comparado con eso) pero el objetivo real es 6.5x &mdash; contra ese numero, el ROAS real de 2.83x esta muy lejos, no apenas por debajo.</p>
+  </div>
+
   <div class="callout" style="background:var(--info-soft);border-left-color:var(--info);">
     <div class="callout-title" style="color:var(--info);">Que cambio desde el 21/07</div>
     <p>El cron semanal automatico esta pausado a pedido tuyo (corre solo a demanda, por Telegram o desde este chat). La tabla de "Que cambiar ahora" ya aplica el mismo filtro que usa el sistema real: una alerta de CTR/CVR bajo no cuenta si el producto ya supera su objetivo de ROAS &mdash; sin ese filtro esta tabla tendria 34 filas en vez de 23, la mayoria ruido.</p>
-    <p>El <strong>Vaso Termico</strong> sigue dividido entre 2 campanas (ver seccion al final) y la campana nueva <strong>"prueba pantalon"</strong> (id 358374832) sigue sin identificar &mdash; ninguno de los dos se toco esta corrida.</p>
+    <p>El <strong>Vaso Termico</strong> sigue dividido entre 2 campanas (ver seccion al final). La campana <strong>"prueba pantalon"</strong> (id 358374832) ya se identifico: 19 variantes de un Pantalon Corte Chino Gabardina Semi Recto (beige/negro/verde), con $601.422 gastados y $3.645.683 de ingresos en 30 dias &mdash; todavia no esta agregada a <code>campaign_ids.json</code>, asi que sigue invisible para el resto del sistema. Tambien se detecto que el total de la cuenta en el panel oficial de ML incluye 2 campanas eliminadas con historial de gasto que este reporte no puede ver (no aparecen en ningun endpoint).</p>
   </div>
 
   <nav class="jump">
@@ -207,57 +212,57 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border
         <thead><tr><th>Campaña</th><th class="num">ROAS</th><th class="num">Budget</th><th>Estado</th><th>Diagnóstico</th></tr></thead>
         <tbody>
         <tr>
-          <td class="col-prod"><div class="prod-name">Plata Medio</div><div class="prod-meta">1 producto</div></td>
-          <td class="num"><span class="roas-val">5.69x</span><span class="roas-obj">obj 4.2x</span></td>
+          <td class="col-prod"><div class="prod-name">Plata Medio</div><div class="prod-meta">1 producto</div><div class="prod-meta">palanca ML: 4.2x</div></td>
+          <td class="num"><span class="roas-val">5.69x</span><span class="roas-obj">obj negocio 4.0x</span></td>
           <td class="num">$45.000/dia</td>
           <td>&mdash;</td>
           <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>En objetivo</span></td>
         </tr>
         <tr>
-          <td class="col-prod"><div class="prod-name">Testeo Bajo</div><div class="prod-meta">6 productos</div></td>
-          <td class="num"><span class="roas-val">3.30x</span><span class="roas-obj">obj 2.8x</span></td>
+          <td class="col-prod"><div class="prod-name">Testeo Bajo</div><div class="prod-meta">6 productos</div><div class="prod-meta">palanca ML: 2.8x</div></td>
+          <td class="num"><span class="roas-val">3.30x</span><span class="roas-obj">obj negocio 3.0x</span></td>
           <td class="num">$50.000/dia</td>
           <td>&mdash;</td>
           <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>En objetivo</span></td>
         </tr>
         <tr>
-          <td class="col-prod"><div class="prod-name">Oro Bajo</div><div class="prod-meta">3 productos</div></td>
-          <td class="num"><span class="roas-val">7.21x</span><span class="roas-obj">obj 6.0x</span></td>
+          <td class="col-prod"><div class="prod-name">Oro Bajo</div><div class="prod-meta">3 productos</div><div class="prod-meta">palanca ML: 6.0x</div></td>
+          <td class="num"><span class="roas-val">7.21x</span><span class="roas-obj">obj negocio 8.0x</span></td>
           <td class="num">$12.000/dia</td>
           <td>&mdash;</td>
-          <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>En objetivo</span></td>
+          <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Por debajo</span></td>
         </tr>
         <tr>
-          <td class="col-prod"><div class="prod-name">Testeo Medio</div><div class="prod-meta">14 productos</div></td>
-          <td class="num"><span class="roas-val">2.95x</span><span class="roas-obj">obj 2.8x</span></td>
+          <td class="col-prod"><div class="prod-name">Testeo Medio</div><div class="prod-meta">14 productos</div><div class="prod-meta">palanca ML: 2.8x</div></td>
+          <td class="num"><span class="roas-val">2.95x</span><span class="roas-obj">obj negocio 3.0x</span></td>
           <td class="num">$23.000/dia</td>
           <td>&mdash;</td>
-          <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>En objetivo</span></td>
+          <td><span class="badge badge-warn"><span class="badge-icon">&darr;</span>Por debajo</span></td>
         </tr>
         <tr>
-          <td class="col-prod"><div class="prod-name">Plata Bajo</div><div class="prod-meta">3 productos</div></td>
-          <td class="num"><span class="roas-val">4.80x</span><span class="roas-obj">obj 3.3x</span></td>
+          <td class="col-prod"><div class="prod-name">Plata Bajo</div><div class="prod-meta">3 productos</div><div class="prod-meta">palanca ML: 3.3x</div></td>
+          <td class="num"><span class="roas-val">4.80x</span><span class="roas-obj">obj negocio 4.0x</span></td>
           <td class="num">$30.000/dia</td>
           <td>&mdash;</td>
           <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>En objetivo</span></td>
         </tr>
         <tr>
-          <td class="col-prod"><div class="prod-name">Testeo Alto</div><div class="prod-meta">5 productos</div></td>
-          <td class="num"><span class="roas-val">3.28x</span><span class="roas-obj">obj 2.8x</span></td>
+          <td class="col-prod"><div class="prod-name">Testeo Alto</div><div class="prod-meta">5 productos</div><div class="prod-meta">palanca ML: 2.8x</div></td>
+          <td class="num"><span class="roas-val">3.28x</span><span class="roas-obj">obj negocio 3.0x</span></td>
           <td class="num">$30.000/dia</td>
           <td>&mdash;</td>
           <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>En objetivo</span></td>
         </tr>
         <tr>
-          <td class="col-prod"><div class="prod-name">Oro Alto</div><div class="prod-meta">4 productos</div></td>
-          <td class="num"><span class="roas-val">7.60x</span><span class="roas-obj">obj 5.5x</span></td>
+          <td class="col-prod"><div class="prod-name">Oro Alto</div><div class="prod-meta">4 productos</div><div class="prod-meta">palanca ML: 5.5x</div></td>
+          <td class="num"><span class="roas-val">7.60x</span><span class="roas-obj">obj negocio 7.5x</span></td>
           <td class="num">$38.000/dia</td>
           <td>&mdash;</td>
           <td><span class="badge badge-good"><span class="badge-icon">&uarr;</span>En objetivo</span></td>
         </tr>
         <tr>
-          <td class="col-prod"><div class="prod-name">Oro Medio</div><div class="prod-meta">3 productos</div></td>
-          <td class="num"><span class="roas-val">2.83x</span><span class="roas-obj">obj 3.8x</span></td>
+          <td class="col-prod"><div class="prod-name">Oro Medio</div><div class="prod-meta">3 productos</div><div class="prod-meta">palanca ML: 3.8x</div></td>
+          <td class="num"><span class="roas-val">2.83x</span><span class="roas-obj">obj negocio 6.5x</span></td>
           <td class="num">$35.000/dia</td>
           <td><span class="season-tag season-todo_ano">Pausada</span></td>
           <td><span class="badge badge-bad"><span class="badge-icon">&times;</span>Lejos del objetivo</span></td>
