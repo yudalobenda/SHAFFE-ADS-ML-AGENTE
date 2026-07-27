@@ -1,8 +1,12 @@
 name: SHAFFE Ads - Análisis semanal
 
 on:
-  schedule:
-    - cron: '0 12 * * 1' # lunes 9:00 ART (UTC-3) = 12:00 UTC
+  # Cron semanal pausado a pedido del usuario (27/07/2026): por ahora el
+  # reporte solo se dispara a pedido (workflow_dispatch, o vía Telegram con
+  # el comando "collect" que ya escucha listen.yml). Para reactivar el envío
+  # automático de los lunes, descomentar el bloque `schedule` de abajo.
+  # schedule:
+  #   - cron: '0 12 * * 1' # lunes 9:00 ART (UTC-3) = 12:00 UTC
   workflow_dispatch: {}
 
 permissions:
