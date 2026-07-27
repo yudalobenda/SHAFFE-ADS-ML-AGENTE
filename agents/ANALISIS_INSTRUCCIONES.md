@@ -41,9 +41,9 @@ Si una campaña muestra saturación agregada, desglosar el gasto semanal **por p
 
 ## 6. roas_target configurado (palanca) vs. ROAS objetivo de negocio (umbral de evaluación) — no confundir
 
-El `roas_target` cargado en ML es una palanca algorítmica para que el sistema de puja compita la campaña — SHAFFE lo arranca bajo a propósito en cada campaña nueva y availability, para que no se ponga muy alto y ML deje de competir. Los ROAS objetivo de negocio (los de la tabla de tiers en `CLAUDE.md`: 7.5/6.5/8.0 oro, 4.0 plata, 2.5-3.5 testeo) son el umbral con el que se EVALÚA si un producto/campaña rinde bien — nunca son lo que hay que cargar directo en `roas_target`.
+El `roas_target_lever_ml` que viene en los datos de cada campaña es una palanca algorítmica para que el sistema de puja compita la campaña — SHAFFE lo arranca bajo a propósito en cada campaña nueva, para que no se ponga muy alto y ML deje de competir. **El campo `roas_objetivo_negocio` que viene junto con cada campaña en los datos es el umbral real con el que hay que EVALUAR** si un producto/campaña rinde bien (7.5/6.5/8.0 oro, 4.0 plata, 3.0 testeo según ticket) — es un campo distinto y ya viene calculado, no hay que derivarlo. **Usar siempre `roas_objetivo_negocio` para decidir si algo "cumple el objetivo" — nunca `roas_target_lever_ml`.** Confundir los dos hace que una campaña que en realidad rinde mal (ej. ROAS real 2.8x contra un objetivo real de 6.5x) parezca que está "cerca" solo porque la palanca de ML también está baja (ej. 3.8x).
 
-Si se recomienda subir `roas_target`: siempre de a escalones pequeños (ej. +0.2 a +0.5), nunca saltar directo al objetivo de negocio en un solo movimiento — si se sube demasiado de golpe, ML dejar de competir la campaña. Justificar la suba solo si el ROAS real logrado sostenido ya está por encima del `roas_target` actual (señal de que hay margen).
+Si se recomienda subir `roas_target_lever_ml` (la palanca real en ML): siempre de a escalones pequeños (ej. +0.2 a +0.5), nunca saltar directo al `roas_objetivo_negocio` en un solo movimiento — si se sube demasiado de golpe, ML deja de competir la campaña. Justificar la suba solo si el ROAS real logrado sostenido ya está por encima de la palanca actual (señal de que hay margen).
 
 ## 7. Cruzar siempre con ventas reales antes de recomendar sacar/bajar un producto
 

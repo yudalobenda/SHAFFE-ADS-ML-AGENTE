@@ -16,6 +16,8 @@ from __future__ import annotations
 import json
 import os
 
+import core.campaign_rules as reglas
+
 try:
     from openai import OpenAI
 except ImportError:
@@ -60,8 +62,15 @@ class AIAnalyst:
                     "id": c.get("id"),
                     "nombre": c.get("name"),
                     "budget": c.get("budget"),
-                    "roas_target": c.get("roas_target"),
-                    "acos_target": c.get("acos_target"),
+                    # OJO: roas_objetivo_negocio es el umbral real de evaluación
+                    # (tabla de tiers en CLAUDE.md/campaign_rules.py). roas_target_lever_ml
+                    # es solo la palanca algorítmica cargada en ML (arranca baja a
+                    # propósito) — nunca usar este segundo valor como objetivo de evaluación.
+                    "roas_objetivo_negocio": reglas.roas_target_campania(
+                        (c.get("name") or "").strip().lower().replace(" ", "_")
+                    ),
+                    "roas_target_lever_ml": c.get("roas_target"),
+                    "acos_target_lever_ml": c.get("acos_target"),
                     "status": c.get("status"),
                 }
                 for c in campanias
