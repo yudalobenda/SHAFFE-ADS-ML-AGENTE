@@ -1,0 +1,972 @@
+<title>Panel Ads SHAFFE — 27/07</title>
+<style>
+:root {
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --border: rgba(11,11,11,0.10);
+  --grid: #e1e0d9;
+
+  --accent: #2a78d6;
+  --good: #0ca30c;
+  --warning: #fab219;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --border: rgba(255,255,255,0.10);
+    --grid: #2c2c2a;
+    --accent: #3987e5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #ffffff;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --border: rgba(255,255,255,0.10);
+  --grid: #2c2c2a;
+  --accent: #3987e5;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 18px;
+  margin-bottom: 28px;
+}
+.masthead .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.masthead h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 2px 0 0;
+  text-wrap: balance;
+}
+.masthead .date {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-2);
+  align-self: flex-end;
+}
+
+section { margin-bottom: 44px; }
+h2.section-title {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+h2.section-title .n {
+  font-family: var(--mono);
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* KPI row */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.kpi {
+  background: var(--surface);
+  padding: 16px 14px;
+}
+.kpi-label {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.kpi-value {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.kpi--critical .kpi-value { color: var(--critical); }
+.kpi--good .kpi-value { color: var(--good); }
+
+/* Campaign bullets */
+.camp-row {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--grid);
+}
+.camp-row:last-child { border-bottom: none; }
+.camp-row__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.camp-row__name { font-weight: 700; font-size: 14.5px; }
+.camp-row__meta { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+.bullet { display: flex; align-items: center; gap: 14px; }
+.bullet__track {
+  position: relative;
+  flex: 1;
+  height: 16px;
+  background: var(--grid);
+  border-radius: 4px;
+}
+.bullet__fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 4px 8px 8px 4px;
+}
+.bullet__fill--good { background: var(--good); }
+.bullet__fill--warning { background: var(--warning); }
+.bullet__fill--critical { background: var(--critical); }
+.bullet__tick {
+  position: absolute;
+  top: -3px; bottom: -3px;
+  width: 2px;
+  background: var(--ink);
+  opacity: 0.6;
+}
+.bullet__figures {
+  display: flex;
+  gap: 10px;
+  min-width: 148px;
+  justify-content: flex-end;
+  font-size: 13px;
+}
+.bullet__real { font-weight: 700; }
+.bullet__real--good { color: var(--good); }
+.bullet__real--warning { color: var(--warning); }
+.bullet__real--critical { color: var(--critical); }
+.bullet__target { color: var(--muted); }
+
+.pill {
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.pill--muted { background: var(--grid); color: var(--ink-2); }
+
+/* Action table */
+.table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface); }
+thead th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--grid);
+  white-space: nowrap;
+}
+tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--grid);
+  vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: none; }
+.cell-sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.cell-reco { color: var(--ink-2); max-width: 260px; }
+td.num { text-align: right; white-space: nowrap; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.dot--critical { background: var(--critical); }
+.dot--warning { background: var(--warning); }
+.dot--good { background: var(--good); }
+
+.chip {
+  display: inline-block;
+  font-size: 11px;
+  background: var(--grid);
+  color: var(--ink-2);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin: 0 4px 4px 0;
+}
+
+/* Callout */
+.callout {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-left: 4px solid var(--serious);
+}
+.callout__icon { font-size: 20px; color: var(--serious); }
+.callout__title { font-weight: 700; margin-bottom: 4px; }
+.callout__body { margin: 0; color: var(--ink-2); font-size: 13.5px; }
+
+/* AI narrative */
+.narrative {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 28px 20px;
+}
+.narrative h2 { font-size: 18px; margin: 22px 0 6px; }
+.narrative h3 { font-size: 15px; margin: 18px 0 4px; color: var(--ink); }
+.narrative h4 { font-size: 13.5px; margin: 14px 0 2px; font-weight: 700; }
+.narrative p { font-size: 13.5px; color: var(--ink-2); margin: 4px 0; }
+.narrative ul { margin: 4px 0 10px; padding-left: 20px; }
+.narrative li { font-size: 13.5px; color: var(--ink-2); margin-bottom: 3px; }
+.narrative strong { color: var(--ink); }
+
+.badge-ai {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.badge-ai::before { content: "●"; font-size: 8px; }
+
+footer {
+  margin-top: 60px;
+  padding-top: 18px;
+  border-top: 1px solid var(--grid);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .bullet__figures { min-width: 110px; }
+  .camp-row__meta { margin-left: 0; }
+}
+</style>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <div class="eyebrow">SHAFFE · Mercado Libre Ads</div>
+      <h1>Panel de campañas</h1>
+    </div>
+    <div class="date">27 de julio de 2026</div>
+  </div>
+
+  <section>
+    <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Gasto 30 días</div>
+      <div class="kpi-value">$6.362.706</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Ingresos atribuidos 30d</div>
+      <div class="kpi-value">$30.430.694</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">ROAS de cuenta</div>
+      <div class="kpi-value">4.78x</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Campañas activas</div>
+      <div class="kpi-value">7</div>
+    </div>
+    <div class="kpi kpi--critical">
+      <div class="kpi-label">Necesitan revisión</div>
+      <div class="kpi-value">9</div>
+    </div>
+    <div class="kpi kpi--good">
+      <div class="kpi-label">Oportunidades</div>
+      <div class="kpi-value">7</div>
+    </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Campañas <span class="n">ROAS real vs. objetivo cargado en ML</span></h2>
+    
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Plata Medio</span>
+        
+        <span class="camp-row__meta">Budget $45.000/día · 1 producto</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--good" style="width:63.4%"></div>
+          <div class="bullet__tick" style="left:46.8%" title="Objetivo 4.2x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--good">5.69x</span>
+          <span class="mono bullet__target">obj 4.2x</span>
+        </div>
+      </div>
+    </div>
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Testeo Bajo</span>
+        
+        <span class="camp-row__meta">Budget $50.000/día · 6 productos</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--good" style="width:36.8%"></div>
+          <div class="bullet__tick" style="left:31.2%" title="Objetivo 2.8x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--good">3.30x</span>
+          <span class="mono bullet__target">obj 2.8x</span>
+        </div>
+      </div>
+    </div>
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Oro Bajo</span>
+        
+        <span class="camp-row__meta">Budget $12.000/día · 3 productos</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--good" style="width:80.4%"></div>
+          <div class="bullet__tick" style="left:66.9%" title="Objetivo 6.0x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--good">7.21x</span>
+          <span class="mono bullet__target">obj 6.0x</span>
+        </div>
+      </div>
+    </div>
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Testeo Medio</span>
+        
+        <span class="camp-row__meta">Budget $23.000/día · 14 productos</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--good" style="width:32.9%"></div>
+          <div class="bullet__tick" style="left:31.2%" title="Objetivo 2.8x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--good">2.95x</span>
+          <span class="mono bullet__target">obj 2.8x</span>
+        </div>
+      </div>
+    </div>
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Plata Bajo</span>
+        
+        <span class="camp-row__meta">Budget $30.000/día · 3 productos</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--good" style="width:53.5%"></div>
+          <div class="bullet__tick" style="left:36.8%" title="Objetivo 3.3x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--good">4.80x</span>
+          <span class="mono bullet__target">obj 3.3x</span>
+        </div>
+      </div>
+    </div>
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Testeo Alto</span>
+        
+        <span class="camp-row__meta">Budget $30.000/día · 5 productos</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--good" style="width:36.6%"></div>
+          <div class="bullet__tick" style="left:31.2%" title="Objetivo 2.8x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--good">3.28x</span>
+          <span class="mono bullet__target">obj 2.8x</span>
+        </div>
+      </div>
+    </div>
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Oro Alto</span>
+        
+        <span class="camp-row__meta">Budget $38.000/día · 4 productos</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--good" style="width:84.7%"></div>
+          <div class="bullet__tick" style="left:61.3%" title="Objetivo 5.5x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--good">7.60x</span>
+          <span class="mono bullet__target">obj 5.5x</span>
+        </div>
+      </div>
+    </div>
+    <div class="camp-row">
+      <div class="camp-row__head">
+        <span class="camp-row__name">Oro Medio</span>
+        <span class="pill pill--muted">Pausada</span>
+        <span class="camp-row__meta">Budget $35.000/día · 3 productos</span>
+      </div>
+      <div class="bullet">
+        <div class="bullet__track">
+          <div class="bullet__fill bullet__fill--critical" style="width:31.6%"></div>
+          <div class="bullet__tick" style="left:42.4%" title="Objetivo 3.8x"></div>
+        </div>
+        <div class="bullet__figures">
+          <span class="mono bullet__real bullet__real--critical">2.83x</span>
+          <span class="mono bullet__target">obj 3.8x</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Qué cambiar ahora <span class="n">23 productos</span></h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Estado</th>
+            <th>Producto</th>
+            <th>ROAS</th>
+            <th>Gasto 30d</th>
+            <th>Ventas 14d</th>
+            <th>Motivo</th>
+            <th>Recomendación</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Pantalon Jogging Hombre Babucha Algodn Rustico Corte Recto<div class="cell-sub">Oro Medio</div></td>
+        <td class="mono num">2.75x<div class="cell-sub">obj 6.5x</div></td>
+        <td class="mono num">$259.134</td>
+        <td class="mono num">24</td>
+        <td><span class="chip">CTR bajo</span><span class="chip">ACOS alto</span><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mejorar foto/precio para recuperar el ROAS · costo de publicidad muy alto para este tier — revisar puja o pausar · mover_tier: oro -&gt; plata</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Pantalón Cargo Parachute Oversize De Mujer Con Bolsillos<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">0.67x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$33.421</td>
+        <td class="mono num">1</td>
+        <td><span class="chip">CTR bajo</span><span class="chip">CVR bajo</span></td>
+        <td class="cell-reco">ROAS muy bajo — cambiar foto + precio o pausar · la gente entra pero no compra — mejorar descripción/ficha</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">0.00x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$6.184</td>
+        <td class="mono num">0</td>
+        <td><span class="chip">CVR bajo</span></td>
+        <td class="cell-reco">sin ventas — revisá descripción, precio y fotos secundarias</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Shaffe<div class="cell-sub">Testeo Alto</div></td>
+        <td class="mono num">0.00x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$3.920</td>
+        <td class="mono num">0</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">sin ventas — cambiá la foto principal antes de decidir</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Buzo Hoodie Frizado Oversize Hombre Canguro Capucha Shaffe<div class="cell-sub">Testeo Alto</div></td>
+        <td class="mono num">0.00x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$2.719</td>
+        <td class="mono num">0</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">sin ventas — cambiá la foto principal antes de decidir</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Sweater Oversize Mujer Tejido Bremer Elastizado Pullover<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">0.00x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$1.277</td>
+        <td class="mono num">0</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">sin ventas — cambiá la foto principal antes de decidir</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Remera Oversize Hombre Básica De Algodón Estilo Streetwear<div class="cell-sub">Testeo Bajo</div></td>
+        <td class="mono num">0.00x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$1.089</td>
+        <td class="mono num">0</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">sin ventas — cambiá la foto principal antes de decidir</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Remera Oversize Hombre Algodón Shaffe Ng Clasicc<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">0.00x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$690</td>
+        <td class="mono num">0</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">sin ventas — cambiá la foto principal antes de decidir</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--critical"></span>Crítico</td>
+        <td>Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">0.00x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$100</td>
+        <td class="mono num">0</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">sin ventas — cambiá la foto principal antes de decidir</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--warning"></span>Atención</td>
+        <td>Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha<div class="cell-sub">Oro Bajo</div></td>
+        <td class="mono num">6.50x<div class="cell-sub">obj 8.0x</div></td>
+        <td class="mono num">$395.472</td>
+        <td class="mono num">145</td>
+        <td><span class="chip">CTR bajo</span><span class="chip">ACOS alto</span></td>
+        <td class="cell-reco">mejorar foto para potenciar (ya está cerca del objetivo) · costo de publicidad muy alto para este tier — revisar puja o pausar</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--warning"></span>Atención</td>
+        <td>Pantalon Mujer Baggy Babucha Friza Jogger Suelto<div class="cell-sub">Testeo Alto</div></td>
+        <td class="mono num">2.90x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$300.212</td>
+        <td class="mono num">23</td>
+        <td><span class="chip">CTR bajo</span><span class="chip">CVR bajo</span></td>
+        <td class="cell-reco">mejorar foto para potenciar (ya está cerca del objetivo) · la gente entra pero no compra — mejorar descripción/ficha</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--warning"></span>Atención</td>
+        <td>Remera Termica Niño Manga Larga Super Abrigada Escolar<div class="cell-sub">Oro Bajo</div></td>
+        <td class="mono num">7.10x<div class="cell-sub">obj 8.0x</div></td>
+        <td class="mono num">$250.797</td>
+        <td class="mono num">149</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">mejorar foto para potenciar (ya está cerca del objetivo)</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--warning"></span>Atención</td>
+        <td>Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">2.96x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$224.681</td>
+        <td class="mono num">18</td>
+        <td><span class="chip">CTR bajo</span></td>
+        <td class="cell-reco">mejorar foto para potenciar (ya está cerca del objetivo)</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--warning"></span>Atención</td>
+        <td>Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe<div class="cell-sub">Oro Alto</div></td>
+        <td class="mono num">4.80x<div class="cell-sub">obj 7.5x</div></td>
+        <td class="mono num">$180.913</td>
+        <td class="mono num">23</td>
+        <td><span class="chip">CTR bajo</span><span class="chip">ACOS alto</span><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mejorar foto/precio para recuperar el ROAS · costo de publicidad muy alto para este tier — revisar puja o pausar · mover_tier: oro -&gt; plata</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--warning"></span>Atención</td>
+        <td>Campera Mujer Deportiva Entallada Elastizada Gym Urbano<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">2.21x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$72.022</td>
+        <td class="mono num">5</td>
+        <td><span class="chip">CTR bajo</span><span class="chip">CVR bajo</span></td>
+        <td class="cell-reco">mejorar foto para potenciar (ya está cerca del objetivo) · la gente entra pero no compra — mejorar descripción/ficha</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--warning"></span>Atención</td>
+        <td>Chaleco Hombre Polar Con Bolsillos Termico Antipilling<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">2.86x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$53.703</td>
+        <td class="mono num">6</td>
+        <td><span class="chip">CTR bajo</span><span class="chip">Poco stock</span></td>
+        <td class="cell-reco">mejorar foto para potenciar (ya está cerca del objetivo) · stock bajo -&gt; agregar_a_promo</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--good"></span>Oportunidad</td>
+        <td>Pantalon Jean Baggy Nena Cintura Alta Adolescente<div class="cell-sub">Testeo Alto</div></td>
+        <td class="mono num">4.20x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$165.406</td>
+        <td class="mono num">16</td>
+        <td><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mover_tier: testeo -&gt; plata</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--good"></span>Oportunidad</td>
+        <td>Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">3.88x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$43.775</td>
+        <td class="mono num">6</td>
+        <td><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mover_tier: testeo -&gt; plata</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--good"></span>Oportunidad</td>
+        <td>Pack X2 Gorro Lana Invierno Hombre Térmico Corderito<div class="cell-sub">Testeo Bajo</div></td>
+        <td class="mono num">6.65x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$20.839</td>
+        <td class="mono num">6</td>
+        <td><span class="chip">Poco stock</span><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">stock bajo -&gt; agregar_a_promo · mover_tier: testeo -&gt; oro</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--good"></span>Oportunidad</td>
+        <td>Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5<div class="cell-sub">Testeo Bajo</div></td>
+        <td class="mono num">19.55x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$10.536</td>
+        <td class="mono num">11</td>
+        <td><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mover_tier: testeo -&gt; oro</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--good"></span>Oportunidad</td>
+        <td>Polera Hombre Morley Slim Cuello Alto Manga Larga Abrigada<div class="cell-sub">Plata Bajo</div></td>
+        <td class="mono num">10.21x<div class="cell-sub">obj 4.0x</div></td>
+        <td class="mono num">$4.977</td>
+        <td class="mono num">3</td>
+        <td><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mover_tier: plata -&gt; oro</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--good"></span>Oportunidad</td>
+        <td>Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom<div class="cell-sub">Testeo Medio</div></td>
+        <td class="mono num">9.63x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$2.991</td>
+        <td class="mono num">1</td>
+        <td><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mover_tier: testeo -&gt; oro</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot--good"></span>Oportunidad</td>
+        <td>Remera Hombre Algodon Oversize Manga Corta Estampada<div class="cell-sub">Testeo Bajo</div></td>
+        <td class="mono num">27.38x<div class="cell-sub">obj 3.0x</div></td>
+        <td class="mono num">$245</td>
+        <td class="mono num">1</td>
+        <td><span class="chip">Cambio de tier</span></td>
+        <td class="cell-reco">mover_tier: testeo -&gt; oro</td>
+      </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  
+    <div class="callout callout--serious">
+      <div class="callout__icon">⚠</div>
+      <div>
+        <div class="callout__title">Tier dividido: Vaso Térmico Acero Inoxidable 900ml Con Pico Frío Calor</div>
+        <p class="callout__body">Sus 4 variantes están repartidas entre <strong>Plata Medio y Testeo Bajo</strong> — el sistema no puede decidir el tier solo mientras esté partido así. Gasto 30d $30.665, ROAS 2.66x, stock actual 0 unidades. Conviene unificarlo en una sola campaña.</p>
+      </div>
+    </div>
+
+  <section>
+    <h2 class="section-title">Candidatas sin ads <span class="n">top 12 por ventas históricas</span></h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Ventas hist.</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th>Campaña sugerida</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td>Remera Hombre Lisa Algodon Clasica Basica Entallada Shaffeco</td>
+        <td class="mono num">169</td>
+        <td class="mono num">951</td>
+        <td class="mono num">$19.000</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe</td>
+        <td class="mono num">121</td>
+        <td class="mono num">113</td>
+        <td class="mono num">$36.825</td>
+        <td>Testeo Alto</td>
+      </tr>
+      <tr>
+        <td>Calza Leggings Mujer Lisa Lycra Deportiva Running Gym Shaffe</td>
+        <td class="mono num">24</td>
+        <td class="mono num">24</td>
+        <td class="mono num">$25.000</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Camisa Hombre De Vestir Entallada Manga Larga Lisa Shaffe Co</td>
+        <td class="mono num">12</td>
+        <td class="mono num">235</td>
+        <td class="mono num">$58.950</td>
+        <td>Testeo Alto</td>
+      </tr>
+      <tr>
+        <td>Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle L</td>
+        <td class="mono num">10</td>
+        <td class="mono num">53</td>
+        <td class="mono num">$19.701</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle Xl</td>
+        <td class="mono num">8</td>
+        <td class="mono num">60</td>
+        <td class="mono num">$19.701</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Remera Hombre Algodón Waffle Manga Corta Shaffe Verde Militar Waffle L</td>
+        <td class="mono num">7</td>
+        <td class="mono num">10</td>
+        <td class="mono num">$19.701</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Remera Hombre Algodón Waffle Manga Corta Shaffe Bordó Waffle L</td>
+        <td class="mono num">7</td>
+        <td class="mono num">14</td>
+        <td class="mono num">$19.900</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle M</td>
+        <td class="mono num">7</td>
+        <td class="mono num">30</td>
+        <td class="mono num">$19.701</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa Xl Algodón</td>
+        <td class="mono num">6</td>
+        <td class="mono num">63</td>
+        <td class="mono num">$22.500</td>
+        <td>Testeo Medio</td>
+      </tr>
+      <tr>
+        <td>Remera Hombre Algodon Manga Corta Estampada Clasica Negro You L Lisa</td>
+        <td class="mono num">6</td>
+        <td class="mono num">4</td>
+        <td class="mono num">$17.950</td>
+        <td>Testeo Bajo</td>
+      </tr>
+      <tr>
+        <td>Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle S</td>
+        <td class="mono num">4</td>
+        <td class="mono num">28</td>
+        <td class="mono num">$19.701</td>
+        <td>Testeo Medio</td>
+      </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Análisis narrativo</h2>
+    <div class="narrative">
+      <div class="badge-ai" style="padding-top:18px">Generado por OpenAI</div>
+      <h4>Análisis Semanal de Campañas y Productos SHAFFE en Mercado Libre Ads</h4>
+<p>Fecha de corte: HOY</p>
+<p>Fuente: Mercado Libre Ads API</p>
+<p>Criterio: <strong>Ver instrucciones internas, &quot;system prompt&quot; SHAFFE</strong></p>
+<h3>Campaña: TESTEO BAJO</h3>
+<p><strong>Budget:</strong> $50.000 — <strong>ROAS target:</strong> 2,8</p>
+<h4>Productos</h4>
+<ul>
+<li><strong>Remera Lisa Algodon Hombre Manga Corta (MLA881345207)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, sobresaliente.</li>
+<li><strong>Métrica clave:</strong> ROAS 19,55 / ACOS 5% / 8 ventas en 14 días / solo 1 variante (<strong>confirmar talle único real</strong>).</li>
+<li><strong>Recomendación:</strong> Mantener. Si es talle único con buen stock, considerar mover a campaña de mejor tier/plata.</li>
+<li><strong>Pack x2 Gorro Lana Invierno Hombre (7171145953464530)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 6,65 a pesar de que en ads no hay ventas recientes; bajo gasto.</li>
+<li><strong>Recomendación:</strong> Mantener en testeo. Revaluar si sigue sin ventas las próximas semanas.</li>
+<li><strong>Vaso Térmico Acero Inoxidable 900ml (4791225646378513)</strong></li>
+<li><strong>Diagnóstico:</strong> Saturado, ROAS bajo 2,66 (&lt; target), ACOS 37% (&gt;35%), sin ventas reales en 14d.</li>
+<li><strong>Recomendación:</strong> PAUSAR producto en ads. Gasto sostenido sin resultados, dejar solo venta orgánica.</li>
+<li><strong>Remera Hombre Oversize Estampada (8587919091333235)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 27,4 / ACOS 3,7%, buen ratio para testeo, 12 ventas orgánicas.</li>
+<li><strong>Recomendación:</strong> Mantener. Muy bajo gasto pero buen desempeño inicial.</li>
+<li><strong>Remera Térmica Hombre Manga Larga (8478742433753810)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano en testeo, ROAS 3,1 / ACOS 32%, muchas ventas (68 en 14d).</li>
+<li><strong>Recomendación:</strong> Candidata para migrar a campaña plata, ajustando campaña a temporada (producto invernal).</li>
+<li><strong>Pantalón Cargo Convertible 2 en 1 (2942378628320595)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 3,11 / ACOS 32%, 73 ventas en 14d, gasto elevado pero rentable.</li>
+<li><strong>Recomendación:</strong> Mantener y considerar mover a campaña de mayor tier si hay proyección de stock para temporada.</li>
+<li><strong>Remera Oversize Hombre Básica (8409341215260511)</strong></li>
+<li><strong>Diagnóstico:</strong> Sin datos suficientes (muy bajo gasto, 0 ventas).</li>
+<li><strong>Recomendación:</strong> Mantener sólo si hay margen para testear más.</li>
+</ul>
+<h3>Campaña: PLATA BAJO</h3>
+<p><strong>Budget:</strong> $30.000 — <strong>ROAS target:</strong> 3,3</p>
+<h4>Productos</h4>
+<ul>
+<li><strong>Pantalón Hombre Jogger Lycra (4715820982541265)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 4,45 / ACOS 22%, 38 ventas en 14d.</li>
+<li><strong>Recomendación:</strong> Mantener. Buen fit para este tier.</li>
+<li><strong>Polera Hombre Morley (4684351091916497)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 10,21 / ACOS 9,8%, ventas orgánicas alineadas.</li>
+<li><strong>Recomendación:</strong> Mantener, posible candidta a subir de tier si mantiene volumen.</li>
+<li><strong>Calza Térmica Hombre Larga (5418139681492752)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 5,13 / ACOS 19,5%, 137 ventas en 14d.</li>
+<li><strong>Recomendación:</strong> Mantener — revisar stock por alta demanda de temporada.</li>
+</ul>
+<h3>Campaña: PLATA MEDIO</h3>
+<p><strong>Budget:</strong> $45.000 — <strong>ROAS target:</strong> 4,2</p>
+<h4>Productos</h4>
+<ul>
+<li><strong>Campera Hombre Inflable Liviana (4237815745645393)</strong></li>
+<li><strong>Diagnóstico:</strong> Limítrofe, ROAS 5,69 / ACOS 17,5% (excede target favorablemente), 108 ventas en 14d, producto muy estacional (abrigo masculino avanzado junio).</li>
+<li><strong>Recomendación:</strong> Mantener, monitorear stock. No escalar agresivamente salvo que haya reposición inmediata.</li>
+</ul>
+<ul>
+<li><strong>Vaso Térmico Acero Inoxidable 900ml (4791225646378513)</strong></li>
+<li><strong>Diagnóstico:</strong> Repite resultados ya analizados en TESTEO BAJO.</li>
+<li><strong>Recomendación:</strong> Como arriba, pausar producto en ads.</li>
+</ul>
+<h3>Campaña: ORO BAJO</h3>
+<p><strong>Budget:</strong> $12.000 — <strong>ROAS target:</strong> 6,0</p>
+<h4>Productos</h4>
+<ul>
+<li><strong>Piloto Lluvia Impermeable Hombre (1099554402837512)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 6,50 / ACOS 15,4%, 145 ventas en 14d.</li>
+<li><strong>Recomendación:</strong> Mantener, excelente fit para ORO y bien de temporada.</li>
+<li><strong>Calza Térmica Niño Lycra Escolar (8129433199386895)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 8,83 / ACOS 11,3%, 82 ventas en 14d, producto muy de temporada.</li>
+<li><strong>Recomendación:</strong> Mantener, revisar stock.</li>
+<li><strong>Remera Térmica Niño Escolar (3950762862926290)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 7,10 / ACOS 14,0%, 107 ventas en 14d.</li>
+<li><strong>Recomendación:</strong> Mantener, mismo criterio.</li>
+</ul>
+<h3>Campaña: ORO ALTO</h3>
+<p><strong>Budget:</strong> $38.000 — <strong>ROAS target:</strong> 5,5</p>
+<h4>Productos</h4>
+<ul>
+<li><strong>Pantalón Gabardina Hombre Vestir Clásico (4816596800258335)</strong></li>
+<li><strong>Diagnóstico:</strong> Ligeramente debajo del target, ROAS 4,8 / ACOS 20,8%, 20 ventas/14d.</li>
+<li><strong>Recomendación:</strong> Mantener en oro pero monitorear. Si baja stock o rotación, mover a plata.</li>
+<li><strong>Chaleco Inflable Hombre Guata Capucha (3883158471915474)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 9,6 / ACOS 10%. Ello pese a la estacionalidad (abrigo).</li>
+<li><strong>Recomendación:</strong> Mantener — priorizar liquidación de stock si temporada termina pronto.</li>
+<li><strong>Pack x3 Remeras Hombre Algodón (4429347355797948)</strong></li>
+<li><strong>Diagnóstico:</strong> ROAS 18,26 / ACOS 5,4%, ventas bajas, poco gasto.</li>
+<li><strong>Recomendación:</strong> Mantener. Si hay stock de verano, escalar al pasar temporada.</li>
+<li><strong>Pantalón Gabardina Hombre Corte Chino (MLA1221195023)</strong></li>
+<li><strong>Diagnóstico:</strong> Sano, ROAS 9,3 / ACOS 10,7%, 26 ventas / 14d</li>
+<li><strong>Recomendación:</strong> Mantener y priorizar si hay stock para la temporada.</li>
+</ul>
+<h3>Campaña: ORO MEDIO</h3>
+<p><strong>Budget:</strong> $35.000 — <strong>ROAS target:</strong> 3,8</p>
+<p><strong>Status:</strong> Pausada</p>
+<h4>Productos</h4>
+<ul>
+<li><strong>Pantalón Jogging Recto Hombre (4382639765639185)</strong></li>
+<li><strong>Diagnóstico:</strong> Saturado/ineficiente, ROAS 2,75 (&lt; target), ACOS 36%, ventas 5/14d, alto gasto.</li>
+<li><strong>Recomendación:</strong> PAUSAR producto si campaña se reactiva, o revisar creativos/ficha.</li>
+<li><strong>Buzo Oversize Wafle Liso (2608211211107984)</strong></li>
+<li><strong>Diagnóstico:</strong> Sin inversión ni datos.</li>
+<li><strong>Recomendación:</strong> Mantener fuera de ads.</li>
+<li><strong>Remera Hombre Lisa Algodón Slim (197204721853729)</strong></li>
+<li><strong>Diagnóstico:</strong> Sin inversión ni datos.</li>
+<li><strong>Recomendación:</strong> Mantener fuera.</li>
+</ul>
+<h3>Campañas TESTEO MEDIO &amp; TESTEO ALTO</h3>
+<p>Se observan <strong>varios productos con roas por debajo del target o sin ventas reales</strong>.</p>
+<p>Recomendar:</p>
+<ul>
+<li><strong>Pausar y excluir de campañas</strong> aquellos productos con: ACOS &gt;50%, ventas reales ≤2 en 14d, ej.</li>
+<li>Buzo Canguro Friza Capucha (3859373507095129): ACOS 32%, solo 2 ventas reales. En testeo pero bajo rendimiento.</li>
+<li>Sweater Tejido Niño (990526411675858): Casi sin ventas, ACOS bajo pero sin escala; dejar fuera de presupuesto principal.</li>
+<li><strong>Campera Guata Hombre (MLA843252230 en TESTEO ALTO):</strong> ROAS 3,13, ACOS 32% a pesar de alto gasto (&gt;100k), ventas 13/14d. Mantener solo si hay expectativa de rotación de stock.</li>
+</ul>
+<h3>Observaciones Adicionales Generales / Reglas aplicadas</h3>
+<ul>
+<li><strong>No se recomienda bajar puja de productos individuales:</strong> Mercado Libre solo permite ajustes a nivel campaña.</li>
+<li><strong>Productos con muchas ventas orgánicas (&gt;10 u/14d) y ACOS altos:</strong> Sacar o bajar inversión en ads, priorizar orgánico.</li>
+<li><strong>Varios productos con bajo gasto y/o pocas impresiones:</strong> Falta de datos, mantener brevemente en testeo.</li>
+<li><strong>Estacionalidad:</strong> No escalar fuertemente abrigos ni productos de invierno salvo que haya stock y plan de liquidación (ej. ceder tier a primavera/verano).</li>
+<li><strong>Diagnóstico hold/pausa:</strong> No se listan productos en hold/pausa esta semana.</li>
+</ul>
+<h3>Recomendaciones Campaña-Level</h3>
+<ul>
+<li><strong>Ajustar budget solo en campañas con saturación comprobada:</strong> No hay evidencia fuerte de saturación de presupuesto agregada analizable por falta de ventanas por semana en el input. Revisar en próximas corridas si alguna supera el gasto/ROAS de las semanas previas y ajustar ahí.</li>
+<li><strong>Al migrar productos de testeo a campañas de mayor tier:</strong> Bajar el presupuesto de testeo en la misma proporción para evitar concentración de gasto en productos ya saturados.</li>
+</ul>
+<h3>Resumen de acciones sugeridas</h3>
+<ul>
+<li><strong>PAUSAR en ads:</strong> Vaso Térmico Acero (4791225646378513, en ambas campañas), Pantalón Jogging Recto (4382639765639185), y aquellos de testeo con ACOS &gt; 50% y sin ventas.</li>
+<li><strong>MANTENER/SUBIR DE NIVEL:</strong> Piloto Lluvia, Calza Térmica Niño, Remera Lisa Hombre, productos con ROAS &gt; target y ventas robustas.</li>
+<li><strong>REVISAR DE CERCA:</strong> Productos de invierno con bajo stock y alta venta, abrigos que puedan quedar fuera de temporada.</li>
+<li><strong>NO CAMBIAR PUJAS INDIVIDUALES:</strong> Solo ajustar budget o exclusión de producto.</li>
+</ul>
+<p><strong>Nivel de confianza:</strong> ALTO en productos con alto gasto y ventas claras. MEDIO-BAJO en productos con bajo historial o pocos días de datos; mantener periodo de prueba antes de sacar.</p>
+<p><strong>Consultas o dudas:</strong> Pedir detalle por producto si se requiere explicación numérica individual.</p>
+<p>Fin del informe.</p>
+    </div>
+  </section>
+
+  <footer>
+    Datos: Mercado Libre Ads API + Orders API (ventas reales 14 días) · corrida manual desde el chat, no automática · guardado en <code>reportes_manuales/2026-07-27/</code>.
+  </footer>
+
+</div>

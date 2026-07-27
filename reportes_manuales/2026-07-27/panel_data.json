@@ -1,0 +1,772 @@
+{
+  "fecha": "2026-07-27",
+  "totales": {
+    "gasto_30d": 6362706,
+    "ingresos_30d": 30430694,
+    "n_campanias_activas": 7,
+    "n_productos_activos": 39,
+    "roas_cuenta": 4.78,
+    "criticos": 9,
+    "oportunidades": 7
+  },
+  "campanias": [
+    {
+      "campania": "plata_medio",
+      "budget": 45000.0,
+      "roas_target": 4.2,
+      "status": "active",
+      "gasto_30d": 1596638,
+      "ingresos_30d": 9084872,
+      "roas_real": 5.69,
+      "n_productos": 1
+    },
+    {
+      "campania": "testeo_bajo",
+      "budget": 50000.0,
+      "roas_target": 2.8,
+      "status": "active",
+      "gasto_30d": 1347595,
+      "ingresos_30d": 4442231,
+      "roas_real": 3.3,
+      "n_productos": 6
+    },
+    {
+      "campania": "oro_bajo",
+      "budget": 12000.0,
+      "roas_target": 6.0,
+      "status": "active",
+      "gasto_30d": 836210,
+      "ingresos_30d": 6028055,
+      "roas_real": 7.21,
+      "n_productos": 3
+    },
+    {
+      "campania": "testeo_medio",
+      "budget": 23000.0,
+      "roas_target": 2.8,
+      "status": "active",
+      "gasto_30d": 731776,
+      "ingresos_30d": 2156285,
+      "roas_real": 2.95,
+      "n_productos": 14
+    },
+    {
+      "campania": "plata_bajo",
+      "budget": 30000.0,
+      "roas_target": 3.3,
+      "status": "active",
+      "gasto_30d": 583322,
+      "ingresos_30d": 2797309,
+      "roas_real": 4.8,
+      "n_productos": 3
+    },
+    {
+      "campania": "testeo_alto",
+      "budget": 30000.0,
+      "roas_target": 2.8,
+      "status": "active",
+      "gasto_30d": 572472,
+      "ingresos_30d": 1879712,
+      "roas_real": 3.28,
+      "n_productos": 5
+    },
+    {
+      "campania": "oro_alto",
+      "budget": 38000.0,
+      "roas_target": 5.5,
+      "status": "active",
+      "gasto_30d": 435559,
+      "ingresos_30d": 3308536,
+      "roas_real": 7.6,
+      "n_productos": 4
+    },
+    {
+      "campania": "oro_medio",
+      "budget": 35000.0,
+      "roas_target": 3.8,
+      "status": "paused",
+      "gasto_30d": 259134,
+      "ingresos_30d": 733694,
+      "roas_real": 2.83,
+      "n_productos": 3
+    }
+  ],
+  "necesitan_accion": [
+    {
+      "campania": "oro_medio",
+      "nombre": "Pantalon Jogging Hombre Babucha Algodn Rustico Corte Recto",
+      "gasto_30d": 259134,
+      "roas": 2.75,
+      "roas_objetivo": 6.5,
+      "ventas_atrib": 24.0,
+      "motivos": [
+        "ctr_bajo",
+        "acos_alto",
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mejorar foto/precio para recuperar el ROAS",
+        "costo de publicidad muy alto para este tier — revisar puja o pausar",
+        "mover_tier: oro -> plata"
+      ],
+      "severidad": "critico",
+      "decision_tier": {
+        "grupo_id": 4382639765639185,
+        "accion": "mover_tier",
+        "campania_origen": "oro_medio",
+        "campania_destino": "plata_medio",
+        "tier_origen": "oro",
+        "tier_destino": "plata",
+        "roas_reciente": 2.7473514929916694
+      }
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Pantalón Cargo Parachute Oversize De Mujer Con Bolsillos",
+      "gasto_30d": 33421,
+      "roas": 0.67,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 1.0,
+      "motivos": [
+        "ctr_bajo",
+        "cvr_bajo"
+      ],
+      "recomendaciones": [
+        "ROAS muy bajo — cambiar foto + precio o pausar",
+        "la gente entra pero no compra — mejorar descripción/ficha"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
+      "gasto_30d": 6184,
+      "roas": 0.0,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 0.0,
+      "motivos": [
+        "cvr_bajo"
+      ],
+      "recomendaciones": [
+        "sin ventas — revisá descripción, precio y fotos secundarias"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_alto",
+      "nombre": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Shaffe",
+      "gasto_30d": 3920,
+      "roas": 0.0,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 0.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "sin ventas — cambiá la foto principal antes de decidir"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_alto",
+      "nombre": "Buzo Hoodie Frizado Oversize Hombre Canguro Capucha Shaffe",
+      "gasto_30d": 2719,
+      "roas": 0.0,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 0.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "sin ventas — cambiá la foto principal antes de decidir"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Sweater Oversize Mujer Tejido Bremer Elastizado Pullover",
+      "gasto_30d": 1277,
+      "roas": 0.0,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 0.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "sin ventas — cambiá la foto principal antes de decidir"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_bajo",
+      "nombre": "Remera Oversize Hombre Básica De Algodón Estilo Streetwear",
+      "gasto_30d": 1089,
+      "roas": 0.0,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 0.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "sin ventas — cambiá la foto principal antes de decidir"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
+      "gasto_30d": 690,
+      "roas": 0.0,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 0.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "sin ventas — cambiá la foto principal antes de decidir"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe",
+      "gasto_30d": 100,
+      "roas": 0.0,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 0.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "sin ventas — cambiá la foto principal antes de decidir"
+      ],
+      "severidad": "critico",
+      "decision_tier": null
+    },
+    {
+      "campania": "oro_bajo",
+      "nombre": "Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha",
+      "gasto_30d": 395472,
+      "roas": 6.5,
+      "roas_objetivo": 8.0,
+      "ventas_atrib": 145.0,
+      "motivos": [
+        "ctr_bajo",
+        "acos_alto"
+      ],
+      "recomendaciones": [
+        "mejorar foto para potenciar (ya está cerca del objetivo)",
+        "costo de publicidad muy alto para este tier — revisar puja o pausar"
+      ],
+      "severidad": "atencion",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_alto",
+      "nombre": "Pantalon Mujer Baggy Babucha Friza Jogger Suelto",
+      "gasto_30d": 300212,
+      "roas": 2.9,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 23.0,
+      "motivos": [
+        "ctr_bajo",
+        "cvr_bajo"
+      ],
+      "recomendaciones": [
+        "mejorar foto para potenciar (ya está cerca del objetivo)",
+        "la gente entra pero no compra — mejorar descripción/ficha"
+      ],
+      "severidad": "atencion",
+      "decision_tier": null
+    },
+    {
+      "campania": "oro_bajo",
+      "nombre": "Remera Termica Niño Manga Larga Super Abrigada Escolar",
+      "gasto_30d": 250797,
+      "roas": 7.1,
+      "roas_objetivo": 8.0,
+      "ventas_atrib": 149.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "mejorar foto para potenciar (ya está cerca del objetivo)"
+      ],
+      "severidad": "atencion",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe",
+      "gasto_30d": 224681,
+      "roas": 2.96,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 18.0,
+      "motivos": [
+        "ctr_bajo"
+      ],
+      "recomendaciones": [
+        "mejorar foto para potenciar (ya está cerca del objetivo)"
+      ],
+      "severidad": "atencion",
+      "decision_tier": null
+    },
+    {
+      "campania": "oro_alto",
+      "nombre": "Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe",
+      "gasto_30d": 180913,
+      "roas": 4.8,
+      "roas_objetivo": 7.5,
+      "ventas_atrib": 23.0,
+      "motivos": [
+        "ctr_bajo",
+        "acos_alto",
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mejorar foto/precio para recuperar el ROAS",
+        "costo de publicidad muy alto para este tier — revisar puja o pausar",
+        "mover_tier: oro -> plata"
+      ],
+      "severidad": "atencion",
+      "decision_tier": {
+        "grupo_id": 4816596800258335,
+        "accion": "mover_tier",
+        "campania_origen": "oro_alto",
+        "campania_destino": "plata_alto",
+        "tier_origen": "oro",
+        "tier_destino": "plata",
+        "roas_reciente": 4.801024560011735
+      }
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Campera Mujer Deportiva Entallada Elastizada Gym Urbano",
+      "gasto_30d": 72022,
+      "roas": 2.21,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 5.0,
+      "motivos": [
+        "ctr_bajo",
+        "cvr_bajo"
+      ],
+      "recomendaciones": [
+        "mejorar foto para potenciar (ya está cerca del objetivo)",
+        "la gente entra pero no compra — mejorar descripción/ficha"
+      ],
+      "severidad": "atencion",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Chaleco Hombre Polar Con Bolsillos Termico Antipilling",
+      "gasto_30d": 53703,
+      "roas": 2.86,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 6.0,
+      "motivos": [
+        "ctr_bajo",
+        "poco_stock"
+      ],
+      "recomendaciones": [
+        "mejorar foto para potenciar (ya está cerca del objetivo)",
+        "stock bajo -> agregar_a_promo"
+      ],
+      "severidad": "atencion",
+      "decision_tier": null
+    },
+    {
+      "campania": "testeo_alto",
+      "nombre": "Pantalon Jean Baggy Nena Cintura Alta Adolescente",
+      "gasto_30d": 165406,
+      "roas": 4.2,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 16.0,
+      "motivos": [
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mover_tier: testeo -> plata"
+      ],
+      "severidad": "oportunidad",
+      "decision_tier": {
+        "grupo_id": 522836159066769,
+        "accion": "mover_tier",
+        "campania_origen": "testeo_alto",
+        "campania_destino": "plata_alto",
+        "tier_origen": "testeo",
+        "tier_destino": "plata",
+        "roas_reciente": 4.203240117497744
+      }
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
+      "gasto_30d": 43775,
+      "roas": 3.88,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 6.0,
+      "motivos": [
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mover_tier: testeo -> plata"
+      ],
+      "severidad": "oportunidad",
+      "decision_tier": {
+        "grupo_id": 5182533623215119,
+        "accion": "mover_tier",
+        "campania_origen": "testeo_medio",
+        "campania_destino": "plata_medio",
+        "tier_origen": "testeo",
+        "tier_destino": "plata",
+        "roas_reciente": 3.8803614522786316
+      }
+    },
+    {
+      "campania": "testeo_bajo",
+      "nombre": "Pack X2 Gorro Lana Invierno Hombre Térmico Corderito",
+      "gasto_30d": 20839,
+      "roas": 6.65,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 6.0,
+      "motivos": [
+        "poco_stock",
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "stock bajo -> agregar_a_promo",
+        "mover_tier: testeo -> oro"
+      ],
+      "severidad": "oportunidad",
+      "decision_tier": {
+        "grupo_id": 7171145953464530,
+        "accion": "mover_tier",
+        "campania_origen": "testeo_bajo",
+        "campania_destino": "oro_bajo",
+        "tier_origen": "testeo",
+        "tier_destino": "oro",
+        "roas_reciente": 6.6533615431384
+      }
+    },
+    {
+      "campania": "testeo_bajo",
+      "nombre": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
+      "gasto_30d": 10536,
+      "roas": 19.55,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 11.0,
+      "motivos": [
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mover_tier: testeo -> oro"
+      ],
+      "severidad": "oportunidad",
+      "decision_tier": {
+        "grupo_id": "MLA881345207",
+        "accion": "mover_tier",
+        "campania_origen": "testeo_bajo",
+        "campania_destino": "oro_bajo",
+        "tier_origen": "testeo",
+        "tier_destino": "oro",
+        "roas_reciente": 19.549986617337474
+      }
+    },
+    {
+      "campania": "plata_bajo",
+      "nombre": "Polera Hombre Morley Slim Cuello Alto Manga Larga Abrigada",
+      "gasto_30d": 4977,
+      "roas": 10.21,
+      "roas_objetivo": 4.0,
+      "ventas_atrib": 3.0,
+      "motivos": [
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mover_tier: plata -> oro"
+      ],
+      "severidad": "oportunidad",
+      "decision_tier": {
+        "grupo_id": 4684351091916497,
+        "accion": "mover_tier",
+        "campania_origen": "plata_bajo",
+        "campania_destino": "oro_bajo",
+        "tier_origen": "plata",
+        "tier_destino": "oro",
+        "roas_reciente": 10.214024393918999
+      }
+    },
+    {
+      "campania": "testeo_medio",
+      "nombre": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
+      "gasto_30d": 2991,
+      "roas": 9.63,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 1.0,
+      "motivos": [
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mover_tier: testeo -> oro"
+      ],
+      "severidad": "oportunidad",
+      "decision_tier": {
+        "grupo_id": 5533546941922063,
+        "accion": "mover_tier",
+        "campania_origen": "testeo_medio",
+        "campania_destino": "oro_medio",
+        "tier_origen": "testeo",
+        "tier_destino": "oro",
+        "roas_reciente": 9.627356188107225
+      }
+    },
+    {
+      "campania": "testeo_bajo",
+      "nombre": "Remera Hombre Algodon Oversize Manga Corta Estampada",
+      "gasto_30d": 245,
+      "roas": 27.38,
+      "roas_objetivo": 3.0,
+      "ventas_atrib": 1.0,
+      "motivos": [
+        "decision_tier"
+      ],
+      "recomendaciones": [
+        "mover_tier: testeo -> oro"
+      ],
+      "severidad": "oportunidad",
+      "decision_tier": {
+        "grupo_id": 8587919091333235,
+        "accion": "mover_tier",
+        "campania_origen": "testeo_bajo",
+        "campania_destino": "oro_bajo",
+        "tier_origen": "testeo",
+        "tier_destino": "oro",
+        "roas_reciente": 27.375025463434508
+      }
+    }
+  ],
+  "candidatas_sin_ads": [
+    {
+      "family_id": "MLA1194006886",
+      "family_name": "Remera Hombre Lisa Algodon Clasica Basica Entallada Shaffeco",
+      "item_ids": [
+        "MLA1194006886"
+      ],
+      "precio_max": 19000,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 951,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 169,
+      "listing_type": "gold_pro"
+    },
+    {
+      "family_id": "MLA1396562483",
+      "family_name": "Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe",
+      "item_ids": [
+        "MLA1396562483"
+      ],
+      "precio_max": 36825,
+      "ticket": "alto",
+      "campania_recomendada": "testeo_alto",
+      "stock_total": 113,
+      "variantes_disponibles": 1,
+      "envio_gratis": true,
+      "sold_quantity_historico": 121,
+      "listing_type": "gold_special"
+    },
+    {
+      "family_id": "MLA1699421072",
+      "family_name": "Calza Leggings Mujer Lisa Lycra Deportiva Running Gym Shaffe",
+      "item_ids": [
+        "MLA1699421072"
+      ],
+      "precio_max": 25000,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 24,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 24,
+      "listing_type": "gold_special"
+    },
+    {
+      "family_id": "MLA1413924317",
+      "family_name": "Camisa Hombre De Vestir Entallada Manga Larga Lisa Shaffe Co",
+      "item_ids": [
+        "MLA1413924317"
+      ],
+      "precio_max": 58950,
+      "ticket": "alto",
+      "campania_recomendada": "testeo_alto",
+      "stock_total": 235,
+      "variantes_disponibles": 1,
+      "envio_gratis": true,
+      "sold_quantity_historico": 12,
+      "listing_type": "gold_special"
+    },
+    {
+      "family_id": "MLA1496830689",
+      "family_name": "Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle L",
+      "item_ids": [
+        "MLA1496830689"
+      ],
+      "precio_max": 19701.47,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 53,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 10,
+      "listing_type": "gold_pro"
+    },
+    {
+      "family_id": "MLA1496779587",
+      "family_name": "Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle Xl",
+      "item_ids": [
+        "MLA1496779587"
+      ],
+      "precio_max": 19701.47,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 60,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 8,
+      "listing_type": "gold_pro"
+    },
+    {
+      "family_id": "MLA2078828574",
+      "family_name": "Remera Hombre Algodón Waffle Manga Corta Shaffe Verde Militar Waffle L",
+      "item_ids": [
+        "MLA2078828574"
+      ],
+      "precio_max": 19701.47,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 10,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 7,
+      "listing_type": "gold_pro"
+    },
+    {
+      "family_id": "MLA2078971426",
+      "family_name": "Remera Hombre Algodón Waffle Manga Corta Shaffe Bordó Waffle L",
+      "item_ids": [
+        "MLA2078971426"
+      ],
+      "precio_max": 19900,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 14,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 7,
+      "listing_type": "gold_pro"
+    },
+    {
+      "family_id": "MLA2078971424",
+      "family_name": "Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle M",
+      "item_ids": [
+        "MLA2078971424"
+      ],
+      "precio_max": 19701.47,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 30,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 7,
+      "listing_type": "gold_pro"
+    },
+    {
+      "family_id": "MLA2367032222",
+      "family_name": "Remeron Manga Corta Oversize Largo Talle Grande Remera Liso Gris Lisa Xl Algodón",
+      "item_ids": [
+        "MLA2367032222"
+      ],
+      "precio_max": 22500,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 63,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 6,
+      "listing_type": "gold_special"
+    },
+    {
+      "family_id": "3385523697201062",
+      "family_name": "Remera Hombre Algodon Manga Corta Estampada Clasica Negro You L Lisa",
+      "item_ids": [
+        "MLA2709605072",
+        "MLA1618458533",
+        "MLA1618217893",
+        "MLA1618179451"
+      ],
+      "precio_max": 17949.6,
+      "ticket": "bajo",
+      "campania_recomendada": "testeo_bajo",
+      "stock_total": 4,
+      "variantes_disponibles": 4,
+      "envio_gratis": false,
+      "sold_quantity_historico": 6,
+      "listing_type": "gold_pro"
+    },
+    {
+      "family_id": "MLA2079022542",
+      "family_name": "Remera Hombre Algodón Waffle Manga Corta Shaffe Negro Waffle S",
+      "item_ids": [
+        "MLA2079022542"
+      ],
+      "precio_max": 19701.47,
+      "ticket": "medio",
+      "campania_recomendada": "testeo_medio",
+      "stock_total": 28,
+      "variantes_disponibles": 1,
+      "envio_gratis": false,
+      "sold_quantity_historico": 4,
+      "listing_type": "gold_pro"
+    }
+  ],
+  "tier_dividido": [
+    {
+      "family_id": "4791225646378513",
+      "family_name": "Vaso Térmico Acero Inoxidable 900ml Con Pico Frío Calor",
+      "item_ids": [
+        "MLA3409335862",
+        "MLA1814260363",
+        "MLA1814234441",
+        "MLA1814234439"
+      ],
+      "tiers_detectados": [
+        "plata_medio",
+        "testeo_bajo"
+      ],
+      "metricas": {
+        "clicks": 382.0,
+        "prints": 83346.0,
+        "cost": 30664.53,
+        "direct_amount": 61275.0,
+        "indirect_amount": 20425.0,
+        "total_amount": 81700.0,
+        "direct_units_quantity": 3.0,
+        "indirect_units_quantity": 1.0,
+        "units_quantity": 4.0,
+        "roas": 2.6643160681086586,
+        "acos": 0.37533084455324356
+      },
+      "stock": 0,
+      "variantes_disp": 0
+    }
+  ]
+}
