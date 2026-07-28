@@ -290,7 +290,7 @@ class MLClient:
             resultados.extend(data.get("results", []))
             total = data.get("paging", {}).get("total", len(resultados))
             offset += limit
-            if offset >= total or offset >= 1000:  # ML no pagina en profundidad más allá de esto
+            if offset >= total:
                 break
         return resultados
 
