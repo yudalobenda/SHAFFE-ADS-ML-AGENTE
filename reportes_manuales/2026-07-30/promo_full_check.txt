@@ -1,0 +1,69 @@
+=== MLA1812611463 ===
+[
+  {
+    "id": "LGH-MLA1000",
+    "type": "LIGHTNING",
+    "ref_id": "CANDIDATE-MLA1812611463-71510793214",
+    "status": "candidate",
+    "price": 9614,
+    "original_price": 11000,
+    "min_discounted_price": 2200,
+    "max_discounted_price": 9900,
+    "suggested_discounted_price": 9350,
+    "stock": {
+      "min": 5,
+      "max": 12
+    }
+  },
+  {
+    "type": "PRICE_DISCOUNT",
+    "status": "candidate",
+    "price": 0,
+    "original_price": 11000,
+    "name": "",
+    "min_discounted_price": 3850,
+    "max_discounted_price": 10450,
+    "suggested_discounted_price": 10120
+  },
+  {
+    "id": "P-MLA17839040",
+    "type": "DEAL",
+    "status": "candidate",
+    "price": 0,
+    "original_price": 11000,
+    "start_date": "2026-08-03T00:00:00-03:00",
+    "finish_date": "2026-08-10T00:00:00-03:00",
+    "name": "Festival del Credito 3",
+    "min_discounted_price": 3850,
+    "max_discounted_price": 10450,
+    "suggested_discounted_price": 10120
+  }
+]
+
+=== MLA3091031108 ===
+[
+  {
+    "type": "PRICE_DISCOUNT",
+    "status": "candidate",
+    "price": 0,
+    "original_price": 43300,
+    "name": "",
+    "min_discounted_price": 14571.48,
+    "max_discounted_price": 41135,
+    "suggested_discounted_price": 36428.7
+  },
+  {
+    "id": "P-MLA17839040",
+    "type": "DEAL",
+    "status": "candidate",
+    "price": 0,
+    "original_price": 43300,
+    "start_date": "2026-08-03T00:00:00-03:00",
+    "finish_date": "2026-08-10T00:00:00-03:00",
+    "name": "Festival del Credito 3",
+    "min_discounted_price": 8660,
+    "max_discounted_price": 38970,
+    "suggested_discounted_price": 36805
+  }
+]
+

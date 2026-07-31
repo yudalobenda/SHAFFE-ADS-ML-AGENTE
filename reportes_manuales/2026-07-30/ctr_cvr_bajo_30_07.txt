@@ -1,0 +1,18 @@
+total: 16
+
+testeo_alto  | Buzo Hoodie Frisa Canguro Capucha Bordado Mujer  | roas=0.00/3.0 | gasto30d=$3920 | ventas_reales_14d=0 | ventas_ads=0.0 | motivos=['ctr_bajo']
+testeo_medio | Sweater Nene Tejido Con Botones Saquito Pullover | roas=0.00/3.0 | gasto30d=$433 | ventas_reales_14d=2 | ventas_ads=0.0 | motivos=['ctr_bajo']
+testeo_medio | Bermuda Hombre Corte Chino De Gabardina Elastiza | roas=0.00/3.0 | gasto30d=$327 | ventas_reales_14d=0 | ventas_ads=0.0 | motivos=['ctr_bajo']
+testeo_medio | Sweater Oversize Mujer Tejido Bremer Elastizado  | roas=0.00/3.0 | gasto30d=$2613 | ventas_reales_14d=0 | ventas_ads=0.0 | motivos=['cvr_bajo']
+testeo_medio | Remera Oversize Hombre Algodón Shaffe Ng Clasicc | roas=0.00/3.0 | gasto30d=$805 | ventas_reales_14d=0 | ventas_ads=0.0 | motivos=['ctr_bajo']
+testeo_bajo  | Remera Oversize Hombre Básica De Algodón Estilo  | roas=0.00/3.0 | gasto30d=$3070 | ventas_reales_14d=0 | ventas_ads=0.0 | motivos=['ctr_bajo', 'cvr_bajo']
+testeo_medio | Pantalón Cargo Parachute Oversize De Mujer Con B | roas=1.26/3.0 | gasto30d=$58516 | ventas_reales_14d=7 | ventas_ads=3.0 | motivos=['ctr_bajo', 'cvr_bajo']
+oro_medio    | Pantalon Jogging Hombre Babucha Algodn Rustico C | roas=2.91/6.5 | gasto30d=$301540 | ventas_reales_14d=10 | ventas_ads=30.0 | motivos=['ctr_bajo', 'acos_alto']
+oro_alto     | Pantalon Gabardina Hombre De Vestir Clasico Chup | roas=4.40/7.5 | gasto30d=$359139 | ventas_reales_14d=42 | ventas_ads=42.0 | motivos=['ctr_bajo', 'acos_alto']
+testeo_medio | Campera Mujer Deportiva Entallada Elastizada Gym | roas=1.85/3.0 | gasto30d=$131273 | ventas_reales_14d=5 | ventas_ads=7.0 | motivos=['ctr_bajo', 'cvr_bajo']
+testeo_alto  | Pantalon Mujer Baggy Babucha Friza Jogger Suelto | roas=1.95/3.0 | gasto30d=$530074 | ventas_reales_14d=18 | ventas_ads=28.0 | motivos=['ctr_bajo', 'cvr_bajo']
+oro_bajo     | Piloto Lluvia Impermeable Hombre Liviano Poncho  | roas=6.16/8.0 | gasto30d=$409941 | ventas_reales_14d=157 | ventas_ads=142.0 | motivos=['ctr_bajo', 'acos_alto']
+oro_bajo     | Remera Termica Niño Manga Larga Super Abrigada E | roas=7.17/8.0 | gasto30d=$239844 | ventas_reales_14d=59 | ventas_ads=143.0 | motivos=['ctr_bajo']
+testeo_medio | Chaleco Hombre Polar Con Bolsillos Termico Antip | roas=2.93/3.0 | gasto30d=$52375 | ventas_reales_14d=0 | ventas_ads=6.0 | motivos=['ctr_bajo']
+oro_alto     | Pantalon De Vestir Hombre Gabardina Corte Chino  | roas=7.37/7.5 | gasto30d=$516174 | ventas_reales_14d=78 | ventas_ads=100.0 | motivos=['ctr_bajo']
+testeo_medio | Pantalon Babucha Hombre Recto Deportivo Con Vivo | roas=2.99/3.0 | gasto30d=$226166 | ventas_reales_14d=14 | ventas_ads=18.0 | motivos=['ctr_bajo', 'cvr_bajo']

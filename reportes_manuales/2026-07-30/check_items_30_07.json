@@ -1,0 +1,378 @@
+{
+  "Pantalon Mujer Baggy Babucha Friza Jogger Suelto": {
+    "title": "Pantalon Mujer Baggy Babucha Friza Jogger Suelto Negro Lisa S",
+    "status": "closed",
+    "pictures": [
+      "https://http2.mlstatic.com/D_723158-MLA112394413541_052026-O.webp",
+      "https://http2.mlstatic.com/D_779274-MLA110185544482_052026-O.jpg",
+      "https://http2.mlstatic.com/D_749066-MLA110187508186_052026-O.jpg",
+      "https://http2.mlstatic.com/D_947517-MLA110188758426_052026-O.webp",
+      "https://http2.mlstatic.com/D_781174-MLA110187388924_052026-O.webp",
+      "https://http2.mlstatic.com/D_828419-MLA111109268087_052026-O.jpg",
+      "https://http2.mlstatic.com/D_895587-MLA110188758438_052026-O.webp",
+      "https://http2.mlstatic.com/D_616405-MLA111109268089_052026-O.jpg",
+      "https://http2.mlstatic.com/D_825965-MLA111109328305_052026-O.webp",
+      "https://http2.mlstatic.com/D_782629-MLA111108522889_052026-O.jpg"
+    ],
+    "n_variations": 0,
+    "price": 39600,
+    "descripcion": "• Calce baggy amplio que no ajusta ni marca\n• Cintura elastizada con cordón regulable\n• Bolsillos funcionales profundos\n• Ideal para uso diario: cómoda, versátil y urbana\n\nEste pantalón babucha baggy está pensado para que te muevas con total comodidad sin perder estilo. Su calce amplio genera una caída relajada que no ajusta el cuerpo, lo que lo convierte en una prenda clave para todos los días.\n\n",
+    "error_promo": "MLClientError('GET /seller-promotions/items/MLA3261938610 -> 400 {\"message\":\"Item status is not allowed (closed)\",\"error\":\"bad_request\",\"status\":400,\"cause\":[]}')"
+  },
+  "Pantalon De Vestir Hombre Gabardina Corte Chino": {
+    "title": "Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co",
+    "status": "active",
+    "pictures": [
+      "https://http2.mlstatic.com/D_949138-MLA114904278195_072026-O.jpg",
+      "https://http2.mlstatic.com/D_739792-MLA108875329441_032026-O.webp",
+      "https://http2.mlstatic.com/D_925010-MLA108101359374_032026-O.jpg",
+      "https://http2.mlstatic.com/D_795078-MLA108099371606_032026-O.webp",
+      "https://http2.mlstatic.com/D_788082-MLA108101064222_032026-O.webp",
+      "https://http2.mlstatic.com/D_664214-MLA108101449144_032026-O.webp",
+      "https://http2.mlstatic.com/D_663066-MLA108099460648_032026-O.webp",
+      "https://http2.mlstatic.com/D_662400-MLA108877081023_032026-O.webp",
+      "https://http2.mlstatic.com/D_747826-MLA91836645410_092025-O.webp",
+      "https://http2.mlstatic.com/D_643554-MLA110121646124_042026-O.webp",
+      "https://http2.mlstatic.com/D_958568-MLA110121497808_042026-O.webp",
+      "https://http2.mlstatic.com/D_944650-MLA108100935574_032026-O.jpg",
+      "https://http2.mlstatic.com/D_858390-MLA108099956848_032026-O.webp",
+      "https://http2.mlstatic.com/D_680610-MLA108875320217_032026-O.webp",
+      "https://http2.mlstatic.com/D_734186-MLA108874219795_032026-O.jpg",
+      "https://http2.mlstatic.com/D_951237-MLA108874219811_032026-O.webp",
+      "https://http2.mlstatic.com/D_813751-MLA108099451370_032026-O.jpg",
+      "https://http2.mlstatic.com/D_921406-MLA108874189927_032026-O.webp",
+      "https://http2.mlstatic.com/D_759935-MLA108875259899_032026-O.jpg",
+      "https://http2.mlstatic.com/D_677652-MLA108484977576_032026-O.jpg",
+      "https://http2.mlstatic.com/D_830552-MLA108099928054_032026-O.jpg",
+      "https://http2.mlstatic.com/D_696148-MLA108099928024_032026-O.webp",
+      "https://http2.mlstatic.com/D_691617-MLA108875261001_032026-O.webp",
+      "https://http2.mlstatic.com/D_672243-MLA108099452358_032026-O.jpg",
+      "https://http2.mlstatic.com/D_761756-MLA108101026370_032026-O.jpg",
+      "https://http2.mlstatic.com/D_713023-MLA108876865991_032026-O.jpg",
+      "https://http2.mlstatic.com/D_646652-MLA108875261037_032026-O.webp",
+      "https://http2.mlstatic.com/D_612892-MLA108101026396_032026-O.jpg",
+      "https://http2.mlstatic.com/D_649535-MLA108874220829_032026-O.webp",
+      "https://http2.mlstatic.com/D_793646-MLA108875380631_032026-O.webp"
+    ],
+    "n_variations": 21,
+    "price": 46000,
+    "descripcion": "Pantalón de vestir hombre en gabardina elastizada Shaffe — elegancia y comodidad para la oficina, reuniones y el día a día. Versátil y de excelente caída, combina con todo: desde una camisa formal hasta una remera y zapatillas.\n\nLO QUE LO HACE DIFERENTE      - Gabardina elastizada: 97% algodon + 3% spandex, comodo y flexible todo el dia   - Corte slim tapered moderno: estiliza la figura sin ser sk",
+    "promociones": [
+      {
+        "id": "P-MLA17753022",
+        "type": "SMART",
+        "ref_id": "CANDIDATE-MLA1221195023-71405989668",
+        "status": "candidate",
+        "price": 35687,
+        "meli_percentage": 1.1,
+        "seller_percentage": 21.3,
+        "original_price": 46000,
+        "name": "Potencia tus ventas"
+      },
+      {
+        "id": "P-MLA17847044",
+        "type": "SMART",
+        "ref_id": "CANDIDATE-MLA1221195023-71467588122",
+        "status": "candidate",
+        "price": 34616.39,
+        "meli_percentage": 4.5,
+        "seller_percentage": 20.2,
+        "original_price": 46000,
+        "name": "Ofertas Compartidas 8.8"
+      },
+      {
+        "id": "P-MLA17863002",
+        "type": "SMART",
+        "ref_id": "CANDIDATE-MLA1221195023-71489054572",
+        "status": "candidate",
+        "price": 34616.39,
+        "meli_percentage": 2.3,
+        "seller_percentage": 22.4,
+        "original_price": 46000,
+        "name": "Potencia tus ventas"
+      },
+      {
+        "type": "PRICE_DISCOUNT",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 46000,
+        "name": "",
+        "min_discounted_price": 14274.8,
+        "max_discounted_price": 43700,
+        "suggested_discounted_price": 42320
+      },
+      {
+        "id": "P-MLA17839040",
+        "type": "DEAL",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 46000,
+        "start_date": "2026-08-03T00:00:00-03:00",
+        "finish_date": "2026-08-10T00:00:00-03:00",
+        "name": "Festival del Credito 3",
+        "min_discounted_price": 14274.8,
+        "max_discounted_price": 43700,
+        "suggested_discounted_price": 42320
+      }
+    ]
+  },
+  "Piloto Lluvia Impermeable Hombre Liviano Poncho": {
+    "title": "Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha Transparente Unico",
+    "status": "paused",
+    "pictures": [
+      "https://http2.mlstatic.com/D_968272-MLA112991256449_062026-O.webp",
+      "https://http2.mlstatic.com/D_639052-MLA112991256415_062026-O.webp",
+      "https://http2.mlstatic.com/D_727954-MLA111875788640_062026-O.webp",
+      "https://http2.mlstatic.com/D_924541-MLA112991345097_062026-O.jpg",
+      "https://http2.mlstatic.com/D_615754-MLA111875611530_062026-O.webp",
+      "https://http2.mlstatic.com/D_666981-MLA112990931855_062026-O.jpg",
+      "https://http2.mlstatic.com/D_882137-MLA111875611554_062026-O.jpg",
+      "https://http2.mlstatic.com/D_743392-MLA112989921647_062026-O.webp",
+      "https://http2.mlstatic.com/D_629846-MLA111876526820_062026-O.webp",
+      "https://http2.mlstatic.com/D_971694-MLA112991523857_062026-O.jpg"
+    ],
+    "n_variations": 0,
+    "price": 17928,
+    "descripcion": "Piloto impermeable para hombre — la solución práctica para no mojarte, ya sea en la city, en moto, bici o laburando afuera. Material EVA 100% impermeable, liviano y fácil de llevar, cubre ropa y mochila sin trabar el movimiento.\n\nCARACTERÍSTICAS PRINCIPALES\nPiloto impermeable para lluvia\nMaterial EVA impermeable 100%\nNo absorbe agua\nCosturas termoselladas\nCierre frontal con botones a presión\nCapuc",
+    "promociones": [
+      {
+        "type": "PRICE_DISCOUNT",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 17928,
+        "name": "",
+        "min_discounted_price": 7171.2,
+        "max_discounted_price": 17031.6,
+        "suggested_discounted_price": 16673.03
+      },
+      {
+        "id": "P-MLA17839040",
+        "type": "DEAL",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 17928,
+        "start_date": "2026-08-03T00:00:00-03:00",
+        "finish_date": "2026-08-10T00:00:00-03:00",
+        "name": "Festival del Credito 3",
+        "min_discounted_price": 7171.2,
+        "max_discounted_price": 17031.6,
+        "suggested_discounted_price": 16673.03
+      }
+    ]
+  },
+  "Pantalon Gabardina Hombre De Vestir Clasico Chupin": {
+    "title": "Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe Azul 38",
+    "status": "active",
+    "pictures": [
+      "https://http2.mlstatic.com/D_781000-MLA114543907041_072026-O.webp",
+      "https://http2.mlstatic.com/D_671064-MLA114544887089_072026-O.jpg",
+      "https://http2.mlstatic.com/D_638105-MLA113299170650_072026-O.webp",
+      "https://http2.mlstatic.com/D_750211-MLA113299438908_072026-O.webp",
+      "https://http2.mlstatic.com/D_914745-MLA114544558911_072026-O.webp",
+      "https://http2.mlstatic.com/D_653058-MLA114543226103_072026-O.webp",
+      "https://http2.mlstatic.com/D_601465-MLA113298816636_072026-O.webp",
+      "https://http2.mlstatic.com/D_872699-MLA114543255913_072026-O.webp",
+      "https://http2.mlstatic.com/D_700422-MLA113299200700_072026-O.webp",
+      "https://http2.mlstatic.com/D_971535-MLA113298816646_072026-O.webp"
+    ],
+    "n_variations": 0,
+    "price": 43300,
+    "descripcion": "Pantalón chino de gabardina para hombre — el clásico infaltable con el plus elastizado que buscás en cada prenda. Corte chupin prolijo, perfecto para la oficina, una salida o el día a día con estilo.\n\n- Pantalón corte Chino chupin\n- Tela gabardina\n- 3% spandex elastano\n- Elastizado\n- Bolsillos laterales y traseros\n- Cierre y botón al frente\n- Tiro medio\n- Es uno de los esenciales masculinos que no",
+    "promociones": [
+      {
+        "type": "PRICE_DISCOUNT",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 43300,
+        "name": "",
+        "min_discounted_price": 14571.48,
+        "max_discounted_price": 41135,
+        "suggested_discounted_price": 36428.7
+      },
+      {
+        "id": "P-MLA17839040",
+        "type": "DEAL",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 43300,
+        "start_date": "2026-08-03T00:00:00-03:00",
+        "finish_date": "2026-08-10T00:00:00-03:00",
+        "name": "Festival del Credito 3",
+        "min_discounted_price": 14571.48,
+        "max_discounted_price": 41135,
+        "suggested_discounted_price": 36428.7
+      }
+    ]
+  },
+  "Remera Termica Nino Manga Larga Super Abrigada": {
+    "title": "Remera Termica Niño Manga Larga Super Abrigada Escolar Negro 4",
+    "status": "active",
+    "pictures": [
+      "https://http2.mlstatic.com/D_959124-MLA111520553538_062026-O.webp",
+      "https://http2.mlstatic.com/D_884722-MLA111521235150_062026-O.webp",
+      "https://http2.mlstatic.com/D_638118-MLA112581368609_062026-O.webp",
+      "https://http2.mlstatic.com/D_722357-MLA111520171776_062026-O.jpg",
+      "https://http2.mlstatic.com/D_863892-MLA111520171780_062026-O.jpg",
+      "https://http2.mlstatic.com/D_631752-MLA112581751461_062026-O.jpg",
+      "https://http2.mlstatic.com/D_831651-MLA111520939480_062026-O.jpg",
+      "https://http2.mlstatic.com/D_762603-MLA111520464600_062026-O.webp",
+      "https://http2.mlstatic.com/D_809764-MLA112581398459_062026-O.jpg",
+      "https://http2.mlstatic.com/D_913670-MLA111521235200_062026-O.webp"
+    ],
+    "n_variations": 0,
+    "price": 11000,
+    "descripcion": "REMERA TÉRMICA NIÑO MANGA LARGA — abrigo real para el colegio y el frío\n\nLa remera térmica ideal para acompañarlo todos los días de invierno. Diseñada para brindar abrigo, comodidad y libertad de movimiento, sin resultar pesada ni incómoda.\n\nSu tela térmica ayuda a conservar el calor corporal mientras mantiene un calce cómodo para usar sola o debajo del uniforme, buzos o camperas. Perfecta para el",
+    "promociones": [
+      {
+        "id": "LGH-MLA1000",
+        "type": "LIGHTNING",
+        "ref_id": "CANDIDATE-MLA1812611463-71510793214",
+        "status": "candidate",
+        "price": 9614,
+        "original_price": 11000,
+        "min_discounted_price": 2200,
+        "max_discounted_price": 9900,
+        "suggested_discounted_price": 9350,
+        "stock": {
+          "min": 5,
+          "max": 12
+        }
+      },
+      {
+        "type": "PRICE_DISCOUNT",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 11000,
+        "name": "",
+        "min_discounted_price": 3850,
+        "max_discounted_price": 10450,
+        "suggested_discounted_price": 10120
+      },
+      {
+        "id": "P-MLA17839040",
+        "type": "DEAL",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 11000,
+        "start_date": "2026-08-03T00:00:00-03:00",
+        "finish_date": "2026-08-10T00:00:00-03:00",
+        "name": "Festival del Credito 3",
+        "min_discounted_price": 3850,
+        "max_discounted_price": 10450,
+        "suggested_discounted_price": 10120
+      }
+    ]
+  },
+  "Campera Mujer Deportiva Entallada Elastizada Gym": {
+    "title": "Campera Mujer Deportiva Entallada Elastizada Gym Urbano Blanco S Lisa",
+    "status": "paused",
+    "pictures": [
+      "https://http2.mlstatic.com/D_755181-MLA107822455226_032026-O.webp",
+      "https://http2.mlstatic.com/D_600195-MLA107820809710_032026-O.webp",
+      "https://http2.mlstatic.com/D_811385-MLA107820869922_032026-O.webp",
+      "https://http2.mlstatic.com/D_993859-MLA107820839740_032026-O.webp",
+      "https://http2.mlstatic.com/D_635667-MLA107825295212_032026-O.webp",
+      "https://http2.mlstatic.com/D_836604-MLA107822844494_032026-O.jpg",
+      "https://http2.mlstatic.com/D_778195-MLA108568846725_032026-O.webp",
+      "https://http2.mlstatic.com/D_964496-MLA107825295216_032026-O.webp",
+      "https://http2.mlstatic.com/D_933693-MLA108571442587_032026-O.jpg",
+      "https://http2.mlstatic.com/D_664141-MLA107820869932_032026-O.webp"
+    ],
+    "n_variations": 0,
+    "price": 43079.05,
+    "descripcion": "Campera deportiva de mujer, calce entallado — la prenda versátil que te acompaña todos los días, del entrenamiento a la salida. Estilo deportivo moderno que se adapta al cuerpo sin limitar el movimiento.\n\nEstá confeccionada en tela deportiva suave y flexible, ideal para uso diario, caminatas, entrenamiento o para completar un look urbano cómodo y moderno. Su textura liviana permite llevarla durant",
+    "promociones": [
+      {
+        "type": "PRICE_DISCOUNT",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 43079.05,
+        "name": "",
+        "min_discounted_price": 8615.82,
+        "max_discounted_price": 40925.09,
+        "suggested_discounted_price": 39632.72
+      },
+      {
+        "id": "P-MLA17839040",
+        "type": "DEAL",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 43079.05,
+        "start_date": "2026-08-03T00:00:00-03:00",
+        "finish_date": "2026-08-10T00:00:00-03:00",
+        "name": "Festival del Credito 3",
+        "min_discounted_price": 8615.82,
+        "max_discounted_price": 38771.15,
+        "suggested_discounted_price": 36617.2
+      }
+    ]
+  },
+  "Pantalon Cargo Parachute Oversize De Mujer": {
+    "title": "Pantalón Cargo Parachute Oversize De Mujer Con Bolsillos",
+    "status": "active",
+    "pictures": [
+      "https://http2.mlstatic.com/D_926256-MLA113894800438_072026-O.webp",
+      "https://http2.mlstatic.com/D_924956-MLA107183946247_022026-O.webp",
+      "https://http2.mlstatic.com/D_841126-MLA107184421593_022026-O.jpg",
+      "https://http2.mlstatic.com/D_622532-MLA107183055455_022026-O.jpg",
+      "https://http2.mlstatic.com/D_735688-MLA91190624422_092025-O.webp",
+      "https://http2.mlstatic.com/D_720199-MLA107182760471_022026-O.jpg",
+      "https://http2.mlstatic.com/D_920192-MLA107182760473_022026-O.jpg",
+      "https://http2.mlstatic.com/D_789905-MLA107183946269_022026-O.jpg",
+      "https://http2.mlstatic.com/D_906295-MLA90362458993_082025-O.jpg",
+      "https://http2.mlstatic.com/D_854205-MLA99681661604_122025-O.webp",
+      "https://http2.mlstatic.com/D_908037-MLA99517498161_112025-O.jpg",
+      "https://http2.mlstatic.com/D_841018-MLA106536577470_022026-O.jpg",
+      "https://http2.mlstatic.com/D_877986-MLA107183916009_022026-O.webp",
+      "https://http2.mlstatic.com/D_916391-MLA107184451785_022026-O.jpg",
+      "https://http2.mlstatic.com/D_748787-MLA95921190225_102025-O.webp",
+      "https://http2.mlstatic.com/D_893824-MLA107183916011_022026-O.webp",
+      "https://http2.mlstatic.com/D_740441-MLA107183145345_022026-O.webp",
+      "https://http2.mlstatic.com/D_935468-MLA107182995329_022026-O.webp",
+      "https://http2.mlstatic.com/D_980212-MLA89982144102_082025-O.webp",
+      "https://http2.mlstatic.com/D_732545-MLA100168409095_122025-O.jpg"
+    ],
+    "n_variations": 8,
+    "price": 31872,
+    "descripcion": "Pantalón cargo mujer Zach de Shaffe — estilo urbano, comodidad total y múltiples bolsillos para el día a día. El pantalón que combina con todo y te acompaña en cualquier época del año.\n\nDisenado para la mujer que busca un look moderno y funcional. Corte amplio con\n bolsillos cargo laterales, elastico en cintura y botamanga ajustada. Ideal para\n salidas urbanas, viajes, actividades al aire libre o ",
+    "promociones": [
+      {
+        "id": "LGH-MLA1000",
+        "type": "LIGHTNING",
+        "ref_id": "CANDIDATE-MLA1677272242-71509356974",
+        "status": "candidate",
+        "price": 21194.88,
+        "original_price": 31872,
+        "min_discounted_price": 6374.4,
+        "max_discounted_price": 28684.8,
+        "suggested_discounted_price": 27091.21,
+        "stock": {
+          "min": 5,
+          "max": 47
+        }
+      },
+      {
+        "type": "PRICE_DISCOUNT",
+        "status": "started",
+        "price": 29322,
+        "original_price": 31872,
+        "start_date": "2026-07-19T00:00:00",
+        "finish_date": "2026-08-03T23:59:59",
+        "name": ""
+      },
+      {
+        "id": "P-MLA17839040",
+        "type": "DEAL",
+        "status": "candidate",
+        "price": 0,
+        "original_price": 31872,
+        "start_date": "2026-08-03T00:00:00-03:00",
+        "finish_date": "2026-08-10T00:00:00-03:00",
+        "name": "Festival del Credito 3",
+        "min_discounted_price": 11728.9,
+        "max_discounted_price": 30278.4,
+        "suggested_discounted_price": 29322.24
+      }
+    ]
+  }
+}
