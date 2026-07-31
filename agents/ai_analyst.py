@@ -9,7 +9,7 @@ arriesgar una segunda rotación del refresh_token en la misma corrida.
 
 Es opcional: si no hay OPENAI_API_KEY configurada, `disponible()` devuelve
 False y el resto del pipeline sigue funcionando igual sin este paso (mismo
-patrón que `agents/copywriter.py` con ANTHROPIC_API_KEY).
+patrón que `agents/copywriter.py`, que también usa OPENAI_API_KEY).
 """
 from __future__ import annotations
 

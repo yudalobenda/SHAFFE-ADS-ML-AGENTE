@@ -1,0 +1,84 @@
+======================================================================
+PUBLICACIÓN DE REFERENCIA: MLA1719339758
+Título: Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe 
+Descripción: Jogger básico de hombre con bolsillos, liso y cómodo — el infaltable para el uso diario. Calce relajado, ideal para entrenar, salir o quedarte en casa sin resignar estilo.
+======================================================================
+
+--- gpt-4o-mini (5.1s) ---
+Aquí tienes tres sugerencias concretas para mejorar tu publicación en MercadoLibre Ads y aumentar las conversiones:
+
+### Foto Principal:
+1. **Uso de Modelo**: Cambia la imagen principal para que el jogger sea modelado por una persona. Asegúrate de que el modelo esté en un entorno atractivo, como una calle o un parque, lo que ayudará a los compradores a visualizar cómo se vería el producto en uso.
+
+### Título:
+2. **Optimización del Título**: Reformula el título para incluir palabras clave más buscadas y atractivas. Ejemplo: "Jogger Hombre Con Bolsillos | Babucha Comodidad Básica para Entrenar y Relax - Shaffe". Esto no solo resalta sus características, sino que incluye un enfoque en la comodidad y versatilidad.
+
+### Descripción:
+3. **Incluir Beneficios Clave**: Amplía la descripción destacando beneficios como “Tejido transpirable, ideal para climas cálidos”, “Versátil: perfecto para hacer ejercicio, salir con amigos o descansar en casa”, y añade una recomendación: "Combínalo fácilmente con tus zapatillas favoritas para un look estilo urbano”. Incorpora un llamado a la acción al final, como "¡No te quedes sin el tuyo!"
+
+Estas sugerencias están diseñadas para captar mejor la atención del cliente y mejorar la percepción del producto.
+
+--- gpt-4.1 (4.5s) ---
+¡Por supuesto! Aquí van 3 sugerencias concretas para el “último intento”, priorizando performance en MercadoLibre:
+
+---
+
+**1. Foto principal**
+- **Nueva imagen:** Mostrá el jogger puesto en un modelo (foto de cuerpo entero, fondo blanco, pose natural). Asegurate de que se vean bien los bolsillos y el calce relajado. Así, el comprador se identifica y ve el fit real.
+---
+
+**2. Título optimizado**
+- **Nuevo título:** Jogger Hombre Shaffe Con Bolsillos Calce Relajado Algodón Casual
+
+(Agregando “algodón” si aplica, y usando palabras clave de alta búsqueda: jogger hombre, bolsillos, calce relajado, casual, marca.)
+
+---
+
+**3. Descripción potenciada**
+- Resumí beneficios y detalles técnicos en bullets para fácil lectura. Ejemplo:
+
+  - Jogger de hombre Shaffe, ideal para uso diario y entrenar  
+  - Tela suave de algodón, calce relajado, súper cómodo  
+  - Dos bolsillos grandes y cintura ajustable  
+  - Aprovechá la moda comfy sin resignar estilo
+
++ **Agregá llamado a la acción:** “¡Compralo ahora y sumá estilo a tu día!”
+
+---
+
+**Bonus:** revisá si el precio es competitivo y habilitá 3 o más cuotas sin interés para captar más compradores. 
+
+¡Éxitos en esta última prueba antes de decidir si lo pausás!
+
+--- gpt-5-mini (15.9s) ---
+- Foto principal: Cambiala por UNA foto de producto on-model (hombre) frente, fondo blanco o gris claro, alta resolución (mín. 1200 px), el jogger ocupando ~60–70% del encuadre. Pose natural con manos en los bolsillos para mostrar funcionamiento, cintura/pretina visible y tiro alineado para mostrar el calce relajado. Sin texto, logos ni elementos distractores. (En la galería subí además un close-up de la tela y de los bolsillos como segunda imagen).
+
+- Título: Hazlo más buscable y directo, priorizando marca + producto + atributos claves. Formato sugerido: "SHAFFE Jogger Hombre Babucha - Bolsillos, Liso, Calce Relajado". Si la publicación tiene color y material definidos, incluirlos: ejemplo completo: "SHAFFE Jogger Hombre Babucha Negro - Algodón, Bolsillos, Calce Relajado". Evitar palabras genéricas al final; front-load keywords.
+
+- Descripción: Reescribila en estructura corta y concreta: 1) composición y tejido (p.ej. 95% algodón / 5% elastano — indicar composición real), 2) guía de talles con medidas en cm y referencia del modelo (ej.: "Modelo: 1,80 m – usa M"), 3) beneficios de uso (entrenamiento / día a día / confort), 4) cuidados y política de cambio/envío. Texto listo para pegar:
+  "Jogger SHAFFE para hombre. Composición: [XX% algodón / XX% poliéster / XX% elastano]. Calce relajado ideal para entrenamiento y uso diario. Bolsillos frontales funcionales y pretina con cordón. Tabla de talles (cm): cintura / tiro / largo interior — consultar para elegir tu talla. Modelo: 1,80 m – usa M. Lavado: máquina frío / secado moderado. Envíos en 24–48h. Cambio por defecto 10 días. Comprar ahora."
+  (Importante: completar % de composición y tabla de talles antes de publicar).
+
+--- gpt-5.2 (7.3s) ---
+- **Foto principal (1 cambio clave):** Rehacerla en **modelo de cuerpo completo**, fondo blanco, mostrando **calce real (babucha)** y **detalle de bolsillos** (mano en bolsillo). Evitar foto “plana” o muy cerrada: en ropa, el CTR sube cuando se entiende el fit en 1 segundo.
+
+- **Título (más buscable + atributos primero):** Pasarlo a algo tipo: **“Jogger Babucha Hombre Algodón Con Bolsillos Liso | Shaffe”**. (Orden: producto + tipo/calce + material/beneficio + bolsillos + liso + marca). Si no es algodón, reemplazar por el material real (ej. frisa/rústico).
+
+- **Descripción (convertidora, con datos concretos):** Reescribirla en formato escaneable con **medidas/tabla y composición** arriba. Ejemplo de estructura:
+  - **Material:** (composición real) / **temporada:** (ej. frisa ideal invierno)  
+  - **Calce:** babucha / tiro (alto/medio) / **puños** (sí/no)  
+  - **Bolsillos:** laterales (sí) + trasero (sí/no)  
+  - **Talles y medidas:** cintura, cadera, largo (por talle) + referencia del modelo (altura/talle)  
+  - **Uso:** diario/entreno/casa + cuidados de lavado  
+  (Sin medidas/composición, muchos clics no se convierten por incertidumbre de talle y tela).
+
+--- gpt-5.5 (12.6s) ---
+- **Foto principal:** reemplazar por una foto con **modelo usando el jogger**, cuerpo completo o 3/4, de frente, fondo blanco/gris claro, buena luz y que se vea bien el **calce real + bolsillos + puño**. Evitar foto plana, colgada, collage o texto agregado.
+
+- **Título:** sumar la keyword “pantalón” y priorizar intención de búsqueda. Probar:  
+  **“Pantalón Jogger Hombre Babucha Bolsillos Puño Shaffe”**  
+  Sacaría “liso básico” porque aporta menos búsqueda y no destaca beneficio.
+
+- **Descripción:** cambiar el texto emocional por una ficha más vendedora y escaneable:  
+  **“Jogger de hombre SHAFFE ideal para uso diario, entrenar o salir. Calce cómodo tipo babucha, con bolsillos laterales y cintura ajustable. Diseño liso fácil de combinar. Consultá la guía de talles antes de comprar para elegir tu talle ideal.”**  
+  Si el material es algodón/frisa/rústico, agregarlo en la primera línea porque puede destrabar conversiones.

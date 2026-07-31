@@ -7,15 +7,18 @@ import os
 import core.campaign_rules as reglas
 
 try:
-    import anthropic
+    from openai import OpenAI
 except ImportError:
-    anthropic = None
+    OpenAI = None
+
+_MODELO_DEFAULT = "gpt-5.2"
 
 
 class Copywriter:
-    def __init__(self):
-        api_key = os.environ.get("ANTHROPIC_API_KEY")
-        self.client = anthropic.Anthropic(api_key=api_key) if (anthropic and api_key) else None
+    def __init__(self, model: str = _MODELO_DEFAULT):
+        api_key = os.environ.get("OPENAI_API_KEY")
+        self.client = OpenAI(api_key=api_key) if (OpenAI and api_key) else None
+        self.model = model
 
     def en_ventana_ultimo_intento(self, dias_sin_conversion: int) -> bool:
         minimo, maximo = reglas.DIAS_SIN_CONVERSION_ULTIMO_INTENTO
@@ -29,9 +32,8 @@ class Copywriter:
                 "tipo de prenda + color, y dejar talles disponibles claros en la descripción."
             )
 
-        respuesta = self.client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=300,
+        respuesta = self.client.chat.completions.create(
+            model=self.model,
             messages=[{
                 "role": "user",
                 "content": (
@@ -44,4 +46,4 @@ class Copywriter:
                 ),
             }],
         )
-        return respuesta.content[0].text
+        return respuesta.choices[0].message.content
