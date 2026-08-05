@@ -81,6 +81,22 @@ class TelegramAgent:
         lineas.append("\n_Revisá el Excel adjunto: hoja \"Alertas Urgentes\"._")
         self._enviar_digest("\n".join(lineas[:1]), lineas[1:])
 
+    def enviar_alertas_margen(self, alertas_margen: list) -> None:
+        """Productos con margen real negativo (costo del ERP, ya descontado el
+        gasto de Ads) aunque el ROAS luzca bien — el ROAS solo no alcanza para
+        saber si conviene seguir invirtiendo."""
+        if not alertas_margen:
+            return
+        lineas = [f"🩸 *MARGEN NEGATIVO* — {len(alertas_margen)} producto(s) pierden plata con costo real (aunque el ROAS luzca bien):"]
+        for a in alertas_margen:
+            lineas.append(
+                f"• *{_esc(a['family_name'])}* ({_esc(a.get('campania', ''))}): "
+                f"margen post-Ads {a['margen_post_ads_pct']:.1f}% — precio prom. ${a['precio_prom']:,.0f}, "
+                f"costo real ${a['costo_producto']:,.0f}, Ads ${a['ads_por_unidad']:,.0f}/u (ROAS {a.get('roas', 0):.2f})"
+            )
+        lineas.append("\n_No incluye comisión de ML ni impuestos — revisá antes de decidir. Excel adjunto: hoja \"Margen Negativo\"._")
+        self._enviar_digest("\n".join(lineas[:1]), lineas[1:])
+
     def enviar_archivo(self, ruta: str, caption: str = "") -> None:
         with open(ruta, "rb") as f:
             resp = requests.post(

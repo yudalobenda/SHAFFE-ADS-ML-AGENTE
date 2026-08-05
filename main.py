@@ -24,6 +24,7 @@ from agents.research_agent import ResearchAgent
 from agents.stock_agent import StockAgent
 from agents.structurer import Structurer
 from agents.telegram_agent import TelegramAgent
+from core.erp_client import ERPClient, ERPClientError
 from core.executor import Executor
 from core.ml_client import MLClient
 
@@ -44,6 +45,21 @@ def _guardar_json(nombre: str, datos) -> None:
 
 def _crear_ml_client() -> MLClient:
     return MLClient(_cargar_json("ml_tokens.json"))
+
+
+def _crear_erp_client() -> ERPClient | None:
+    """None si no hay ERP_PASSWORD configurado — el agente sigue funcionando
+    sin margen real en ese caso (mismo criterio que ai_analyst.disponible()),
+    no debe tirar abajo la corrida semanal por esto."""
+    password = os.environ.get("ERP_PASSWORD", "")
+    if not password:
+        print("  [erp] ERP_PASSWORD no configurado — se omite el margen real esta corrida.")
+        return None
+    return ERPClient(
+        os.environ.get("ERP_BASE_URL", "https://shaffeerp-production.up.railway.app"),
+        os.environ.get("ERP_EMAIL", "admin@shaffe.com.ar"),
+        password,
+    )
 
 
 def _guardar_tokens_ml(ml: MLClient) -> None:
@@ -210,6 +226,21 @@ def modo_collect() -> None:
 
     grupos = collector.recolectar(campaign_ids["campañas"])
 
+    # Costo real por publicación, desde el ERP (fuente única de verdad — ver
+    # CIOMA). Se pide una sola vez para todos los item_ids de la corrida.
+    # Nunca debe tirar abajo la corrida si el ERP no responde.
+    costos_por_item: dict = {}
+    erp = _crear_erp_client()
+    if erp is not None:
+        try:
+            todos_item_ids = [iid for grupo in grupos.values() for iid in grupo["item_ids"]]
+            costos_por_item = erp.cost_by_item(todos_item_ids)
+            print(f"  [erp] Costo real encontrado para {len(costos_por_item)}/{len(todos_item_ids)} publicaciones.")
+        except ERPClientError as e:
+            print(f"  [erp] No se pudo consultar costos reales, se omite el margen esta corrida: {e}")
+        except Exception as e:
+            print(f"  [erp] Error inesperado consultando costos, se omite el margen esta corrida: {e}")
+
     # Cierre del loop: actualizar resultados de movimientos de hace 7+ días
     retro_actualizadas = _cerrar_loop_retrospectivo(changes_history, historial_roas, grupos)
     if retro_actualizadas:
@@ -218,6 +249,7 @@ def modo_collect() -> None:
 
     acciones: list = []
     alertas_urgentes: list = []
+    alertas_margen: list = []
 
     for family_id, grupo in grupos.items():
         if len(grupo["tiers_detectados"]) > 1:
@@ -234,6 +266,25 @@ def modo_collect() -> None:
         roas_objetivo = reglas.roas_target_campania(nombre_campania_actual)
 
         analisis = analyst.analizar_item(family_id, nombre_campania_actual, grupo["metricas"])
+
+        # Margen real (costo del ERP) — chequeo independiente del ROAS: un
+        # producto puede tener buen ROAS y estar perdiendo plata igual si el
+        # costo real es alto (CIOMA: vender no alcanza, tiene que dejar margen).
+        costo_real = next((costos_por_item[iid] for iid in grupo["item_ids"] if iid in costos_por_item), None)
+        margen = reglas.calcular_margen(
+            ingresos=grupo["metricas"].get("direct_amount", 0.0) + grupo["metricas"].get("indirect_amount", 0.0),
+            unidades=grupo["metricas"].get("units_quantity", 0.0),
+            costo_producto=costo_real,
+            gasto_ads=grupo["metricas"].get("cost", 0.0),
+        )
+        if margen and margen["margen_post_ads_pct"] < 0:
+            alertas_margen.append({
+                "item_ids": grupo["item_ids"],
+                "family_name": grupo["family_name"],
+                "campania": nombre_campania_actual,
+                "roas": analisis["roas"],
+                **margen,
+            })
 
         for alerta in analisis["alertas"]:
             # Filtrar CTR/CVR cuando el ROAS ya supera el objetivo: el funnel rinde bien
@@ -428,6 +479,9 @@ def modo_collect() -> None:
     if alertas_urgentes:
         telegram.enviar_alertas_urgentes(alertas_urgentes)
 
+    if alertas_margen:
+        telegram.enviar_alertas_margen(alertas_margen)
+
     if retro_actualizadas:
         mejoraron = sum(1 for e in retro_actualizadas if "mejoró" in (e.get("resultado") or ""))
         empeoraron = sum(1 for e in retro_actualizadas if "empeoró" in (e.get("resultado") or ""))
@@ -447,6 +501,7 @@ def modo_collect() -> None:
         grupos=grupos,
         acciones=acciones,
         alertas_urgentes=alertas_urgentes,
+        alertas_margen=alertas_margen,
         candidatas_sin_ads=candidatas_sin_ads,
         changes_history=changes_history,
         retro_semana=retro_actualizadas,

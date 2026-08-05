@@ -235,6 +235,36 @@ def tiene_presupuesto_real(costo: float, impresiones: int) -> bool:
     return costo >= GASTO_MIN_EVALUAR or impresiones >= IMPRESIONES_MIN_EVALUAR
 
 
+def calcular_margen(ingresos: float, unidades: float, costo_producto: float | None, gasto_ads: float) -> dict | None:
+    """Margen real de producto usando costo REAL del ERP (nunca Excel ni
+    supuesto hardcodeado — ver CIOMA / AUDITORIA-FASE-0.md, este agente antes
+    no tenía ningún ancla de costo real).
+
+    OJO: margen_post_ads_pct NO resta comisión de Mercado Libre ni impuestos
+    — este agente no tiene ese dato real por publicación (vive en el ERP a
+    nivel venta, no por línea de Ads). Se etiqueta explícitamente qué NO está
+    incluido en vez de inventar un promedio, siguiendo la regla de "no ocultar
+    incertidumbre". Por eso un margen_post_ads_pct positivo pero bajo (ej. <15%)
+    puede terminar en pérdida real una vez descontada la comisión de ML.
+
+    Devuelve None si no hay costo real o no hay unidades vendidas (nada que evaluar)."""
+    if not unidades or unidades <= 0 or costo_producto is None:
+        return None
+    precio_prom = ingresos / unidades
+    if precio_prom <= 0:
+        return None
+    ads_por_unidad = gasto_ads / unidades
+    margen_producto_pct = (precio_prom - costo_producto) / precio_prom * 100
+    margen_post_ads_pct = (precio_prom - costo_producto - ads_por_unidad) / precio_prom * 100
+    return {
+        "precio_prom": precio_prom,
+        "costo_producto": costo_producto,
+        "ads_por_unidad": ads_por_unidad,
+        "margen_producto_pct": margen_producto_pct,
+        "margen_post_ads_pct": margen_post_ads_pct,
+    }
+
+
 def es_poco_stock(unidades_totales: int, variantes_disponibles: int, total_variantes: int | None = None) -> bool:
     """Poco stock si las unidades totales son bajas, O si de varias variantes
     posibles quedan muy pocas disponibles (señal de que se vendieron talles/

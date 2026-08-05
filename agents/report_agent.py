@@ -59,6 +59,7 @@ class ReportAgent:
         changes_history: list,
         semana: str,
         retro_semana: list | None = None,
+        alertas_margen: list | None = None,
     ) -> str:
         """Genera el xlsx y devuelve la ruta del archivo creado."""
         wb = openpyxl.Workbook()
@@ -67,6 +68,7 @@ class ReportAgent:
         self._hoja_resumen(wb, grupos, acciones, semana, retro_semana or [])
         self._hoja_problema(wb, grupos, acciones, semana)
         self._hoja_urgentes(wb, alertas_urgentes, semana)
+        self._hoja_margen_negativo(wb, alertas_margen or [], semana)
         self._hoja_sin_ads(wb, candidatas_sin_ads, semana)
         self._hoja_acciones(wb, acciones, semana)
         self._hoja_historial(wb, changes_history)
@@ -308,6 +310,41 @@ class ReportAgent:
             ws.cell(row=fila, column=10, value="Mover a Plata si persiste 1-2 días más")
             for col in range(1, 11):
                 ws.cell(row=fila, column=col).fill = PatternFill("solid", fgColor=_AMARILLO)
+            fila += 1
+
+        _autowidth(ws)
+
+    # ------------------------------------------------------------------ #
+    # Hoja: Margen Negativo (costo real del ERP — ver CIOMA)
+    # ------------------------------------------------------------------ #
+    def _hoja_margen_negativo(self, wb, alertas_margen: list, semana: str) -> None:
+        ws = wb.create_sheet("Margen Negativo")
+        ws["A1"] = "🩸 MARGEN NEGATIVO — costo real del ERP, ya descontado el gasto de Ads"
+        ws["A1"].font = Font(bold=True, size=12, color="C00000")
+        ws["A2"] = (
+            f"Semana: {semana}  |  Puede incluir productos con buen ROAS que igual pierden plata. "
+            "NO incluye comisión de ML ni impuestos — confirmar antes de decidir."
+        )
+
+        _header(ws, 4, [
+            "MLA", "Producto", "Campaña", "ROAS",
+            "Precio prom. ($)", "Costo real ERP ($)", "Ads/unidad ($)",
+            "Margen producto (%)", "Margen post-Ads (%)",
+        ])
+
+        fila = 5
+        for a in sorted(alertas_margen, key=lambda x: x["margen_post_ads_pct"]):
+            ws.cell(row=fila, column=1, value=a["item_ids"][0] if a["item_ids"] else "")
+            ws.cell(row=fila, column=2, value=a.get("family_name", ""))
+            ws.cell(row=fila, column=3, value=a.get("campania", ""))
+            ws.cell(row=fila, column=4, value=round(a.get("roas", 0), 2))
+            ws.cell(row=fila, column=5, value=round(a["precio_prom"]))
+            ws.cell(row=fila, column=6, value=round(a["costo_producto"]))
+            ws.cell(row=fila, column=7, value=round(a["ads_por_unidad"]))
+            ws.cell(row=fila, column=8, value=round(a["margen_producto_pct"], 1))
+            ws.cell(row=fila, column=9, value=round(a["margen_post_ads_pct"], 1))
+            for col in range(1, 10):
+                ws.cell(row=fila, column=col).fill = PatternFill("solid", fgColor=_ROJO)
             fila += 1
 
         _autowidth(ws)
