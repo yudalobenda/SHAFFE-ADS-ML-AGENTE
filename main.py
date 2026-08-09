@@ -24,6 +24,7 @@ from agents.research_agent import ResearchAgent
 from agents.stock_agent import StockAgent
 from agents.structurer import Structurer
 from agents.telegram_agent import TelegramAgent
+from core.ads_launcher import activar_item_en_testeo
 from core.erp_client import ERPClient, ERPClientError
 from core.executor import Executor
 from core.ml_client import MLClient
@@ -583,6 +584,18 @@ def modo_check_approvals() -> None:
         resultados = executor.ejecutar(aprobadas)
         _guardar_tokens_ml(ml)
 
+        # Codex ejecuta por sesión de navegador lo que la API no puede
+        # escribir (401 real) — se empuja igual aunque la API haya "andado",
+        # para que la pestaña Ads de CIOMA quede como registro único de lo
+        # aprobado. Nunca debe tirar abajo la corrida.
+        try:
+            erp = _crear_erp_client()
+            if erp is not None:
+                for accion, resultado in zip(aprobadas, resultados):
+                    erp.push_ads_queue(accion, resultado)
+        except Exception as e:
+            print(f"  [ads_queue] error empujando acciones aprobadas al ERP, se omite: {e}")
+
         hoy = date.today().isoformat()
         fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
         fecha_entrada_campania: dict = state.setdefault("fecha_entrada_campania", {})
@@ -639,6 +652,39 @@ def modo_listen() -> None:
     acciones = state.get("acciones_pendientes", [])
 
     telegram = TelegramAgent()
+
+    # Ads para publicaciones nuevas que el ERP ya publicó (asíncrono, ver
+    # core/ads_launcher.py) — corre siempre en cada hora, sin depender de
+    # comandos/botones de Telegram. Nunca debe tirar abajo el resto de listen.
+    try:
+        erp = _crear_erp_client()
+        if erp is not None:
+            pendientes_ads = erp.pending_ads_activations()
+            if pendientes_ads:
+                campaign_ids_actual = _cargar_json("campaign_ids.json")
+                ml_ads = _crear_ml_client()
+                for p in pendientes_ads:
+                    resultado = activar_item_en_testeo(
+                        ml_ads, campaign_ids_actual.get("advertiser_id"), campaign_ids_actual,
+                        p["external_item_id"], p.get("price"),
+                    )
+                    titulo = p.get("title", p.get("external_item_id", ""))
+                    if resultado["ok"]:
+                        erp.marcar_ads_resuelto(p["id"], "ads_activado")
+                        telegram._enviar_mensaje(f"✅ Ads activado para *{titulo}* (campaña {resultado.get('campania')}).")
+                    else:
+                        erp.marcar_ads_resuelto(p["id"], "ads_error", resultado.get("detalle"))
+                        if resultado["motivo"] == "401":
+                            telegram._enviar_mensaje(
+                                f"⚠️ Publicación activa, pero no pude activar Ads para *{titulo}* — "
+                                "permiso de Product Ads pendiente en ML Developers."
+                            )
+                        else:
+                            telegram._enviar_mensaje(f"⚠️ Error activando Ads para *{titulo}*: {resultado.get('detalle')}")
+                _guardar_tokens_ml(ml_ads)
+    except Exception as e:
+        print(f"  [ads_launcher] Error consumiendo pending-ads, se omite esta corrida: {e}")
+
     decisiones, comandos, nuevo_offset = telegram.drenar_updates(
         run_id=run_id, offset=offset
     )
@@ -651,8 +697,15 @@ def modo_listen() -> None:
         if aprobadas:
             ml = _crear_ml_client()
             executor = Executor(ml, campaign_ids)
-            executor.ejecutar(aprobadas)
+            resultados = executor.ejecutar(aprobadas)
             _guardar_tokens_ml(ml)
+            try:
+                erp = _crear_erp_client()
+                if erp is not None:
+                    for accion, resultado in zip(aprobadas, resultados):
+                        erp.push_ads_queue(accion, resultado)
+            except Exception as e:
+                print(f"  [ads_queue] error empujando acciones aprobadas al ERP, se omite: {e}")
             hoy = date.today().isoformat()
             fecha_entrada_oro: dict = state.setdefault("fecha_entrada_oro", {})
             fecha_entrada_campania: dict = state.setdefault("fecha_entrada_campania", {})

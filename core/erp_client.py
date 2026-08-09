@@ -73,3 +73,74 @@ class ERPClient:
             for row in (data or []):
                 resultado[row["external_item_id"]] = float(row["cost"])
         return resultado
+
+    def pending_ads_activations(self) -> list:
+        """Publicaciones nuevas que el ERP ya publicó en ML y están esperando
+        que este agente intente activarlas en Ads. Cada una: {id, external_item_id,
+        title, category_id, price}. Ver backend/routes/productLaunch.js del ERP."""
+        return self._request("GET", "/api/product-launch/pending-ads") or []
+
+    def marcar_ads_resuelto(self, request_id: str, status: str, error_message: str | None = None) -> dict:
+        """status: 'ads_activado' o 'ads_error'."""
+        return self._request(
+            "POST", f"/api/product-launch/pending-ads/{request_id}/resolved",
+            json={"status": status, "errorMessage": error_message},
+        )
+
+    _SCOPE_CAMPANA = {"ajustar_presupuesto", "ajustar_roas_target"}
+
+    def push_ads_queue(self, accion: dict, resultado: dict | None = None) -> dict | None:
+        """Empuja una decisión ya aprobada (por León, vía Telegram) a la cola
+        de CIOMA (pestaña Ads) para que Codex la ejecute por sesión de
+        navegador — la escritura directa por API de Ads da 401 real hoy
+        (ver core/executor.py). No frena la corrida si el ERP no responde:
+        la decisión ya se guardó en Telegram/changes_history de todos modos."""
+        tipo = accion.get("tipo")
+        scope = "campaña" if tipo in self._SCOPE_CAMPANA else "publicacion"
+        api_attempt = "no_intentado"
+        api_error = None
+        if resultado is not None:
+            api_attempt = "ok" if resultado.get("estado") == "ejecutada" else "error"
+            api_error = resultado.get("error")
+        try:
+            return self._request("POST", "/api/ads-queue", json={
+                "actionType": tipo,
+                "scope": scope,
+                "title": _titulo_accion_ads_queue(accion),
+                "itemIds": accion.get("item_ids", []),
+                "campaignName": accion.get("campania") or accion.get("campania_destino"),
+                "detail": accion,
+                "reason": accion.get("motivo"),
+                "apiAttempt": api_attempt,
+                "apiError": api_error,
+            })
+        except Exception as exc:
+            print(f"  [ads_queue] no se pudo empujar la acción al ERP: {exc}")
+            return None
+
+
+def _titulo_accion_ads_queue(accion: dict) -> str:
+    """Resumen legible para la cola de Ads del ERP — misma lógica de
+    TelegramAgent._linea_accionable pero en texto plano (sin markdown)."""
+    tipo = accion.get("tipo")
+    nombre = accion.get("family_name") or ((accion.get("item_ids") or [""])[0])
+    n_variantes = len(accion.get("item_ids", []))
+    sufijo = f" ({n_variantes} var.)" if n_variantes > 1 else ""
+    if tipo == "mover_tier":
+        origen = accion.get("campania_origen") or accion.get("tier_origen", "")
+        destino = accion.get("campania_destino") or accion.get("tier_destino", "")
+        roas = accion.get("roas_reciente") or 0
+        return f"{nombre}{sufijo}: {origen} → {destino} (ROAS {roas:.2f})"
+    if tipo == "agregar_a_testeo":
+        return f"{nombre}{sufijo}: activar en testeo ({accion.get('campania', 'testeo')})"
+    if tipo == "agregar_a_promo":
+        return f"{nombre}{sufijo}: agregar a promo ML (poco stock)"
+    if tipo == "pausar":
+        motivo = (accion.get("motivo") or "").replace("_", " ")
+        roas = accion.get("roas_reciente") or 0
+        return f"{nombre}{sufijo}: pausar / sacar de ads (ROAS {roas:.2f}, {motivo})"
+    if tipo == "ajustar_presupuesto":
+        return f"Campaña {accion.get('campania', '')}: presupuesto → ${accion.get('presupuesto_nuevo')}"
+    if tipo == "ajustar_roas_target":
+        return f"Campaña {accion.get('campania', '')}: ROAS objetivo → {accion.get('roas_target_nuevo')}"
+    return f"{nombre}: {tipo}"
