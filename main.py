@@ -242,6 +242,12 @@ def modo_collect() -> None:
         except Exception as e:
             print(f"  [erp] Error inesperado consultando costos, se omite el margen esta corrida: {e}")
 
+        # Columna "En Ads + campaña" de Publicaciones (CIOMA) — el ERP no lo adivina.
+        try:
+            erp.reportar_ads_status(grupos)
+        except Exception as e:
+            print(f"  [erp] No se pudo reportar ads-status, se omite: {e}")
+
     # Cierre del loop: actualizar resultados de movimientos de hace 7+ días
     retro_actualizadas = _cerrar_loop_retrospectivo(changes_history, historial_roas, grupos)
     if retro_actualizadas:

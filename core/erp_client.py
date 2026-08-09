@@ -80,6 +80,24 @@ class ERPClient:
         title, category_id, price}. Ver backend/routes/productLaunch.js del ERP."""
         return self._request("GET", "/api/product-launch/pending-ads") or []
 
+    def reportar_ads_status(self, grupos: dict) -> dict | None:
+        """Le dice al ERP en qué campaña está cada item, para la columna 'En Ads'
+        de la pestaña Publicaciones de CIOMA — el ERP nunca lo adivina. grupos es
+        el dict que devuelve Collector.recolectar() (family_id -> item_ids/tiers_detectados).
+        No frena la corrida si el ERP no responde."""
+        items = []
+        for grupo in grupos.values():
+            campania = " + ".join(grupo.get("tiers_detectados", [])) or None
+            for item_id in grupo.get("item_ids", []):
+                items.append({"externalItemId": item_id, "campaign": campania})
+        if not items:
+            return None
+        try:
+            return self._request("POST", "/api/product-launch/ads-status", json={"items": items})
+        except Exception as exc:
+            print(f"  [ads-status] no se pudo reportar al ERP: {exc}")
+            return None
+
     def marcar_ads_resuelto(self, request_id: str, status: str, error_message: str | None = None) -> dict:
         """status: 'ads_activado' o 'ads_error'."""
         return self._request(
