@@ -377,6 +377,29 @@ def modo_collect() -> None:
         if accion_stock:
             acciones.append(accion_stock)
 
+    # Empuja las propuestas accionables al panel de Ads de CIOMA apenas se
+    # detectan (21/08) — antes push_ads_queue solo se llamaba DESPUÉS de que
+    # León aprobaba por Telegram (ver modo_check_approvals/modo_listen más
+    # abajo), así que nada llegaba al panel del ERP hasta ya estar decidido.
+    # Ahora se puede aprobar directo desde el panel sin pasar por Telegram —
+    # Telegram sigue mandándose igual, es un canal adicional, no se reemplaza.
+    # Solo los tipos que son acciones reales de ML Ads (coinciden 1:1 con
+    # ACTION_TYPES del ERP); 'alerta' y 'tier_dividido' son informativos, ni
+    # siquiera pasan nunca por Executor. push_ads_queue sin `resultado` deja
+    # api_attempt='no_intentado' y status='pendiente' (default), que es
+    # justo lo que corresponde: todavía no se intentó nada por API/Chrome.
+    # El ERP deduplica solo si la misma propuesta se re-detecta en la
+    # próxima corrida sin que León haya decidido nada todavía.
+    _TIPOS_ACCIONABLES_ERP = {"pausar", "mover_tier", "agregar_a_testeo", "agregar_a_promo"}
+    if erp is not None:
+        for accion in acciones:
+            if accion.get("tipo") not in _TIPOS_ACCIONABLES_ERP:
+                continue
+            try:
+                erp.push_ads_queue(accion)
+            except Exception as e:
+                print(f"  [erp] no se pudo empujar propuesta al panel de CIOMA, se omite: {e}")
+
     nuevas = collector.items_activos_sin_campania(campaign_ids["campañas"])
     candidatas_sin_ads = {}
     for family_id, grupo in nuevas.items():
