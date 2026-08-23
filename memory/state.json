@@ -2,17 +2,244 @@
   "ultima_corrida": "collect",
   "acciones_pendientes": [
     {
-      "tipo": "mover_tier",
+      "tipo": "alerta",
       "item_ids": [
         "MLA881345207"
       ],
       "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
-      "campania_origen": "testeo_bajo",
-      "campania_destino": "oro_bajo",
+      "alerta": "ctr_bajo",
+      "roas": 3.0717422726733243,
+      "acos": 0.3255481453949273,
+      "campania": "plata_bajo",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA881345207"
+      ],
+      "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
+      "alerta": "acos_alto",
+      "roas": 3.0717422726733243,
+      "acos": 0.3255481453949273,
+      "campania": "plata_bajo",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "pausar",
+      "item_ids": [
+        "MLA881345207"
+      ],
+      "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
+      "motivo": "roas_bajo_sostenido",
+      "roas_reciente": 3.0717422726733243,
+      "campania": "plata_bajo"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3706493468",
+        "MLA3706343660",
+        "MLA3706305462"
+      ],
+      "family_name": "Pantalón Mujer Palazzo Pierna Ancha Gamuza Tiro Alto",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "testeo_medio",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3706493468",
+        "MLA3706343660",
+        "MLA3706305462"
+      ],
+      "family_name": "Pantalón Mujer Palazzo Pierna Ancha Gamuza Tiro Alto",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "testeo_medio",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3706492080",
+        "MLA3706342528",
+        "MLA3706342524",
+        "MLA3706304246",
+        "MLA3706304244",
+        "MLA3706304242",
+        "MLA3706304240"
+      ],
+      "family_name": "Camisa Niño Manga Larga Cuello Mao Casual Nene",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "oro_medio",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 19.768820439584275,
-      "grupo_id": "MLA881345207"
+      "roas_reciente": 40.900496404069486,
+      "grupo_id": "4396384007104081"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3706490348",
+        "MLA3706490346",
+        "MLA3706490344",
+        "MLA3706340922",
+        "MLA3706340920",
+        "MLA3706340918",
+        "MLA3706302696",
+        "MLA3706302694"
+      ],
+      "family_name": "Camisa Niño Elastizada Manga Larga Poplin Elegante Sport",
+      "campania_origen": "plata_bajo",
+      "campania_destino": "oro_bajo",
+      "tier_origen": "plata",
+      "tier_destino": "oro",
+      "roas_reciente": 9.585920457804228,
+      "grupo_id": "8553117370361807"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3706336446",
+        "MLA3706336444",
+        "MLA3706336442",
+        "MLA3706298202",
+        "MLA1937563005",
+        "MLA1937563003"
+      ],
+      "family_name": "Conjunto Deportivo Mujer Campera Crop Con Capucha Y Pantalon",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "plata_medio",
+      "tier_origen": "testeo",
+      "tier_destino": "plata",
+      "roas_reciente": 4.284302744965316,
+      "grupo_id": "1554267127736337"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3686104380",
+        "MLA3686104378",
+        "MLA3686104376",
+        "MLA3686104374",
+        "MLA1930262831",
+        "MLA1930262829",
+        "MLA1930262827",
+        "MLA1930249809"
+      ],
+      "family_name": "Camisa Mujer Lino Manga Larga Corte Relajado Corta",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "oro_medio",
+      "tier_origen": "testeo",
+      "tier_destino": "oro",
+      "roas_reciente": 16.43246817655811,
+      "grupo_id": "2391095704699731"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3663194988",
+        "MLA3663194986",
+        "MLA3663194984",
+        "MLA3663169636",
+        "MLA3650079992",
+        "MLA3347547530",
+        "MLA3347547528",
+        "MLA3347547526",
+        "MLA3347256658",
+        "MLA3347206762",
+        "MLA3045028456",
+        "MLA3045028454",
+        "MLA3045028452",
+        "MLA1914424007",
+        "MLA1914386843",
+        "MLA1914386841",
+        "MLA1796396303",
+        "MLA1796396301",
+        "MLA1796396299",
+        "MLA1796396297",
+        "MLA1796396295",
+        "MLA1796396293",
+        "MLA1796396291",
+        "MLA1702240971"
+      ],
+      "family_name": "Buzo Canguro Hombre Friza Con Capucha Abrigado Hoodie",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "plata_medio",
+      "tier_origen": "testeo",
+      "tier_destino": "plata",
+      "roas_reciente": 4.507910338204383,
+      "grupo_id": "3859373507095129"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA3637006038",
+        "MLA3637006036",
+        "MLA3637006034",
+        "MLA3636847514",
+        "MLA3636847512",
+        "MLA3636847510",
+        "MLA3636847508"
+      ],
+      "family_name": "Sweater Niño Tejido Cuello Redondo Abrigado Nene Hilo",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3636456460",
+        "MLA3636456458",
+        "MLA1907934381",
+        "MLA1907934379",
+        "MLA1907934377",
+        "MLA1907921995",
+        "MLA1907921993"
+      ],
+      "family_name": "Sweater Nene Tejido Con Botones Saquito Pullover",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "testeo_medio",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3636456460",
+        "MLA3636456458",
+        "MLA1907934381",
+        "MLA1907934379",
+        "MLA1907934377",
+        "MLA1907921995",
+        "MLA1907921993"
+      ],
+      "family_name": "Sweater Nene Tejido Con Botones Saquito Pullover",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "testeo_medio",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3636451790",
+        "MLA1907929575",
+        "MLA1907929573",
+        "MLA1907917041"
+      ],
+      "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
+      "alerta": "ctr_bajo",
+      "roas": 2.103000780914939,
+      "acos": 0.4755109979393048,
+      "campania": "plata_medio",
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
     {
       "tipo": "alerta",
@@ -24,61 +251,132 @@
       ],
       "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
       "alerta": "cvr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "testeo_medio",
-      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+      "roas": 2.103000780914939,
+      "acos": 0.4755109979393048,
+      "campania": "plata_medio",
+      "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
     {
-      "tipo": "mover_tier",
+      "tipo": "alerta",
       "item_ids": [
-        "MLA3540402556",
-        "MLA3540402554",
-        "MLA3540402552",
-        "MLA3540264004",
-        "MLA3539932686",
-        "MLA3539932684",
-        "MLA3539932682",
-        "MLA3539932680",
-        "MLA3539932678",
-        "MLA3539932676",
-        "MLA1866556185",
-        "MLA1866556183"
+        "MLA3636451790",
+        "MLA1907929575",
+        "MLA1907929573",
+        "MLA1907917041"
       ],
-      "family_name": "Pantalon Jean Baggy Nena Cintura Alta Adolescente",
-      "campania_origen": "testeo_alto",
-      "campania_destino": "plata_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 4.203240117497744,
-      "grupo_id": "522836159066769"
+      "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
+      "alerta": "acos_alto",
+      "roas": 2.103000780914939,
+      "acos": 0.4755109979393048,
+      "campania": "plata_medio",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
     {
-      "tipo": "mover_tier",
+      "tipo": "pausar",
       "item_ids": [
-        "MLA3484999520",
-        "MLA1824780173"
+        "MLA3636451790",
+        "MLA1907929575",
+        "MLA1907929573",
+        "MLA1907917041"
       ],
-      "family_name": "Pack X2 Gorro Lana Invierno Hombre Térmico Corderito",
-      "campania_origen": "testeo_bajo",
-      "campania_destino": "oro_bajo",
-      "tier_origen": "testeo",
-      "tier_destino": "oro",
-      "roas_reciente": 6.6533615431384,
-      "grupo_id": "7171145953464530",
-      "poco_stock": true
+      "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
+      "motivo": "roas_bajo_sostenido",
+      "roas_reciente": 2.103000780914939,
+      "campania": "plata_medio"
     },
     {
-      "tipo": "agregar_a_promo",
+      "tipo": "alerta",
       "item_ids": [
-        "MLA3484999520",
-        "MLA1824780173"
+        "MLA3551070832",
+        "MLA3551070830",
+        "MLA3551033902",
+        "MLA3551033900",
+        "MLA3184985568",
+        "MLA3184953858",
+        "MLA3184940934",
+        "MLA3184940932",
+        "MLA3184929108",
+        "MLA3184903478",
+        "MLA3075900554",
+        "MLA3075854212",
+        "MLA3075792926",
+        "MLA1871515605",
+        "MLA1747366313",
+        "MLA1747366311",
+        "MLA1747344349",
+        "MLA1747323597",
+        "MLA1711870831",
+        "MLA1711870829"
       ],
-      "family_name": "Pack X2 Gorro Lana Invierno Hombre Térmico Corderito",
-      "motivo": "poco_stock"
+      "family_name": "Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra",
+      "alerta": "ctr_bajo",
+      "roas": 3.5174260912902073,
+      "acos": 0.28429879521169854,
+      "campania": "plata_bajo",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
-      "tipo": "mover_tier",
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3551070832",
+        "MLA3551070830",
+        "MLA3551033902",
+        "MLA3551033900",
+        "MLA3184985568",
+        "MLA3184953858",
+        "MLA3184940934",
+        "MLA3184940932",
+        "MLA3184929108",
+        "MLA3184903478",
+        "MLA3075900554",
+        "MLA3075854212",
+        "MLA3075792926",
+        "MLA1871515605",
+        "MLA1747366313",
+        "MLA1747366311",
+        "MLA1747344349",
+        "MLA1747323597",
+        "MLA1711870831",
+        "MLA1711870829"
+      ],
+      "family_name": "Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra",
+      "alerta": "acos_alto",
+      "roas": 3.5174260912902073,
+      "acos": 0.28429879521169854,
+      "campania": "plata_bajo",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "pausar",
+      "item_ids": [
+        "MLA3551070832",
+        "MLA3551070830",
+        "MLA3551033902",
+        "MLA3551033900",
+        "MLA3184985568",
+        "MLA3184953858",
+        "MLA3184940934",
+        "MLA3184940932",
+        "MLA3184929108",
+        "MLA3184903478",
+        "MLA3075900554",
+        "MLA3075854212",
+        "MLA3075792926",
+        "MLA1871515605",
+        "MLA1747366313",
+        "MLA1747366311",
+        "MLA1747344349",
+        "MLA1747323597",
+        "MLA1711870831",
+        "MLA1711870829"
+      ],
+      "family_name": "Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra",
+      "motivo": "roas_bajo_sostenido",
+      "roas_reciente": 3.5174260912902073,
+      "campania": "plata_bajo"
+    },
+    {
+      "tipo": "alerta",
       "item_ids": [
         "MLA3471164422",
         "MLA3471164420",
@@ -92,12 +390,68 @@
         "MLA1841122337"
       ],
       "family_name": "Polera Hombre Morley Slim Cuello Alto Manga Larga Abrigada",
-      "campania_origen": "plata_bajo",
-      "campania_destino": "oro_bajo",
-      "tier_origen": "plata",
-      "tier_destino": "oro",
-      "roas_reciente": 10.214024393918999,
-      "grupo_id": "4684351091916497"
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "plata_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3471164422",
+        "MLA3471164420",
+        "MLA3471164418",
+        "MLA3471164416",
+        "MLA3471164414",
+        "MLA3471125870",
+        "MLA3471112996",
+        "MLA3471112994",
+        "MLA3471112992",
+        "MLA1841122337"
+      ],
+      "family_name": "Polera Hombre Morley Slim Cuello Alto Manga Larga Abrigada",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "plata_bajo",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+    },
+    {
+      "tipo": "pausar",
+      "item_ids": [
+        "MLA3471164422",
+        "MLA3471164420",
+        "MLA3471164418",
+        "MLA3471164416",
+        "MLA3471164414",
+        "MLA3471125870",
+        "MLA3471112996",
+        "MLA3471112994",
+        "MLA3471112992",
+        "MLA1841122337"
+      ],
+      "family_name": "Polera Hombre Morley Slim Cuello Alto Manga Larga Abrigada",
+      "motivo": "roas_bajo_sostenido",
+      "roas_reciente": 0.0,
+      "campania": "plata_bajo"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA3471164422",
+        "MLA3471164420",
+        "MLA3471164418",
+        "MLA3471164416",
+        "MLA3471164414",
+        "MLA3471125870",
+        "MLA3471112996",
+        "MLA3471112994",
+        "MLA3471112992",
+        "MLA1841122337"
+      ],
+      "family_name": "Polera Hombre Morley Slim Cuello Alto Manga Larga Abrigada",
+      "motivo": "poco_stock"
     },
     {
       "tipo": "alerta",
@@ -114,8 +468,8 @@
       ],
       "family_name": "Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha",
       "alerta": "ctr_bajo",
-      "roas": 6.521341163743879,
-      "acos": 0.15334269054341323,
+      "roas": 6.290097830206006,
+      "acos": 0.15898003926073262,
       "campania": "oro_bajo",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -134,78 +488,65 @@
       ],
       "family_name": "Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha",
       "alerta": "acos_alto",
-      "roas": 6.521341163743879,
-      "acos": 0.15334269054341323,
+      "roas": 6.290097830206006,
+      "acos": 0.15898003926073262,
       "campania": "oro_bajo",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
     {
-      "tipo": "tier_dividido",
+      "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA3409335862",
         "MLA1814260363",
-        "MLA1814234441",
-        "MLA1814234439"
+        "MLA1814234441"
       ],
       "family_name": "Vaso Térmico Acero Inoxidable 900ml Con Pico Frío Calor",
-      "tiers_detectados": [
-        "plata_medio",
-        "testeo_bajo"
-      ]
+      "motivo": "poco_stock"
     },
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA3261938610",
-        "MLA3261913218",
-        "MLA3261901268",
-        "MLA3261901266",
-        "MLA1807440799",
-        "MLA1807440797",
-        "MLA1807440795",
-        "MLA1807438325",
-        "MLA1807387859",
-        "MLA1807387857",
-        "MLA1807387855",
-        "MLA1807349743",
-        "MLA1807349741",
-        "MLA1807331245",
-        "MLA1807328627",
-        "MLA1807328625"
+        "MLA3383029350",
+        "MLA3383029348",
+        "MLA1796394583",
+        "MLA1796394581",
+        "MLA1796385989",
+        "MLA1796385987"
       ],
-      "family_name": "Pantalon Mujer Baggy Babucha Friza Jogger Suelto",
+      "family_name": "Remera Termica Hombre Manga Larga Primera Piel Ajustada",
       "alerta": "ctr_bajo",
-      "roas": 2.900457300220241,
-      "acos": 0.34477321901069424,
-      "campania": "testeo_alto",
+      "roas": 2.9631167274455468,
+      "acos": 0.3374824861732947,
+      "campania": "testeo_medio",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
-      "tipo": "alerta",
+      "tipo": "mover_tier",
       "item_ids": [
-        "MLA3261938610",
-        "MLA3261913218",
-        "MLA3261901268",
-        "MLA3261901266",
-        "MLA1807440799",
-        "MLA1807440797",
-        "MLA1807440795",
-        "MLA1807438325",
-        "MLA1807387859",
-        "MLA1807387857",
-        "MLA1807387855",
-        "MLA1807349743",
-        "MLA1807349741",
-        "MLA1807331245",
-        "MLA1807328627",
-        "MLA1807328625"
+        "MLA3215506478",
+        "MLA3215506476",
+        "MLA3215506474",
+        "MLA3215506472",
+        "MLA3215378974",
+        "MLA3215378972",
+        "MLA1757030023",
+        "MLA1757030021",
+        "MLA1757030019",
+        "MLA1757030017",
+        "MLA1757030015",
+        "MLA1757009389",
+        "MLA1757009387",
+        "MLA1757009385",
+        "MLA1757009383",
+        "MLA1757009381"
       ],
-      "family_name": "Pantalon Mujer Baggy Babucha Friza Jogger Suelto",
-      "alerta": "cvr_bajo",
-      "roas": 2.900457300220241,
-      "acos": 0.34477321901069424,
-      "campania": "testeo_alto",
-      "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
+      "family_name": "Pantalon Babucha Hombre Recto Deportivo Con Vivo Lateral",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "plata_medio",
+      "tier_origen": "testeo",
+      "tier_destino": "plata",
+      "roas_reciente": 3.917757517327741,
+      "grupo_id": "2040596443848656"
     },
     {
       "tipo": "alerta",
@@ -223,10 +564,31 @@
       ],
       "family_name": "Chaleco Hombre Polar Con Bolsillos Termico Antipilling",
       "alerta": "ctr_bajo",
-      "roas": 2.863398049909623,
-      "acos": 0.34923541281016196,
+      "roas": 0.0,
+      "acos": null,
       "campania": "testeo_medio",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3193408526",
+        "MLA3193395542",
+        "MLA3193031876",
+        "MLA3193031874",
+        "MLA3192842698",
+        "MLA3192842696",
+        "MLA3192829608",
+        "MLA3192829606",
+        "MLA3192752478",
+        "MLA1749484333"
+      ],
+      "family_name": "Chaleco Hombre Polar Con Bolsillos Termico Antipilling",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "testeo_medio",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
     },
     {
       "tipo": "agregar_a_promo",
@@ -248,81 +610,60 @@
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA3184975890",
-        "MLA1747443331",
-        "MLA1747443329",
-        "MLA1747418717",
-        "MLA1747392843",
-        "MLA1747392841",
-        "MLA1747392839",
-        "MLA1747369595",
-        "MLA1747369593",
-        "MLA1747335003",
-        "MLA1729961489",
-        "MLA1729961487",
-        "MLA1729961485",
-        "MLA1729890963",
-        "MLA1729877757"
+        "MLA3122507846",
+        "MLA3122483392",
+        "MLA3122483390",
+        "MLA3122420232",
+        "MLA1727917419",
+        "MLA1727870975",
+        "MLA1727870973",
+        "MLA1727870971"
       ],
-      "family_name": "Pantalon Jogging Hombre Babucha Algodn Rustico Corte Recto",
+      "family_name": "Polera Hombre Morley Cuello Alto Comoda Shaffe",
       "alerta": "ctr_bajo",
-      "roas": 2.7473514929916694,
-      "acos": 0.36398691705482195,
-      "campania": "oro_medio",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA3184975890",
-        "MLA1747443331",
-        "MLA1747443329",
-        "MLA1747418717",
-        "MLA1747392843",
-        "MLA1747392841",
-        "MLA1747392839",
-        "MLA1747369595",
-        "MLA1747369593",
-        "MLA1747335003",
-        "MLA1729961489",
-        "MLA1729961487",
-        "MLA1729961485",
-        "MLA1729890963",
-        "MLA1729877757"
+        "MLA3122507846",
+        "MLA3122483392",
+        "MLA3122483390",
+        "MLA3122420232",
+        "MLA1727917419",
+        "MLA1727870975",
+        "MLA1727870973",
+        "MLA1727870971"
       ],
-      "family_name": "Pantalon Jogging Hombre Babucha Algodn Rustico Corte Recto",
-      "alerta": "acos_alto",
-      "roas": 2.7473514929916694,
-      "acos": 0.36398691705482195,
-      "campania": "oro_medio",
-      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+      "family_name": "Polera Hombre Morley Cuello Alto Comoda Shaffe",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
     },
     {
       "tipo": "mover_tier",
       "item_ids": [
-        "MLA3184975890",
-        "MLA1747443331",
-        "MLA1747443329",
-        "MLA1747418717",
-        "MLA1747392843",
-        "MLA1747392841",
-        "MLA1747392839",
-        "MLA1747369595",
-        "MLA1747369593",
-        "MLA1747335003",
-        "MLA1729961489",
-        "MLA1729961487",
-        "MLA1729961485",
-        "MLA1729890963",
-        "MLA1729877757"
+        "MLA3122507846",
+        "MLA3122483392",
+        "MLA3122483390",
+        "MLA3122420232",
+        "MLA1727917419",
+        "MLA1727870975",
+        "MLA1727870973",
+        "MLA1727870971"
       ],
-      "family_name": "Pantalon Jogging Hombre Babucha Algodn Rustico Corte Recto",
-      "campania_origen": "oro_medio",
-      "campania_destino": "plata_medio",
+      "family_name": "Polera Hombre Morley Cuello Alto Comoda Shaffe",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
       "tier_origen": "oro",
       "tier_destino": "plata",
-      "roas_reciente": 2.7473514929916694,
-      "grupo_id": "4382639765639185"
+      "roas_reciente": 0.0,
+      "grupo_id": "3290113265002063"
     },
     {
       "tipo": "alerta",
@@ -375,8 +716,8 @@
       ],
       "family_name": "Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe",
       "alerta": "ctr_bajo",
-      "roas": 4.826166068595862,
-      "acos": 0.20720381059969262,
+      "roas": 4.486225797347661,
+      "acos": 0.22290451822358526,
       "campania": "oro_alto",
       "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
@@ -431,8 +772,8 @@
       ],
       "family_name": "Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe",
       "alerta": "acos_alto",
-      "roas": 4.826166068595862,
-      "acos": 0.20720381059969262,
+      "roas": 4.486225797347661,
+      "acos": 0.22290451822358526,
       "campania": "oro_alto",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -490,7 +831,7 @@
       "campania_destino": "plata_alto",
       "tier_origen": "oro",
       "tier_destino": "plata",
-      "roas_reciente": 4.826166068595862,
+      "roas_reciente": 4.486225797347661,
       "grupo_id": "4816596800258335"
     },
     {
@@ -525,10 +866,10 @@
       ],
       "family_name": "Campera Mujer Deportiva Entallada Elastizada Gym Urbano",
       "alerta": "ctr_bajo",
-      "roas": 2.211421879861023,
-      "acos": 0.45219775073530755,
+      "roas": 0.0,
+      "acos": null,
       "campania": "testeo_medio",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
       "tipo": "alerta",
@@ -562,10 +903,10 @@
       ],
       "family_name": "Campera Mujer Deportiva Entallada Elastizada Gym Urbano",
       "alerta": "cvr_bajo",
-      "roas": 2.211421879861023,
-      "acos": 0.45219775073530755,
+      "roas": 0.0,
+      "acos": null,
       "campania": "testeo_medio",
-      "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
     },
     {
       "tipo": "mover_tier",
@@ -607,12 +948,49 @@
         "MLA1586110235"
       ],
       "family_name": "Remera Hombre Algodon Oversize Manga Corta Estampada",
-      "campania_origen": "testeo_bajo",
+      "campania_origen": "plata_bajo",
       "campania_destino": "oro_bajo",
+      "tier_origen": "plata",
+      "tier_destino": "oro",
+      "roas_reciente": 11.990260046470555,
+      "grupo_id": "8587919091333235"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA2473413538",
+        "MLA2473401774",
+        "MLA2473401772",
+        "MLA2473401770",
+        "MLA2473401768",
+        "MLA2472863112",
+        "MLA2472863110",
+        "MLA2472863108",
+        "MLA2472850452",
+        "MLA2472850450",
+        "MLA2472836970",
+        "MLA2472811526",
+        "MLA2472811524",
+        "MLA2472811522",
+        "MLA2472798640",
+        "MLA2472798638",
+        "MLA2472798636",
+        "MLA2472759872",
+        "MLA2472746760",
+        "MLA2472669198",
+        "MLA2472669196",
+        "MLA2472669194",
+        "MLA2472579102",
+        "MLA2472579100",
+        "MLA1562927987"
+      ],
+      "family_name": "Remera Hombre Lisa Algodon Clasica Basica Slim Fit Shaffe",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "oro_medio",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 39.720974225585245,
-      "grupo_id": "8587919091333235"
+      "roas_reciente": 13.29200637980415,
+      "grupo_id": "197204721853729"
     },
     {
       "tipo": "alerta",
@@ -667,8 +1045,121 @@
       "alerta": "ctr_bajo",
       "roas": 0.0,
       "acos": null,
-      "campania": "testeo_bajo",
+      "campania": "testeo_medio",
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2220214678",
+        "MLA2220149598",
+        "MLA2220149596",
+        "MLA2220136560",
+        "MLA2220136558",
+        "MLA2220123702",
+        "MLA2220097786",
+        "MLA2220097784",
+        "MLA2220097782",
+        "MLA2220045562",
+        "MLA2219915544",
+        "MLA2219915542",
+        "MLA2219876600",
+        "MLA2219837520",
+        "MLA2219824608",
+        "MLA2219798522"
+      ],
+      "family_name": "Remera Oversize Hombre Básica De Algodón Estilo Streetwear",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "testeo_medio",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA1930523289",
+        "MLA1930435177",
+        "MLA1930435175",
+        "MLA1930435173",
+        "MLA1930435171",
+        "MLA1930409605",
+        "MLA1930409603"
+      ],
+      "family_name": "Pantalon Jean Cargo Baggy Nena Wide Leg Cintura Elastizca",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "testeo_medio",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA1930523289",
+        "MLA1930435177",
+        "MLA1930435175",
+        "MLA1930435173",
+        "MLA1930435171",
+        "MLA1930409605",
+        "MLA1930409603"
+      ],
+      "family_name": "Pantalon Jean Cargo Baggy Nena Wide Leg Cintura Elastizca",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA1907966903",
+        "MLA1907966901",
+        "MLA1907937673",
+        "MLA1907937671",
+        "MLA1907937669",
+        "MLA1907937667",
+        "MLA1907925479"
+      ],
+      "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
+      "alerta": "ctr_bajo",
+      "roas": 4.0310703457347214,
+      "acos": 0.24807307097929976,
+      "campania": "oro_alto",
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA1907966903",
+        "MLA1907966901",
+        "MLA1907937673",
+        "MLA1907937671",
+        "MLA1907937669",
+        "MLA1907937667",
+        "MLA1907925479"
+      ],
+      "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
+      "alerta": "cvr_bajo",
+      "roas": 4.0310703457347214,
+      "acos": 0.24807307097929976,
+      "campania": "oro_alto",
+      "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA1907966903",
+        "MLA1907966901",
+        "MLA1907937673",
+        "MLA1907937671",
+        "MLA1907937669",
+        "MLA1907937667",
+        "MLA1907925479"
+      ],
+      "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
+      "alerta": "acos_alto",
+      "roas": 4.0310703457347214,
+      "acos": 0.24807307097929976,
+      "campania": "oro_alto",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
     {
       "tipo": "mover_tier",
@@ -682,15 +1173,15 @@
         "MLA1907925479"
       ],
       "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
-      "campania_origen": "testeo_medio",
-      "campania_destino": "oro_medio",
-      "tier_origen": "testeo",
-      "tier_destino": "oro",
-      "roas_reciente": 9.627356188107225,
+      "campania_origen": "oro_alto",
+      "campania_destino": "plata_alto",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 4.0310703457347214,
       "grupo_id": "5533546941922063"
     },
     {
-      "tipo": "alerta",
+      "tipo": "mover_tier",
       "item_ids": [
         "MLA1873471469",
         "MLA1873471467",
@@ -704,49 +1195,15 @@
         "MLA1785464439"
       ],
       "family_name": "Sweater Oversize Mujer Tejido Bremer Elastizado Pullover",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "testeo_medio",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+      "campania_origen": "testeo_medio",
+      "campania_destino": "oro_medio",
+      "tier_origen": "testeo",
+      "tier_destino": "oro",
+      "roas_reciente": 10.050989183928674,
+      "grupo_id": "6099944914109264"
     },
     {
       "tipo": "alerta",
-      "item_ids": [
-        "MLA1812611463",
-        "MLA1812611461",
-        "MLA1812598669",
-        "MLA1812598667",
-        "MLA1812586499",
-        "MLA1812586497",
-        "MLA1812586495",
-        "MLA1812586493",
-        "MLA1812554479",
-        "MLA1812554477",
-        "MLA1812554475",
-        "MLA1812554473"
-      ],
-      "family_name": "Remera Termica Niño Manga Larga Super Abrigada Escolar",
-      "alerta": "ctr_bajo",
-      "roas": 7.102371564495875,
-      "acos": 0.14079804061489984,
-      "campania": "oro_bajo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA1747915126"
-      ],
-      "family_name": "Buzo Hoodie Frisa Canguro Capucha Bordado Mujer Over Shaffe ",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "testeo_alto",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
-      "tipo": "mover_tier",
       "item_ids": [
         "MLA1720884051",
         "MLA1720884049",
@@ -762,76 +1219,144 @@
         "MLA1720849915"
       ],
       "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
-      "campania_origen": "testeo_medio",
-      "campania_destino": "plata_medio",
-      "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 3.8803614522786316,
-      "grupo_id": "5182533623215119"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA1719339758"
-      ],
-      "family_name": "Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe ",
       "alerta": "ctr_bajo",
-      "roas": 2.977485887334211,
-      "acos": 0.3358538168909057,
-      "campania": "testeo_medio",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "roas": 2.514372110400225,
+      "acos": 0.39771360645613635,
+      "campania": "plata_medio",
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA1677272242"
+        "MLA1720884051",
+        "MLA1720884049",
+        "MLA1720873767",
+        "MLA1720862481",
+        "MLA1720862479",
+        "MLA1720862477",
+        "MLA1720862475",
+        "MLA1720862473",
+        "MLA1720862471",
+        "MLA1720849919",
+        "MLA1720849917",
+        "MLA1720849915"
       ],
-      "family_name": "Pantalón Cargo Parachute Oversize De Mujer Con Bolsillos",
-      "alerta": "ctr_bajo",
-      "roas": 0.6745062376347779,
-      "acos": 1.482565978198508,
-      "campania": "testeo_medio",
-      "recomendacion": "ROAS muy bajo — cambiar foto + precio o pausar"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA1677272242"
-      ],
-      "family_name": "Pantalón Cargo Parachute Oversize De Mujer Con Bolsillos",
+      "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
       "alerta": "cvr_bajo",
-      "roas": 0.6745062376347779,
-      "acos": 1.482565978198508,
-      "campania": "testeo_medio",
+      "roas": 2.514372110400225,
+      "acos": 0.39771360645613635,
+      "campania": "plata_medio",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA1420436886"
+        "MLA1720884051",
+        "MLA1720884049",
+        "MLA1720873767",
+        "MLA1720862481",
+        "MLA1720862479",
+        "MLA1720862477",
+        "MLA1720862475",
+        "MLA1720862473",
+        "MLA1720862471",
+        "MLA1720849919",
+        "MLA1720849917",
+        "MLA1720849915"
       ],
-      "family_name": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
+      "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
+      "alerta": "acos_alto",
+      "roas": 2.514372110400225,
+      "acos": 0.39771360645613635,
+      "campania": "plata_medio",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "pausar",
+      "item_ids": [
+        "MLA1720884051",
+        "MLA1720884049",
+        "MLA1720873767",
+        "MLA1720862481",
+        "MLA1720862479",
+        "MLA1720862477",
+        "MLA1720862475",
+        "MLA1720862473",
+        "MLA1720862471",
+        "MLA1720849919",
+        "MLA1720849917",
+        "MLA1720849915"
+      ],
+      "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
+      "motivo": "roas_bajo_sostenido",
+      "roas_reciente": 2.514372110400225,
+      "campania": "plata_medio"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA1221195023"
+      ],
+      "family_name": "Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co",
+      "alerta": "ctr_bajo",
+      "roas": 5.112068527592986,
+      "acos": 0.19561553109125657,
+      "campania": "oro_alto",
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA1221195023"
+      ],
+      "family_name": "Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co",
+      "alerta": "acos_alto",
+      "roas": 5.112068527592986,
+      "acos": 0.19561553109125657,
+      "campania": "oro_alto",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA1221195023"
+      ],
+      "family_name": "Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co",
+      "campania_origen": "oro_alto",
+      "campania_destino": "plata_alto",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 5.112068527592986,
+      "grupo_id": "MLA1221195023"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA1203687845"
+      ],
+      "family_name": "Pack X3 Remeras Hombre Lisas De Algodon Entalladas Basicas",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "plata_medio",
+      "tier_origen": "testeo",
+      "tier_destino": "plata",
+      "roas_reciente": 6.2259856962308655,
+      "grupo_id": "MLA1203687845"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA1194006886"
+      ],
+      "family_name": "Remera Hombre Lisa Algodon Clasica Basica Entallada Shaffeco",
       "alerta": "ctr_bajo",
       "roas": 0.0,
       "acos": null,
       "campania": "testeo_medio",
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA1415952167"
-      ],
-      "family_name": "Buzo Hoodie Frizado Oversize Hombre Canguro Capucha Shaffe",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "testeo_alto",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     }
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1785163827",
+  "run_id": "1787445515",
   "fecha_entrada_campania": {}
 }
