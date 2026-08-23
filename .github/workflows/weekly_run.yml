@@ -1,12 +1,12 @@
 name: SHAFFE Ads - Análisis semanal
 
 on:
-  # Cron semanal pausado a pedido del usuario (27/07/2026): por ahora el
-  # reporte solo se dispara a pedido (workflow_dispatch, o vía Telegram con
-  # el comando "collect" que ya escucha listen.yml). Para reactivar el envío
-  # automático de los lunes, descomentar el bloque `schedule` de abajo.
-  # schedule:
-  #   - cron: '0 12 * * 1' # lunes 9:00 ART (UTC-3) = 12:00 UTC
+  # Reactivado 22/08/2026 a pedido del usuario: quiere que la info de Ads se
+  # recolecte sola, sin tener que dispararlo a mano. Corrió bien todas las
+  # semanas hasta que se pausó el 27/07/2026 (ver historial git de este
+  # archivo). Mismo horario de siempre.
+  schedule:
+    - cron: '0 12 * * 1' # lunes 9:00 ART (UTC-3) = 12:00 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -34,6 +34,12 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Sin esto, push_ads_queue() no tiene con qué autenticarse contra
+          # el ERP y las propuestas detectadas nunca llegan al panel de
+          # CIOMA — agregado 22/08/2026 (secrets nuevos en este repo).
+          ERP_BASE_URL: ${{ secrets.ERP_BASE_URL }}
+          ERP_EMAIL: ${{ secrets.ERP_EMAIL }}
+          ERP_PASSWORD: ${{ secrets.ERP_PASSWORD }}
 
       # ML_ACCESS_TOKEN/ML_REFRESH_TOKEN no van por Secrets: main.py los lee y
       # los reescribe en memory/ml_tokens.json (rotan en cada refresh). Por eso
