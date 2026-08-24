@@ -8,8 +8,8 @@
       ],
       "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
       "alerta": "ctr_bajo",
-      "roas": 3.0717422726733243,
-      "acos": 0.3255481453949273,
+      "roas": 3.029179726926489,
+      "acos": 0.33012237310020387,
       "campania": "plata_bajo",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -20,8 +20,8 @@
       ],
       "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
       "alerta": "acos_alto",
-      "roas": 3.0717422726733243,
-      "acos": 0.3255481453949273,
+      "roas": 3.029179726926489,
+      "acos": 0.33012237310020387,
       "campania": "plata_bajo",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -32,7 +32,7 @@
       ],
       "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
       "motivo": "roas_bajo_sostenido",
-      "roas_reciente": 3.0717422726733243,
+      "roas_reciente": 3.029179726926489,
       "campania": "plata_bajo"
     },
     {
@@ -79,7 +79,7 @@
       "campania_destino": "oro_medio",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 40.900496404069486,
+      "roas_reciente": 41.38010749580997,
       "grupo_id": "4396384007104081"
     },
     {
@@ -99,7 +99,7 @@
       "campania_destino": "oro_bajo",
       "tier_origen": "plata",
       "tier_destino": "oro",
-      "roas_reciente": 9.585920457804228,
+      "roas_reciente": 9.5228272215929,
       "grupo_id": "8553117370361807"
     },
     {
@@ -114,10 +114,10 @@
       ],
       "family_name": "Conjunto Deportivo Mujer Campera Crop Con Capucha Y Pantalon",
       "campania_origen": "testeo_medio",
-      "campania_destino": "plata_medio",
+      "campania_destino": "oro_medio",
       "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 4.284302744965316,
+      "tier_destino": "oro",
+      "roas_reciente": 7.510111941517909,
       "grupo_id": "1554267127736337"
     },
     {
@@ -137,7 +137,7 @@
       "campania_destino": "oro_medio",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 16.43246817655811,
+      "roas_reciente": 10.639002745121623,
       "grupo_id": "2391095704699731"
     },
     {
@@ -173,7 +173,7 @@
       "campania_destino": "plata_medio",
       "tier_origen": "testeo",
       "tier_destino": "plata",
-      "roas_reciente": 4.507910338204383,
+      "roas_reciente": 4.566478339309534,
       "grupo_id": "3859373507095129"
     },
     {
@@ -236,8 +236,8 @@
       ],
       "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
       "alerta": "ctr_bajo",
-      "roas": 2.103000780914939,
-      "acos": 0.4755109979393048,
+      "roas": 2.104402185974826,
+      "acos": 0.475194336265512,
       "campania": "plata_medio",
       "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
@@ -251,8 +251,8 @@
       ],
       "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
       "alerta": "cvr_bajo",
-      "roas": 2.103000780914939,
-      "acos": 0.4755109979393048,
+      "roas": 2.104402185974826,
+      "acos": 0.475194336265512,
       "campania": "plata_medio",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
@@ -266,8 +266,8 @@
       ],
       "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
       "alerta": "acos_alto",
-      "roas": 2.103000780914939,
-      "acos": 0.4755109979393048,
+      "roas": 2.104402185974826,
+      "acos": 0.475194336265512,
       "campania": "plata_medio",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -281,7 +281,7 @@
       ],
       "family_name": "Jean Baggy Mujer Tiro Alto Wide Leg Rigido Denim",
       "motivo": "roas_bajo_sostenido",
-      "roas_reciente": 2.103000780914939,
+      "roas_reciente": 2.104402185974826,
       "campania": "plata_medio"
     },
     {
@@ -310,8 +310,8 @@
       ],
       "family_name": "Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra",
       "alerta": "ctr_bajo",
-      "roas": 3.5174260912902073,
-      "acos": 0.28429879521169854,
+      "roas": 3.6170440559707346,
+      "acos": 0.27646884708226815,
       "campania": "plata_bajo",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -341,8 +341,8 @@
       ],
       "family_name": "Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra",
       "alerta": "acos_alto",
-      "roas": 3.5174260912902073,
-      "acos": 0.28429879521169854,
+      "roas": 3.6170440559707346,
+      "acos": 0.27646884708226815,
       "campania": "plata_bajo",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -372,7 +372,7 @@
       ],
       "family_name": "Pantalon Hombre Urbano Elastizado Tipo Jogger De Lycra",
       "motivo": "roas_bajo_sostenido",
-      "roas_reciente": 3.5174260912902073,
+      "roas_reciente": 3.6170440559707346,
       "campania": "plata_bajo"
     },
     {
@@ -468,8 +468,8 @@
       ],
       "family_name": "Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha",
       "alerta": "ctr_bajo",
-      "roas": 6.290097830206006,
-      "acos": 0.15898003926073262,
+      "roas": 6.285518189967802,
+      "acos": 0.15909587241288733,
       "campania": "oro_bajo",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -488,8 +488,8 @@
       ],
       "family_name": "Piloto Lluvia Impermeable Hombre Liviano Poncho Capucha",
       "alerta": "acos_alto",
-      "roas": 6.290097830206006,
-      "acos": 0.15898003926073262,
+      "roas": 6.285518189967802,
+      "acos": 0.15909587241288733,
       "campania": "oro_bajo",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -515,8 +515,8 @@
       ],
       "family_name": "Remera Termica Hombre Manga Larga Primera Piel Ajustada",
       "alerta": "ctr_bajo",
-      "roas": 2.9631167274455468,
-      "acos": 0.3374824861732947,
+      "roas": 2.931659896259234,
+      "acos": 0.34110368712141165,
       "campania": "testeo_medio",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -545,7 +545,7 @@
       "campania_destino": "plata_medio",
       "tier_origen": "testeo",
       "tier_destino": "plata",
-      "roas_reciente": 3.917757517327741,
+      "roas_reciente": 4.023372754390032,
       "grupo_id": "2040596443848656"
     },
     {
@@ -568,27 +568,6 @@
       "acos": null,
       "campania": "testeo_medio",
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3193408526",
-        "MLA3193395542",
-        "MLA3193031876",
-        "MLA3193031874",
-        "MLA3192842698",
-        "MLA3192842696",
-        "MLA3192829608",
-        "MLA3192829606",
-        "MLA3192752478",
-        "MLA1749484333"
-      ],
-      "family_name": "Chaleco Hombre Polar Con Bolsillos Termico Antipilling",
-      "alerta": "cvr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "testeo_medio",
-      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
     },
     {
       "tipo": "agregar_a_promo",
@@ -668,6 +647,48 @@
     {
       "tipo": "alerta",
       "item_ids": [
+        "MLA3094756768"
+      ],
+      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
+      "alerta": "ctr_bajo",
+      "roas": 3.947785658476658,
+      "acos": 0.2533065587927265,
+      "campania": "plata_bajo",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3094756768"
+      ],
+      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
+      "alerta": "acos_alto",
+      "roas": 3.947785658476658,
+      "acos": 0.2533065587927265,
+      "campania": "plata_bajo",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "pausar",
+      "item_ids": [
+        "MLA3094756768"
+      ],
+      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
+      "motivo": "roas_bajo_sostenido",
+      "roas_reciente": 3.947785658476658,
+      "campania": "plata_bajo"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA3094756768"
+      ],
+      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
         "MLA3091031108",
         "MLA3090982102",
         "MLA3090957894",
@@ -716,8 +737,8 @@
       ],
       "family_name": "Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe",
       "alerta": "ctr_bajo",
-      "roas": 4.486225797347661,
-      "acos": 0.22290451822358526,
+      "roas": 4.96581272530415,
+      "acos": 0.2013769055172638,
       "campania": "oro_alto",
       "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
@@ -772,8 +793,8 @@
       ],
       "family_name": "Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe",
       "alerta": "acos_alto",
-      "roas": 4.486225797347661,
-      "acos": 0.22290451822358526,
+      "roas": 4.96581272530415,
+      "acos": 0.2013769055172638,
       "campania": "oro_alto",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -831,7 +852,7 @@
       "campania_destino": "plata_alto",
       "tier_origen": "oro",
       "tier_destino": "plata",
-      "roas_reciente": 4.486225797347661,
+      "roas_reciente": 4.96581272530415,
       "grupo_id": "4816596800258335"
     },
     {
@@ -952,7 +973,7 @@
       "campania_destino": "oro_bajo",
       "tier_origen": "plata",
       "tier_destino": "oro",
-      "roas_reciente": 11.990260046470555,
+      "roas_reciente": 12.010262906463698,
       "grupo_id": "8587919091333235"
     },
     {
@@ -989,7 +1010,7 @@
       "campania_destino": "oro_medio",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 13.29200637980415,
+      "roas_reciente": 11.833304833213223,
       "grupo_id": "197204721853729"
     },
     {
@@ -1120,8 +1141,8 @@
       ],
       "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
       "alerta": "ctr_bajo",
-      "roas": 4.0310703457347214,
-      "acos": 0.24807307097929976,
+      "roas": 4.0352693335637095,
+      "acos": 0.24781493311547054,
       "campania": "oro_alto",
       "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
@@ -1138,8 +1159,8 @@
       ],
       "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
       "alerta": "cvr_bajo",
-      "roas": 4.0310703457347214,
-      "acos": 0.24807307097929976,
+      "roas": 4.0352693335637095,
+      "acos": 0.24781493311547054,
       "campania": "oro_alto",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
@@ -1156,8 +1177,8 @@
       ],
       "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
       "alerta": "acos_alto",
-      "roas": 4.0310703457347214,
-      "acos": 0.24807307097929976,
+      "roas": 4.0352693335637095,
+      "acos": 0.24781493311547054,
       "campania": "oro_alto",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -1177,7 +1198,7 @@
       "campania_destino": "plata_alto",
       "tier_origen": "oro",
       "tier_destino": "plata",
-      "roas_reciente": 4.0310703457347214,
+      "roas_reciente": 4.0352693335637095,
       "grupo_id": "5533546941922063"
     },
     {
@@ -1199,7 +1220,7 @@
       "campania_destino": "oro_medio",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 10.050989183928674,
+      "roas_reciente": 10.147732582047894,
       "grupo_id": "6099944914109264"
     },
     {
@@ -1220,10 +1241,10 @@
       ],
       "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
       "alerta": "ctr_bajo",
-      "roas": 2.514372110400225,
-      "acos": 0.39771360645613635,
+      "roas": 1.2595420382555629,
+      "acos": 0.7939393602018852,
       "campania": "plata_medio",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
+      "recomendacion": "ROAS muy bajo — cambiar foto + precio o pausar"
     },
     {
       "tipo": "alerta",
@@ -1243,8 +1264,8 @@
       ],
       "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
       "alerta": "cvr_bajo",
-      "roas": 2.514372110400225,
-      "acos": 0.39771360645613635,
+      "roas": 1.2595420382555629,
+      "acos": 0.7939393602018852,
       "campania": "plata_medio",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
@@ -1266,8 +1287,8 @@
       ],
       "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
       "alerta": "acos_alto",
-      "roas": 2.514372110400225,
-      "acos": 0.39771360645613635,
+      "roas": 1.2595420382555629,
+      "acos": 0.7939393602018852,
       "campania": "plata_medio",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -1289,8 +1310,21 @@
       ],
       "family_name": "Buzo Crop Mujer Deportivo Con Capucha Elastico Urbano",
       "motivo": "roas_bajo_sostenido",
-      "roas_reciente": 2.514372110400225,
+      "roas_reciente": 1.2595420382555629,
       "campania": "plata_medio"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA1719339758"
+      ],
+      "family_name": "Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe ",
+      "campania_origen": "testeo_medio",
+      "campania_destino": "plata_medio",
+      "tier_origen": "testeo",
+      "tier_destino": "plata",
+      "roas_reciente": 3.545025304435191,
+      "grupo_id": "MLA1719339758"
     },
     {
       "tipo": "alerta",
@@ -1299,8 +1333,8 @@
       ],
       "family_name": "Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co",
       "alerta": "ctr_bajo",
-      "roas": 5.112068527592986,
-      "acos": 0.19561553109125657,
+      "roas": 5.050049609228071,
+      "acos": 0.1980178567300957,
       "campania": "oro_alto",
       "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
@@ -1311,8 +1345,8 @@
       ],
       "family_name": "Pantalon De Vestir Hombre Gabardina Corte Chino Shaffe Co",
       "alerta": "acos_alto",
-      "roas": 5.112068527592986,
-      "acos": 0.19561553109125657,
+      "roas": 5.050049609228071,
+      "acos": 0.1980178567300957,
       "campania": "oro_alto",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -1326,7 +1360,7 @@
       "campania_destino": "plata_alto",
       "tier_origen": "oro",
       "tier_destino": "plata",
-      "roas_reciente": 5.112068527592986,
+      "roas_reciente": 5.050049609228071,
       "grupo_id": "MLA1221195023"
     },
     {
@@ -1336,10 +1370,10 @@
       ],
       "family_name": "Pack X3 Remeras Hombre Lisas De Algodon Entalladas Basicas",
       "campania_origen": "testeo_medio",
-      "campania_destino": "plata_medio",
+      "campania_destino": "oro_medio",
       "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 6.2259856962308655,
+      "tier_destino": "oro",
+      "roas_reciente": 7.1390051021754015,
       "grupo_id": "MLA1203687845"
     },
     {
@@ -1357,6 +1391,6 @@
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1787445515",
+  "run_id": "1787574419",
   "fecha_entrada_campania": {}
 }
