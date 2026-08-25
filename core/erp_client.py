@@ -59,7 +59,12 @@ class ERPClient:
     def cost_by_item(self, item_ids: list) -> dict:
         """item_id (MLA) -> costo real, vía channel_product_links del ERP.
         Items sin vínculo en el ERP simplemente no aparecen en el resultado
-        (el caller debe tratar eso como 'sin dato', no como costo cero)."""
+        (el caller debe tratar eso como 'sin dato', no como costo cero).
+        OJO: channel_product_links tiene huecos reales (variantes/talles que
+        nunca se vincularon a su producto padre) aunque el costo del producto
+        SÍ esté cargado — para no perder margen por eso, preferir
+        cost_by_code() cuando el caller ya tiene el código de SKU (el costo
+        se carga por SKU padre, es el mismo para todas sus variantes)."""
         item_ids = list(dict.fromkeys(item_ids))  # dedupe preservando orden
         if not item_ids:
             return {}
@@ -72,6 +77,22 @@ class ERPClient:
             )
             for row in (data or []):
                 resultado[row["external_item_id"]] = float(row["cost"])
+        return resultado
+
+    def cost_by_code(self, codes: list) -> dict:
+        """código interno de producto (SKU padre, ej. '1N981') -> costo real,
+        directo de products.cost — sin pasar por channel_product_links, así
+        que no depende de que cada variante/talle esté vinculada a ML. Es la
+        fuente preferida para margen por SKU (ver cost_by_item)."""
+        codes = list(dict.fromkeys(codes))
+        if not codes:
+            return {}
+        resultado: dict = {}
+        for i in range(0, len(codes), 100):
+            lote = codes[i:i + 100]
+            data = self._request("GET", "/api/economics/cost", params={"codes": ",".join(lote)})
+            for row in (data or []):
+                resultado[row["code"]] = float(row["cost"])
         return resultado
 
     def pending_ads_activations(self) -> list:

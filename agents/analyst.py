@@ -40,11 +40,14 @@ class Analyst:
         historial_roas: list,
         dias_en_oro: int = 0,
         dias_en_tier_actual: int = 999,
+        ticket_actual: str | None = None,
     ) -> dict | None:
         if self._tiene_aprendizaje_bloqueante(grupo_id, "subir_tier") or self._tiene_aprendizaje_bloqueante(grupo_id, "bajar_tier"):
             return None
 
-        destino = reglas.evaluar_movimiento_tier(nombre_campania, historial_roas, dias_en_oro, dias_en_tier_actual)
+        destino = reglas.evaluar_movimiento_tier(
+            nombre_campania, historial_roas, dias_en_oro, dias_en_tier_actual, ticket_actual
+        )
         if destino is None or destino == nombre_campania:
             return None
 

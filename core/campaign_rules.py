@@ -5,32 +5,28 @@ TIERS = ("testeo", "plata", "oro")
 TIERS_ORDEN = {"testeo": 0, "plata": 1, "oro": 2}
 
 # Límites de precio por ticket (inclusive)
-TICKET_BAJO_MAX  = 17_999   # < $18.000
-TICKET_MEDIO_MAX = 32_999   # $18.000 – $32.999
-# Ticket Alto: >= $33.000
+# Reestructuración del 05/08/2026: Oro y Plata quedaron con 2 subniveles
+# (alto/bajo, el "medio" se fusionó a "alto"); Testeo se unificó en una sola
+# campaña sin subnivel de ticket. Ver project_shaffe_ads_agent.md.
+TICKET_BAJO_MAX = 17_999   # < $18.000
+# Ticket Alto: >= $18.000
 
 # ROAS mínimo de evaluación por campaña (tier + ticket).
 # Nota: este valor NO es el roas_target que se envía a la API de ML —
 # ese es una palanca algorítmica que se maneja por separado y conservadoramente.
 ROAS_TARGET = {
     "oro_alto":    7.5,
-    "oro_medio":   6.5,
     "oro_bajo":    8.0,
     "plata_alto":  4.0,
-    "plata_medio": 4.0,
     "plata_bajo":  4.0,
-    "testeo_alto": 3.0,
-    "testeo_medio": 3.0,
-    "testeo_bajo": 3.0,
+    "testeo":      3.0,
 }
 
 # ACOS máximo tolerado por campaña (testeo no tiene límite estricto).
 ACOS_MAX = {
     "oro_alto":    0.15,
-    "oro_medio":   0.18,
     "oro_bajo":    0.15,
     "plata_alto":  0.25,
-    "plata_medio": 0.25,
     "plata_bajo":  0.25,
 }
 
@@ -80,23 +76,29 @@ STOCK_CANDIDATA_MIN      = 10
 def clasificar_ticket(precio: float) -> str:
     if precio <= TICKET_BAJO_MAX:
         return "bajo"
-    if precio <= TICKET_MEDIO_MAX:
-        return "medio"
     return "alto"
 
 
-def nombre_campania(tier: str, ticket: str) -> str:
+def nombre_campania(tier: str, ticket: str | None) -> str:
+    """Testeo no lleva ticket en el nombre (campaña única desde el 05/08)."""
+    if tier == "testeo":
+        return "testeo"
     return f"{tier}_{ticket}"
 
 
 def tier_y_ticket(nombre: str) -> tuple:
-    tier, _, ticket = nombre.partition("_")
-    return tier, ticket
+    """"testeo" (sin sufijo) no tiene ticket en el nombre — devuelve ticket=None,
+    quien llame tiene que resolverlo por precio real si lo necesita (ver
+    evaluar_movimiento_tier, que ya recibe el ticket real aparte)."""
+    if nombre == "testeo":
+        return "testeo", None
+    tier, sep, ticket = nombre.partition("_")
+    return tier, (ticket if sep else None)
 
 
 def roas_target_campania(nombre: str) -> float:
     """ROAS de evaluación para una campaña dada. Fallback conservador si el nombre no existe."""
-    return ROAS_TARGET.get(nombre, ROAS_TARGET.get(f"{tier_y_ticket(nombre)[0]}_medio", 4.0))
+    return ROAS_TARGET.get(nombre, 4.0)
 
 
 def acos_max_campania(nombre: str) -> float | None:
@@ -116,6 +118,7 @@ def evaluar_movimiento_tier(
     historial_roas: list,
     dias_en_oro: int = 0,
     dias_en_tier_actual: int = 999,
+    ticket_actual: str | None = None,
 ) -> str | None:
     """Evalúa si un producto debe moverse de campaña.
 
@@ -128,11 +131,16 @@ def evaluar_movimiento_tier(
     dias_en_oro: días que lleva el producto en una campaña Oro (para regla de 15 días).
     dias_en_tier_actual: días en el tier actual; bloquea subidas si no supera el mínimo.
                          Default 999 = producto rastreado antes de esta regla → no bloquear.
+    ticket_actual: ticket real (clasificar_ticket sobre el precio), OBLIGATORIO
+                   para resolver el destino cuando el tier actual es "testeo"
+                   (esa campaña no lleva ticket en el nombre). Para plata/oro
+                   se ignora: el ticket real ya viene del nombre de la campaña.
     """
     if not historial_roas:
         return None
 
-    tier_actual, ticket = tier_y_ticket(nombre_campania_actual)
+    tier_actual, ticket_del_nombre = tier_y_ticket(nombre_campania_actual)
+    ticket = ticket_del_nombre if ticket_del_nombre is not None else (ticket_actual or "alto")
 
     # Oro recién confirmado: no tocar hasta cumplir el mínimo de estabilidad
     if tier_actual == "oro" and dias_en_oro < DIAS_SIN_TOCAR_ORO:

@@ -191,8 +191,8 @@ class MLClient:
         )
 
     def add_item_to_campaign(self, advertiser_id: str, campaign_id: str, item_id: str) -> dict:
-        """NO verificado contra la API real. Probar primero sobre una campaña
-        de prueba/pausada antes de usar en producción."""
+        """OBSOLETO: ruta legacy por item_id, confirmado 404 (no existe más).
+        Ver get_ad_groups/move_ad_group — ML gestiona por ad_group_id ahora."""
         return self._request(
             "POST",
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items",
@@ -200,10 +200,54 @@ class MLClient:
         )
 
     def remove_item_from_campaign(self, advertiser_id: str, campaign_id: str, item_id: str) -> dict:
-        """NO verificado contra la API real."""
+        """OBSOLETO: ruta legacy por item_id, confirmado 404 (no existe más)."""
         return self._request(
             "DELETE",
             f"/advertising/advertisers/{advertiser_id}/product_ads/campaigns/{campaign_id}/items/{item_id}",
+        )
+
+    def get_ad_groups(self, site_id: str, advertiser_id: str, limit: int = 50, offset: int = 0) -> dict:
+        """Confirmado en vivo 2026-08-05/06: GET funciona. Reemplaza el modelo
+        viejo por item_id — SHAFFE tiene 442 ad_groups (tipo FAMILY, uno por
+        producto/family_id, no por talle/color individual)."""
+        return self._request(
+            "GET",
+            f"/marketplace/advertising/{site_id}/advertisers/{advertiser_id}/product_ads/ad_groups/search",
+            params={"limit": limit, "offset": offset},
+        )
+
+    def get_ad_group(self, site_id: str, ad_group_id: str) -> dict:
+        """Confirmado en vivo: GET individual funciona, devuelve status/campaign_id/title."""
+        return self._request("GET", f"/marketplace/advertising/{site_id}/product_ads/ad_groups/{ad_group_id}")
+
+    def move_ad_group(self, site_id: str, ad_group_id: str, campaign_id: str, status: str = "active") -> dict:
+        """Mover un ad_group a otra campaña (o cambiar su status) en un solo PUT
+        — no requiere DELETE+POST como el modelo viejo. CONFIRMADO BLOQUEADO:
+        401 'User does not have permission to write' (probado 2026-08-06,
+        mismo bloqueo que update_campaign_roas_target, no es específico de
+        este endpoint). No usar en producción hasta que ML habilite escritura
+        — verificar con get_ad_group después y hacer rollback si hiciera falta."""
+        return self._request(
+            "PUT",
+            f"/marketplace/advertising/{site_id}/product_ads/ad_groups/{ad_group_id}",
+            json={"status": status, "campaign_id": campaign_id},
+        )
+
+    def move_ad_groups_bulk(self, site_id: str, advertiser_id: str, ad_group_ids: list, campaign_id: str, status: str = "active") -> dict:
+        """Versión en lote de move_ad_group. Mismo bloqueo 401 confirmado."""
+        return self._request(
+            "PUT",
+            f"/marketplace/advertising/{site_id}/advertisers/{advertiser_id}/product_ads/ad_groups",
+            json={"ad_groups": ad_group_ids, "status": status, "campaign_id": campaign_id},
+        )
+
+    def remove_ad_group(self, site_id: str, campaign_id: str, ad_group_id: str) -> dict:
+        """NO PROBAR mientras move_ad_group siga dando 401 — si el DELETE
+        funcionara mientras el PUT no, se podría sacar un ad_group de Ads sin
+        forma confirmada de reponerlo por API."""
+        return self._request(
+            "DELETE",
+            f"/marketplace/advertising/{site_id}/product_ads/campaigns/{campaign_id}/ad_groups/{ad_group_id}",
         )
 
     def pause_item(self, site_id: str, item_id: str, status: str = "paused") -> dict:

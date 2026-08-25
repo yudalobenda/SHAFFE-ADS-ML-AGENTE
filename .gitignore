@@ -5,3 +5,4 @@ logs/*.json
 logs/*.xlsx
 !logs/.gitkeep
 analisis_manual_output.json
+browser_automation/browser_profile/

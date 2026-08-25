@@ -4,13 +4,11 @@
   "promotion_id": null,
   "campañas": {
     "oro_alto": 357702416,
-    "oro_medio": 357709533,
     "oro_bajo": 357702510,
-    "plata_alto": 357936810,
-    "plata_medio": 357700023,
+    "plata_alto": 357700023,
     "plata_bajo": 357700015,
-    "testeo_alto": 357706745,
-    "testeo_medio": 357700008,
-    "testeo_bajo": 357700013
+    "testeo": 357700008,
+    "prueba_pantalon": 358374832,
+    "lanzamientos_acc": 358897997
   }
 }

@@ -270,6 +270,19 @@ def modo_collect() -> None:
 
         nombre_campania_actual = grupo["tiers_detectados"][0]
         tier_actual, ticket = reglas.tier_y_ticket(nombre_campania_actual)
+        if ticket is None:
+            # "testeo" no lleva ticket en el nombre (campaña unica desde el
+            # 05/08) - hay que resolverlo por precio real para saber si un
+            # eventual ascenso va a oro_alto/oro_bajo o plata_alto/plata_bajo.
+            try:
+                items_precio = ml.get_items_multiget(grupo["item_ids"], attributes="id,price,status")
+                activos = [i for i in items_precio if i.get("status") == "active"] or items_precio
+                precios = [float(i.get("price") or 0) for i in activos]
+                precio_grupo = max(precios) if precios else 0
+            except Exception as e:
+                print(f"  [ticket] no se pudo leer precio real de {grupo['family_name']}, uso 'alto' por defecto: {e}")
+                precio_grupo = 0
+            ticket = reglas.clasificar_ticket(precio_grupo) if precio_grupo else "alto"
         roas_objetivo = reglas.roas_target_campania(nombre_campania_actual)
 
         analisis = analyst.analizar_item(family_id, nombre_campania_actual, grupo["metricas"])
@@ -346,7 +359,7 @@ def modo_collect() -> None:
         else:
             decision = analyst.decidir_movimiento_tier(
                 family_id, nombre_campania_actual, serie_roas,
-                dias_en_oro, dias_en_tier_actual
+                dias_en_oro, dias_en_tier_actual, ticket
             )
 
         if decision:
@@ -432,7 +445,7 @@ def modo_collect() -> None:
             sold_total = sum(i.get("sold_quantity", 0) for i in items_data)
             listing_type = items_data[0].get("listing_type_id", "")
 
-        ticket = reglas.clasificar_ticket(precio) if precio else "medio"
+        ticket = reglas.clasificar_ticket(precio) if precio else "alto"
         campania_rec = f"testeo_{ticket}"
 
         # Motivo real: evaluar potencial basado en ventas históricas + stock + listing
