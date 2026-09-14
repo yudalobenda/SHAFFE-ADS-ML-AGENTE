@@ -2,53 +2,12 @@
   "ultima_corrida": "collect",
   "acciones_pendientes": [
     {
-      "tipo": "alerta",
+      "tipo": "agregar_a_promo",
       "item_ids": [
-        "MLA881345207"
+        "MLA3841098150"
       ],
-      "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
-      "alerta": "ctr_bajo",
-      "roas": 1.9240748143994377,
-      "acos": 0.5197303101294065,
-      "campania": "plata_bajo",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA881345207"
-      ],
-      "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
-      "alerta": "acos_alto",
-      "roas": 1.9240748143994377,
-      "acos": 0.5197303101294065,
-      "campania": "plata_bajo",
-      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
-    },
-    {
-      "tipo": "pausar",
-      "item_ids": [
-        "MLA881345207"
-      ],
-      "family_name": "Remera Lisa Algodon De Hombre Manga Corta Entallada Shaffe5",
-      "motivo": "roas_bajo_sostenido",
-      "roas_reciente": 1.9240748143994377,
-      "campania": "plata_bajo"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3840365056",
-        "MLA3840352202",
-        "MLA3840339192",
-        "MLA3840339190"
-      ],
-      "family_name": "Botella Termica Acero Inoxidable Con Sujetador 300ml",
-      "alerta": "ctr_bajo",
-      "roas": 3.473509330456394,
-      "acos": 0.2878932816537468,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "family_name": "Remera Hombre Lisa Algodon Manga Corta Al Cuerpo",
+      "motivo": "poco_stock"
     },
     {
       "tipo": "mover_tier",
@@ -62,7 +21,7 @@
       "campania_destino": "plata_alto",
       "tier_origen": "testeo",
       "tier_destino": "plata",
-      "roas_reciente": 4.639148416456669,
+      "roas_reciente": 5.048244504453559,
       "grupo_id": "7128827909097744"
     },
     {
@@ -81,7 +40,7 @@
       "campania_destino": "oro_alto",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 58.740634681261454,
+      "roas_reciente": 122.09653844573454,
       "grupo_id": "4396384007104081",
       "poco_stock": true
     },
@@ -116,7 +75,7 @@
       "campania_destino": "plata_alto",
       "tier_origen": "testeo",
       "tier_destino": "plata",
-      "roas_reciente": 5.7768374338412265,
+      "roas_reciente": 5.950027921296145,
       "grupo_id": "2391095704699731"
     },
     {
@@ -159,17 +118,21 @@
       "campania_destino": "oro_alto",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 7.315721641461152,
+      "roas_reciente": 9.322076965100177,
       "grupo_id": "990526411675858"
     },
     {
       "tipo": "agregar_a_promo",
       "item_ids": [
-        "MLA3409335862",
-        "MLA1814260363",
-        "MLA1814234441"
+        "MLA3382490776",
+        "MLA1807301427",
+        "MLA1807288393",
+        "MLA1807288389",
+        "MLA1807288387",
+        "MLA1807275523",
+        "MLA1807275521"
       ],
-      "family_name": "Vaso Térmico Acero Inoxidable 900ml Con Pico Frío Calor",
+      "family_name": "Calza Térmica Niño Lycra Negra Escolar Abrigada Nene",
       "motivo": "poco_stock"
     },
     {
@@ -194,34 +157,13 @@
       ],
       "family_name": "Pantalon Babucha Hombre Recto Deportivo Con Vivo Lateral",
       "campania_origen": "testeo",
-      "campania_destino": "oro_alto",
+      "campania_destino": "plata_alto",
       "tier_origen": "testeo",
-      "tier_destino": "oro",
-      "roas_reciente": 7.179103397893549,
+      "tier_destino": "plata",
+      "roas_reciente": 5.956931592147367,
       "grupo_id": "2040596443848656"
     },
     {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3193408526",
-        "MLA3193395542",
-        "MLA3193031876",
-        "MLA3193031874",
-        "MLA3192842698",
-        "MLA3192842696",
-        "MLA3192829608",
-        "MLA3192829606",
-        "MLA3192752478",
-        "MLA1749484333"
-      ],
-      "family_name": "Chaleco Hombre Polar Con Bolsillos Termico Antipilling",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "testeo",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
       "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA3193408526",
@@ -236,48 +178,6 @@
         "MLA1749484333"
       ],
       "family_name": "Chaleco Hombre Polar Con Bolsillos Termico Antipilling",
-      "motivo": "poco_stock"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3094756768"
-      ],
-      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
-      "alerta": "ctr_bajo",
-      "roas": 3.619338577346357,
-      "acos": 0.27629357647252345,
-      "campania": "plata_bajo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3094756768"
-      ],
-      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
-      "alerta": "acos_alto",
-      "roas": 3.619338577346357,
-      "acos": 0.27629357647252345,
-      "campania": "plata_bajo",
-      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
-    },
-    {
-      "tipo": "pausar",
-      "item_ids": [
-        "MLA3094756768"
-      ],
-      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
-      "motivo": "roas_bajo_sostenido",
-      "roas_reciente": 3.619338577346357,
-      "campania": "plata_bajo"
-    },
-    {
-      "tipo": "agregar_a_promo",
-      "item_ids": [
-        "MLA3094756768"
-      ],
-      "family_name": "Calza Termica Hombre Larga Deportiva Primera Piel Gym",
       "motivo": "poco_stock"
     },
     {
@@ -327,11 +227,11 @@
       "campania_destino": "plata_alto",
       "tier_origen": "testeo",
       "tier_destino": "plata",
-      "roas_reciente": 3.828981304521335,
+      "roas_reciente": 4.07377830790153,
       "grupo_id": "51714917744955"
     },
     {
-      "tipo": "mover_tier",
+      "tipo": "alerta",
       "item_ids": [
         "MLA2473413538",
         "MLA2473401774",
@@ -360,12 +260,11 @@
         "MLA1562927987"
       ],
       "family_name": "Remera Hombre Lisa Algodon Clasica Basica Slim Fit Shaffe",
-      "campania_origen": "testeo",
-      "campania_destino": "plata_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 4.3957969716866625,
-      "grupo_id": "197204721853729"
+      "alerta": "ctr_bajo",
+      "roas": 2.010242954814946,
+      "acos": 0.4974523092369477,
+      "campania": "testeo",
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
     {
       "tipo": "mover_tier",
@@ -394,11 +293,11 @@
       "campania_destino": "oro_alto",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 13.889129824835232,
+      "roas_reciente": 18.399968166665197,
       "grupo_id": "5837472192529673"
     },
     {
-      "tipo": "mover_tier",
+      "tipo": "alerta",
       "item_ids": [
         "MLA2220214678",
         "MLA2220149598",
@@ -418,24 +317,39 @@
         "MLA2219798522"
       ],
       "family_name": "Remera Oversize Hombre Básica De Algodón Estilo Streetwear",
-      "campania_origen": "testeo",
-      "campania_destino": "plata_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 3.62602339739308,
-      "grupo_id": "8409341215260511"
+      "alerta": "ctr_bajo",
+      "roas": 2.5288631462451536,
+      "acos": 0.39543460526315793,
+      "campania": "testeo",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
-      "tipo": "alerta",
+      "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA1977357073"
       ],
       "family_name": "Toallitas Húmedas Limpieza Cocina Antigrasa Desengrasante 80",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA1930523289",
+        "MLA1930435177",
+        "MLA1930435175",
+        "MLA1930435173",
+        "MLA1930435171",
+        "MLA1930409605",
+        "MLA1930409603"
+      ],
+      "family_name": "Pantalon Jean Cargo Baggy Nena Wide Leg Cintura Elastizca",
+      "campania_origen": "testeo",
+      "campania_destino": "plata_alto",
+      "tier_origen": "testeo",
+      "tier_destino": "plata",
+      "roas_reciente": 5.317550622637029,
+      "grupo_id": "8480018630407698",
+      "poco_stock": true
     },
     {
       "tipo": "agregar_a_promo",
@@ -464,8 +378,8 @@
       ],
       "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
       "alerta": "ctr_bajo",
-      "roas": 1.677588908523985,
-      "acos": 0.5960935929648241,
+      "roas": 2.0933805518635036,
+      "acos": 0.47769623115577886,
       "campania": "oro_alto",
       "recomendacion": "ROAS muy bajo — cambiar foto + precio o pausar"
     },
@@ -482,8 +396,8 @@
       ],
       "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
       "alerta": "cvr_bajo",
-      "roas": 1.677588908523985,
-      "acos": 0.5960935929648241,
+      "roas": 2.0933805518635036,
+      "acos": 0.47769623115577886,
       "campania": "oro_alto",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
@@ -500,8 +414,8 @@
       ],
       "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
       "alerta": "acos_alto",
-      "roas": 1.677588908523985,
-      "acos": 0.5960935929648241,
+      "roas": 2.0933805518635036,
+      "acos": 0.47769623115577886,
       "campania": "oro_alto",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -521,7 +435,7 @@
       "campania_destino": "plata_alto",
       "tier_origen": "oro",
       "tier_destino": "plata",
-      "roas_reciente": 1.677588908523985,
+      "roas_reciente": 2.0933805518635036,
       "grupo_id": "5533546941922063"
     },
     {
@@ -541,12 +455,35 @@
     {
       "tipo": "alerta",
       "item_ids": [
+        "MLA1812611463",
+        "MLA1812611461",
+        "MLA1812598669",
+        "MLA1812598667",
+        "MLA1812586499",
+        "MLA1812586497",
+        "MLA1812586495",
+        "MLA1812586493",
+        "MLA1812554479",
+        "MLA1812554477",
+        "MLA1812554475",
+        "MLA1812554473"
+      ],
+      "family_name": "Remera Termica Niño Manga Larga Super Abrigada Escolar",
+      "alerta": "ctr_bajo",
+      "roas": 6.7486967627676995,
+      "acos": 0.14817675695801916,
+      "campania": "oro_bajo",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
         "MLA1719339758"
       ],
       "family_name": "Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe ",
       "alerta": "ctr_bajo",
-      "roas": 2.050948004594613,
-      "acos": 0.4875794012133712,
+      "roas": 1.7076813612059738,
+      "acos": 0.5855893392745087,
       "campania": "testeo",
       "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
@@ -557,26 +494,52 @@
       ],
       "family_name": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
       "alerta": "ctr_bajo",
-      "roas": 6.840363907359872,
-      "acos": 0.14619105263157894,
+      "roas": 4.897407675047278,
+      "acos": 0.20418965835641736,
       "campania": "oro_alto",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
     {
       "tipo": "alerta",
       "item_ids": [
+        "MLA1420436886"
+      ],
+      "family_name": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
+      "alerta": "acos_alto",
+      "roas": 4.897407675047278,
+      "acos": 0.20418965835641736,
+      "campania": "oro_alto",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA1420436886"
+      ],
+      "family_name": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
+      "campania_origen": "oro_alto",
+      "campania_destino": "plata_alto",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 4.897407675047278,
+      "grupo_id": "MLA1420436886"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
         "MLA1194006886"
       ],
       "family_name": "Remera Hombre Lisa Algodon Clasica Basica Entallada Shaffeco",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "testeo",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+      "campania_origen": "testeo",
+      "campania_destino": "plata_alto",
+      "tier_origen": "testeo",
+      "tier_destino": "plata",
+      "roas_reciente": 3.898404389922511,
+      "grupo_id": "MLA1194006886"
     }
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1788799883",
+  "run_id": "1789406077",
   "fecha_entrada_campania": {}
 }
