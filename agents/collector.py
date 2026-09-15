@@ -80,8 +80,8 @@ class Collector:
         ads = self.ml.search_ads_todas(self.site_id, self.advertiser_id, date_from.isoformat(), date_to.isoformat())
         items_en_campanias_conocidas = {ad["item_id"] for ad in ads if ad.get("campaign_id") in ids_conocidos}
 
-        activos = self.ml.get_seller_items(status="active")
-        sin_campania = [item_id for item_id in activos.get("results", []) if item_id not in items_en_campanias_conocidas]
+        activos = self.ml.get_seller_items_todos(status="active")
+        sin_campania = [item_id for item_id in activos if item_id not in items_en_campanias_conocidas]
 
         # Agrupar por family_id usando lo que ya sabemos de ads/search; si un item
         # activo no aparece ni siquiera ahí (nunca se publicitó), queda solo.

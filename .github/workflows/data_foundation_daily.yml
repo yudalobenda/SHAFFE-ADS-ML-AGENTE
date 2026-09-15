@@ -1,0 +1,70 @@
+name: SHAFFE Ads - Data Foundation diaria
+
+on:
+  schedule:
+    # 23:50 America/Argentina/Buenos_Aires (UTC-3). La fecha se resuelve
+    # dentro del runner con ZoneInfo, no con el timezone UTC de GitHub.
+    - cron: '50 2 * * *'
+  workflow_dispatch:
+    inputs:
+      capture_date:
+        description: 'Fecha BA opcional (YYYY-MM-DD)'
+        required: false
+        type: string
+
+concurrency:
+  group: ml-data-foundation-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -r requirements.txt
+
+      - name: Capturar facts diarios read-only
+        shell: bash
+        run: |
+          args=()
+          if [[ -n "${{ inputs.capture_date }}" ]]; then
+            args+=(--date "${{ inputs.capture_date }}")
+          fi
+          python run_data_foundation.py "${args[@]}"
+        env:
+          ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
+          ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
+          ML_SELLER_ID: ${{ secrets.ML_SELLER_ID }}
+          ML_REDIRECT_URI: ${{ secrets.ML_REDIRECT_URI }}
+          ERP_BASE_URL: ${{ secrets.ERP_BASE_URL }}
+          ERP_EMAIL: ${{ secrets.ERP_EMAIL }}
+          ERP_PASSWORD: ${{ secrets.ERP_PASSWORD }}
+
+      - name: Persistir token OAuth rotado y evidencia de corrida
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "shaffe-ads-foundation"
+          git config user.email "foundation@shaffe.local"
+          git add memory/ml_tokens.json
+          git diff --cached --quiet || git commit -m "chore: captura diaria Data Foundation"
+          git pull --rebase origin main
+          git push
+
+      - name: Archivar evidencia operativa
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-foundation-${{ github.run_id }}
+          path: logs/foundation_*.json
+          if-no-files-found: warn
+          retention-days: 14

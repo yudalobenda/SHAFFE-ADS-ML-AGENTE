@@ -1,0 +1,48 @@
+{
+  "fixture_origin": "ML001 cases studied 2026-08-25; monetary/traffic values reduced to a single illustrative day",
+  "date": "2026-08-25",
+  "items": [
+    {
+      "id": "MLA1645674269",
+      "title": "Piloto Lluvia Impermeable Hombre Liviano",
+      "status": "active",
+      "listing_type_id": "gold_special",
+      "price": 17600,
+      "original_price": null,
+      "seller_custom_field": "ML001|M|NEGRO",
+      "family_id": "fixture-family-ml001",
+      "shipping": {"logistic_type": "fulfillment"},
+      "available_quantity": 36,
+      "variations": []
+    },
+    {
+      "id": "MLA1645687127",
+      "title": "Piloto Lluvia Impermeable Hombre Liviano",
+      "status": "active",
+      "listing_type_id": "gold_special",
+      "price": 17600,
+      "original_price": null,
+      "seller_custom_field": "ML001|L|NEGRO",
+      "family_id": "fixture-family-ml001",
+      "shipping": {"logistic_type": "self_service"},
+      "available_quantity": 1,
+      "variations": []
+    }
+  ],
+  "ads": [
+    {
+      "item_id": "MLA1645674269",
+      "campaign_id": "357700001",
+      "ad_group_id": "900001",
+      "family_id": "fixture-family-ml001",
+      "metrics": {"prints": 360, "clicks": 5, "cost": 809.45, "direct_amount": 0, "indirect_amount": 17600, "direct_units_quantity": 0, "indirect_units_quantity": 1}
+    },
+    {
+      "item_id": "MLA1645687127",
+      "campaign_id": "357700001",
+      "ad_group_id": "900002",
+      "family_id": "fixture-family-ml001",
+      "metrics": {"prints": 2785, "clicks": 16, "cost": 1602.36, "direct_amount": 35200, "indirect_amount": 0, "direct_units_quantity": 2, "indirect_units_quantity": 0}
+    }
+  ]
+}

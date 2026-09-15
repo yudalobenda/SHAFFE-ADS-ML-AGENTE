@@ -1,0 +1,91 @@
+{
+  "_nota": "Payloads reales capturados en vivo 2026-08-28 contra advertiser_id=21757 (SHAFFE, site MLA) con core/ml_client.py get_ad/get_ad_group/get_ad_groups. Los family_items de cada caso FAMILY son los item_id reales devueltos por GET /api/publicaciones (agrupacion por family_id real de ML, backend/routes/publicaciones.js) para esa misma familia -- no son sinteticos, aunque no se capturo el atributo SIZE/COLOR de cada uno.",
+
+  "ad_group_camisa_family": {
+    "channel": "MARKETPLACE",
+    "catalog_listing": false,
+    "title": "Camisa Hombre Elastizada Lisa Manga Larga Casual Vestir",
+    "advertiser_id": 21757,
+    "ad_group_type": "FAMILY",
+    "domain_id": "MLA-SHIRTS",
+    "official_store_id": 94966,
+    "id": 2723481184,
+    "campaign_id": 0,
+    "ad_group_external_id": "5835601663700178",
+    "status": "IDLE"
+  },
+  "camisa_ad_by_item": {
+    "MLA3822378936": {"ad_group_id": 2723481184, "campaign_id": 294904181, "status": "idle"},
+    "MLA2013053241": {"ad_group_id": 2723481184, "campaign_id": 294904181, "status": "idle"},
+    "MLA2013496013": {"ad_group_id": 2723481184, "campaign_id": 294904181, "status": "idle"},
+    "MLA2013053167": {"ad_group_id": 2723481184, "campaign_id": 294904181, "status": "idle"},
+    "MLA2013053177": {"ad_group_id": 2723481184, "campaign_id": 294904181, "status": "idle"},
+    "MLA3822378886": {"ad_group_id": 2723481184, "campaign_id": 294904181, "status": "idle"}
+  },
+  "camisa_family_items": [
+    {"id": "MLA3822378936", "family_id": "5835601663700178"},
+    {"id": "MLA2013053241", "family_id": "5835601663700178"},
+    {"id": "MLA2013496013", "family_id": "5835601663700178"},
+    {"id": "MLA2013053167", "family_id": "5835601663700178"},
+    {"id": "MLA2013053177", "family_id": "5835601663700178"},
+    {"id": "MLA3822378886", "family_id": "5835601663700178"}
+  ],
+
+  "ad_group_pantalon_family": {
+    "channel": "MARKETPLACE",
+    "catalog_listing": false,
+    "title": "Pantalon Gabardina Hombre De Vestir Clasico Chupin Shaffe",
+    "advertiser_id": 21757,
+    "ad_group_type": "FAMILY",
+    "domain_id": "MLA-PANTS",
+    "id": 1248435949,
+    "campaign_id": 0,
+    "ad_group_external_id": "4816596800258335",
+    "status": "IDLE"
+  },
+  "pantalon_ad_by_item": {
+    "MLA1716917723": {"ad_group_id": 1248435949, "campaign_id": 357702416, "status": "active"},
+    "MLA1716917725": {"ad_group_id": 1248435949, "campaign_id": 357702416, "status": "active"},
+    "MLA1716910895": {"ad_group_id": 1248435949, "campaign_id": 357702416, "status": "active"},
+    "MLA2308911916": {"ad_group_id": 1248435949, "campaign_id": 357702416, "status": "active"},
+    "MLA3091031108": {"ad_group_id": 1248435949, "campaign_id": 357702416, "status": "active"},
+    "MLA2308911906": {"ad_group_id": 1248435949, "campaign_id": 357702416, "status": "active"}
+  },
+  "pantalon_family_items": [
+    {"id": "MLA1716917723", "family_id": "4816596800258335"},
+    {"id": "MLA1716917725", "family_id": "4816596800258335"},
+    {"id": "MLA1716910895", "family_id": "4816596800258335"},
+    {"id": "MLA2308911916", "family_id": "4816596800258335"},
+    {"id": "MLA3091031108", "family_id": "4816596800258335"},
+    {"id": "MLA2308911906", "family_id": "4816596800258335"}
+  ],
+
+  "ad_group_1n019_hombre_item": {
+    "channel": "MARKETPLACE",
+    "catalog_listing": false,
+    "title": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
+    "advertiser_id": 21757,
+    "ad_group_type": "ITEM",
+    "domain_id": "MLA-T_SHIRTS",
+    "id": 204050174,
+    "campaign_id": 357702416,
+    "ad_group_external_id": "MLA1420436886",
+    "status": "ACTIVE",
+    "permalink": "https://articulo.mercadolibre.com.ar/MLA-1420436886-remera-oversize-hombre-algodon-shaffe-ng-clasicc-_JM"
+  },
+  "ad_group_1n019_mujer_item": {
+    "channel": "MARKETPLACE",
+    "catalog_listing": false,
+    "title": "Remera Oversize Mujer Algodón Lisa Basica Gym Shaffe ",
+    "advertiser_id": 21757,
+    "ad_group_type": "ITEM",
+    "domain_id": "MLA-T_SHIRTS",
+    "id": 105126942,
+    "campaign_id": 359130777,
+    "ad_group_external_id": "MLA1403338277",
+    "status": "ACTIVE",
+    "permalink": "https://articulo.mercadolibre.com.ar/MLA-1403338277-remera-oversize-mujer-algodon-lisa-basica-gym-shaffe-_JM"
+  },
+
+  "total_ad_groups_cuenta_20260828": 451
+}

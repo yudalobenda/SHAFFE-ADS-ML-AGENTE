@@ -8,6 +8,7 @@ siempre lo pide acá. Ver AUDITORIA-FASE-0.md / MEDICION-DIVERGENCIA-MARGEN.md.
 from __future__ import annotations
 
 import time
+import random
 
 import requests
 
@@ -94,6 +95,106 @@ class ERPClient:
             for row in (data or []):
                 resultado[row["code"]] = float(row["cost"])
         return resultado
+
+    def rentabilidad_sku(self, month: str) -> list:
+        """Margen NETO real por producto ya calculado por el ERP (backend/routes/reports.js
+        /rentabilidad-sku): IVA (venta neta de IVA, IVA_FRAC=1-1/1.21), IIBB real segun
+        tax_regime/iibb_rate de la empresa, comision real, costo real, Ads y envio real por
+        SKU cuando hay dato (si no, prorrateo explicito marcado con adsReal/envioReal=false).
+        Fuente unica de verdad para margen - preferir esto sobre reconstruir la formula
+        a mano (ver core/margin.py, que quedo mas incompleto que esto: nunca incluyo IVA
+        ni IIBB real de la empresa, solo la retencion parcial que trae la liquidacion de MP).
+        month: 'YYYY-MM'."""
+        data = self._request("GET", "/api/reports/rentabilidad-sku", params={"month": month})
+        return (data or {}).get("items", data if isinstance(data, list) else [])
+
+    def settlement_movements(self, date_from: str, date_to: str) -> list:
+        """Liquidaciones REALES de Mercado Pago ya importadas por el ERP cada 12hs
+        (reporte oficial de liquidacion de MP, no reconstruido desde la API de ML) -
+        fuente correcta para margen real: fee_amount/ml_fee, shipping_cost, iibb_tax
+        y net_amount ya vienen conciliados con la plata que efectivamente se movio.
+        Cada fila es un movimiento (Pago aprobado, Pago de envio, Reclamo, Devolucion,
+        Cashback...), no una venta - una misma orden puede tener varias filas. El campo
+        `sku` viene poblado solo cuando el movimiento es atribuible a una venta puntual;
+        cashbacks/bonificaciones de flex agregadas de toda la cuenta vienen con sku=None
+        y no se pueden repartir por producto (ver core/margin.py)."""
+        return self._request(
+            "GET", "/api/contador/mp/settlement-movements",
+            params={"dateFrom": date_from, "dateTo": date_to},
+        ) or []
+
+    # --- Data foundation persistence (shadow mode; no ML/Ads writes) ---
+
+    def create_ingestion_run(self, payload: dict) -> dict:
+        return self._foundation_request("POST", "/api/ads-data-foundation/ingestion-runs", json=payload)
+
+    def _foundation_request(self, method: str, path: str, **kwargs):
+        """Retry policy restricted to internal Data Foundation persistence."""
+        last_error = None
+        for attempt in range(5):
+            try:
+                return self._request(method, path, **kwargs)
+            except (requests.Timeout, requests.ConnectionError, requests.HTTPError) as error:
+                last_error = error
+                response = getattr(error, "response", None)
+                status = getattr(response, "status_code", None)
+                retryable = status in (429, 500, 502, 503, 504) or status is None
+                if not retryable or attempt == 4:
+                    raise
+                retry_after = response.headers.get("Retry-After") if response is not None else None
+                delay = float(retry_after) if retry_after and retry_after.isdigit() else min(16, 2 ** attempt)
+                time.sleep(delay + random.uniform(0, 0.25))
+        raise last_error
+
+    def foundation_source_links(self, item_ids: list) -> list:
+        result = []
+        for i in range(0, len(item_ids), 100):
+            data = self._foundation_request(
+                "GET", "/api/ads-data-foundation/source-links",
+                params={"itemIds": ",".join(item_ids[i:i + 100])},
+            )
+            result.extend(data or [])
+        return result
+
+    def finish_ingestion_run(self, run_id: str, payload: dict) -> dict:
+        return self._foundation_request("PATCH", f"/api/ads-data-foundation/ingestion-runs/{run_id}", json=payload)
+
+    def heartbeat_ingestion_run(self, run_id: str, checkpoint: dict, metadata: dict | None = None) -> dict:
+        return self._foundation_request(
+            "PATCH", f"/api/ads-data-foundation/ingestion-runs/{run_id}/heartbeat",
+            json={"checkpoint": checkpoint, "metadata": metadata or {}},
+        )
+
+    def persist_listing_sku_mappings(self, run_id: str, rows: list) -> dict:
+        return self._foundation_request("POST", "/api/ads-data-foundation/mappings", json={"ingestionRunId": run_id, "rows": rows})
+
+    def persist_listing_snapshots(self, run_id: str, rows: list) -> dict:
+        return self._foundation_request("POST", "/api/ads-data-foundation/listing-snapshots", json={"ingestionRunId": run_id, "rows": rows})
+
+    def persist_ads_daily_metrics(self, run_id: str, rows: list) -> dict:
+        return self._foundation_request("POST", "/api/ads-data-foundation/ads-daily-metrics", json={"ingestionRunId": run_id, "rows": rows})
+
+    def persist_actionable_units(self, run_id: str, rows: list) -> dict:
+        rows = [{**row, "ingestionRunId": run_id} for row in rows]
+        return self._foundation_request("POST", "/api/ads-data-foundation/actionable-units", json={"rows": rows})
+
+    def foundation_status(self) -> dict:
+        return self._foundation_request("GET", "/api/ads-data-foundation/status")
+
+    def foundation_manual_review(self) -> list:
+        return self._foundation_request("GET", "/api/ads-data-foundation/mappings/manual-review") or []
+
+    def create_formula_version(self, payload: dict) -> dict:
+        return self._request("POST", "/api/ads-data-foundation/formula-versions", json=payload)
+
+    def create_calculation_run(self, payload: dict) -> dict:
+        return self._request("POST", "/api/ads-data-foundation/calculation-runs", json=payload)
+
+    def finish_calculation_run(self, run_id: str, payload: dict) -> dict:
+        return self._request("PATCH", f"/api/ads-data-foundation/calculation-runs/{run_id}", json=payload)
+
+    def persist_sku_daily_economics(self, run_id: str, rows: list) -> dict:
+        return self._request("POST", "/api/ads-data-foundation/sku-daily-economics", json={"calculationRunId": run_id, "rows": rows})
 
     def pending_ads_activations(self) -> list:
         """Publicaciones nuevas que el ERP ya publicó en ML y están esperando

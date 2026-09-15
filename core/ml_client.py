@@ -105,10 +105,14 @@ class MLClient:
 
     def _request(self, method: str, path: str, **kwargs) -> dict:
         url = f"{ML_API_BASE}{path}"
-        resp = requests.request(method, url, headers=self._headers(), timeout=30, **kwargs)
-        if resp.status_code >= 400:
-            raise MLClientError(f"{method} {path} -> {resp.status_code} {resp.text}")
-        return resp.json() if resp.content else {}
+        for intento in range(5):
+            resp = requests.request(method, url, headers=self._headers(), timeout=30, **kwargs)
+            if resp.status_code == 429 and intento < 4:
+                time.sleep(2 ** intento)  # 1,2,4,8s - los reportes con shipments/visits en paralelo pueden gatillar esto
+                continue
+            if resp.status_code >= 400:
+                raise MLClientError(f"{method} {path} -> {resp.status_code} {resp.text}")
+            return resp.json() if resp.content else {}
 
     # --- Ads API (PADS) ---
 
@@ -169,6 +173,37 @@ class MLClient:
             if offset >= total:
                 break
         return resultados
+
+    def search_ads_daily_foundation_todas(
+        self, site_id: str, advertiser_id: str, metric_date: str
+    ) -> list:
+        """Daily base facts for the shadow pipeline. Kept separate from the
+        operational collector so Phase 1 cannot alter its request contract."""
+        metrics = (
+            "clicks,prints,cost,direct_amount,indirect_amount,"
+            "direct_units_quantity,indirect_units_quantity,units_quantity"
+        )
+        results, offset, limit = [], 0, 50
+        while True:
+            page = self._request(
+                "GET",
+                f"/marketplace/advertising/{site_id}/advertisers/{advertiser_id}/product_ads/ads/search",
+                params={
+                    "date_from": metric_date,
+                    "date_to": metric_date,
+                    "metrics": metrics,
+                    "limit": limit,
+                    "offset": offset,
+                },
+            )
+            rows = page.get("results") or []
+            results.extend(rows)
+            paging = page.get("paging") or {}
+            total = paging.get("total", len(results))
+            offset += limit
+            if not rows or offset >= total:
+                break
+        return results
 
     def update_campaign_roas_target(self, site_id: str, campaign_id: str, roas_target: float) -> dict:
         """Ruta confirmada correcta (el GET del mismo endpoint funciona), pero
@@ -305,6 +340,26 @@ class MLClient:
             "GET", f"/users/{self.seller_id}/items/search", params={"status": status, "limit": 100}
         )
 
+    def get_seller_items_todos(self, status: str = "active") -> list:
+        """Version paginada de get_seller_items: éste no pagina (siempre corta
+        en 100), asi que subestimaba silenciosamente el catalogo real (835
+        activos confirmados 25/08, no 100). Usar siempre este para listar
+        TODO el catalogo activo."""
+        resultados: list = []
+        offset = 0
+        limit = 100
+        while True:
+            data = self._request(
+                "GET", f"/users/{self.seller_id}/items/search",
+                params={"status": status, "limit": limit, "offset": offset},
+            )
+            resultados.extend(data.get("results", []))
+            total = data.get("paging", {}).get("total", len(resultados))
+            offset += limit
+            if offset >= total:
+                break
+        return resultados
+
     def search_orders_todas(self, date_from: str, date_to: str, status: str = "paid") -> list:
         """Todas las órdenes del seller en el rango de fechas (paginado).
         Confirmado en vivo 26/07/2026: GET /orders/search con seller + rango
@@ -349,3 +404,45 @@ class MLClient:
                     continue
                 unidades[item_id] = unidades.get(item_id, 0) + item_orden.get("quantity", 0)
         return unidades
+
+    # --- Read-only data foundation (shadow mode) ---
+
+    def get_item_visits(self, item_id: str, last: int, unit: str = "day") -> dict:
+        """Visitas del item para una ventana relativa. ML no acepta un rango
+        date_from/date_to arbitrario en este recurso; el caller debe guardar la
+        fecha de captura y la ventana para no confundirlo con un fact diario."""
+        if last <= 0:
+            raise ValueError("last debe ser positivo")
+        return self._request(
+            "GET", f"/items/{item_id}/visits/time_window",
+            params={"last": last, "unit": unit},
+        )
+
+    def get_shipment(self, shipment_id: str) -> dict:
+        """Detalle read-only de un shipment asociado a una orden."""
+        return self._request("GET", f"/shipments/{shipment_id}")
+
+    def get_listing_prices(self, price: float, category_id: str) -> list:
+        """Simulación teórica de cargos por listing type. No sustituye los
+        cargos efectivamente cobrados ni debe usarse como verdad económica."""
+        if price <= 0 or not category_id:
+            raise ValueError("price positivo y category_id son obligatorios")
+        return self._request(
+            "GET", "/sites/MLA/listing_prices",
+            params={"price": price, "category_id": category_id},
+        )
+
+    def get_user_product(self, user_product_id: str) -> dict:
+        """Producto de usuario read-only; contiene SELLER_SKU de variaciones
+        nativas cuando el item público no alcanza para resolverlo."""
+        return self._request("GET", f"/user-products/{user_product_id}")
+
+    def get_distributed_stock(self, user_product_id: str) -> dict:
+        """Stock distribuido read-only. Es la fuente correcta para separar
+        stock Full del stock del vendedor; available_quantity no alcanza."""
+        return self._request("GET", f"/user-products/{user_product_id}/stock")
+
+    def get_item_promotions(self, item_id: str) -> list:
+        """Promociones read-only asociadas al item. El caller debe conservar
+        el payload y decidir qué estados/tipos considera activos."""
+        return self._request("GET", f"/seller-promotions/items/{item_id}", params={"app_version": "v2"})
