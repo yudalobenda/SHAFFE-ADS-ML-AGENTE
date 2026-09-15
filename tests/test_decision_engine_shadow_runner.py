@@ -5,7 +5,7 @@ import unittest
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 
-from run_decision_engine_shadow import _rehydrate_unit  # noqa: E402
+from run_decision_engine_shadow import _economics_rows, _rehydrate_unit  # noqa: E402
 
 
 class RehydrateUnitTests(unittest.TestCase):
@@ -63,6 +63,44 @@ class RehydrateUnitTests(unittest.TestCase):
         unit = _rehydrate_unit(row)
         self.assertFalse(unit.integrity_ok)
         self.assertEqual(unit.integrity_issue, "FAMILY_ITEMS_NOT_PROVIDED")
+
+
+class EconomicsRowsTests(unittest.TestCase):
+    """_economics_rows traduce core.margin.calcular_margen_real ->
+    sku_daily_economics. contributionPreAds siempre real cuando status=ok;
+    contributionPostAds SOLO cuando hay gasto de Ads real sincronizado --
+    nunca asume $0 para un mes sin sincronizar (eso sería inventar dato)."""
+
+    def test_status_ok_with_real_ads_cost_fills_both_contributions(self):
+        margin_by_sku = {"1N019": {"status": "ok", "net_real": 10000.0, "cogs": 4000.0, "ads_cost": 1500.0, "revenue": 12000.0}}
+        rows = _economics_rows(margin_by_sku, skus_with_real_ads_cost={"1N019"}, metric_date_str="2026-09-15")
+        self.assertEqual(len(rows), 1)
+        row = rows[0]
+        self.assertEqual(row["contributionPreAds"], 6000.0)
+        self.assertEqual(row["contributionPostAds"], 4500.0)
+        self.assertEqual(row["overallConfidence"], "high")
+        self.assertEqual(row["blockedComponents"], [])
+
+    def test_status_ok_without_synced_ads_cost_leaves_post_ads_null(self):
+        margin_by_sku = {"1N019": {"status": "ok", "net_real": 10000.0, "cogs": 4000.0, "ads_cost": 0.0, "revenue": 12000.0}}
+        rows = _economics_rows(margin_by_sku, skus_with_real_ads_cost=set(), metric_date_str="2026-09-15")
+        row = rows[0]
+        self.assertEqual(row["contributionPreAds"], 6000.0)
+        self.assertIsNone(row["contributionPostAds"], "sin ad_spend_by_sku sincronizado no debe inventar $0 de gasto")
+        self.assertIn("ads_cost_mes", row["blockedComponents"])
+
+    def test_status_not_ok_produces_blocked_row_without_numbers(self):
+        margin_by_sku = {"2N997": {"status": "liquidacion_incompleta", "revenue": 500.0, "units": 2}}
+        rows = _economics_rows(margin_by_sku, skus_with_real_ads_cost=set(), metric_date_str="2026-09-15")
+        row = rows[0]
+        self.assertIsNone(row["contributionPreAds"])
+        self.assertIsNone(row["contributionPostAds"])
+        self.assertEqual(row["overallConfidence"], "blocked")
+
+    def test_sin_asignar_key_is_skipped(self):
+        margin_by_sku = {"_sin_asignar": 1234.5}
+        rows = _economics_rows(margin_by_sku, skus_with_real_ads_cost=set(), metric_date_str="2026-09-15")
+        self.assertEqual(rows, [])
 
 
 if __name__ == "__main__":

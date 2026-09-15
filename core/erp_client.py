@@ -184,6 +184,14 @@ class ERPClient:
     def foundation_manual_review(self) -> list:
         return self._foundation_request("GET", "/api/ads-data-foundation/mappings/manual-review") or []
 
+    def get_ad_spend_by_sku(self, month: str) -> dict:
+        """month='YYYY-MM'. code -> costo real ARS del mes, ya cargado en
+        ad_spend_by_sku (backend/routes/economics.js) -- para pasarle a
+        core.margin.calcular_margen_real como sku_ads (real, nunca
+        inventado; ausente = sin dato, no se interpreta como $0 acá)."""
+        rows = self._request("GET", "/api/economics/ad-spend-by-sku", params={"month": month}) or []
+        return {row["code"]: float(row["cost"]) for row in rows if row.get("code")}
+
     def create_formula_version(self, payload: dict) -> dict:
         return self._request("POST", "/api/ads-data-foundation/formula-versions", json=payload)
 

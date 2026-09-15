@@ -67,10 +67,80 @@ def _rehydrate_unit(row: dict) -> ActionableUnit:
     )
 
 
+FORMULA_NAME = "contribucion_settled_pre_post_ads"
+FORMULA_VERSION_TAG = "v1"
+
+
+def _economics_rows(real_margin_by_sku: dict, skus_with_real_ads_cost: set, metric_date_str: str) -> list:
+    """Traduce core.margin.calcular_margen_real -> filas de sku_daily_economics.
+    contributionPreAds = net_real - cogs, siempre real cuando status='ok'
+    (mismo cálculo que usa decision_engine, ver core/decision_context.
+    compute_settled_break_even). contributionPostAds SOLO se completa
+    cuando el SKU tiene un gasto de Ads real sincronizado este mes en
+    ad_spend_by_sku -- si no, queda null en vez de asumir gasto $0 (que
+    sería inventar un dato que no se sincronizó, no un hecho real)."""
+    rows = []
+    for sku, data in real_margin_by_sku.items():
+        if sku == "_sin_asignar" or not isinstance(data, dict):
+            continue
+        if data.get("status") != "ok":
+            rows.append({
+                "metricDate": metric_date_str, "skuCode": sku,
+                "components": {"settlement_mp": {
+                    "value": None, "source": "mp_settlement_movements", "confidence": "blocked",
+                    "coverage": 0, "estimated": False,
+                }},
+                "contributionPreAds": None, "contributionPostAds": None,
+                "blockedComponents": ["settlement_mp"], "overallConfidence": "blocked",
+            })
+            continue
+        contrib_pre = data["net_real"] - data["cogs"]
+        contrib_post = contrib_pre - data["ads_cost"] if sku in skus_with_real_ads_cost else None
+        components = {
+            "settlement_mp_net_minus_cogs": {
+                "value": contrib_pre, "source": "mp_settlement_movements+erp_cost_by_code",
+                "confidence": "high", "coverage": 1.0, "estimated": False,
+            },
+        }
+        blocked = []
+        if contrib_post is None:
+            components["ads_cost_mes"] = {
+                "value": None, "source": "ad_spend_by_sku", "confidence": "blocked", "coverage": 0, "estimated": False,
+            }
+            blocked.append("ads_cost_mes")
+        rows.append({
+            "metricDate": metric_date_str, "skuCode": sku, "components": components,
+            "contributionPreAds": contrib_pre, "contributionPostAds": contrib_post,
+            "blockedComponents": blocked, "overallConfidence": "high",
+        })
+    return rows
+
+
+def persist_sku_economics(erp, real_margin_by_sku: dict, skus_with_real_ads_cost: set, metric_date_str: str) -> dict:
+    formula = erp.create_formula_version({
+        "formulaName": FORMULA_NAME, "version": FORMULA_VERSION_TAG, "status": "approved",
+        "definition": {
+            "contributionPreAds": "settlement_mp_net_real - erp_cogs (ventana 30d conciliada)",
+            "contributionPostAds": "contributionPreAds - ads_cost_mes_real (solo si ad_spend_by_sku tiene el mes sincronizado)",
+        },
+        "componentRules": {}, "codeCommit": None,
+    })
+    run = erp.create_calculation_run({
+        "formulaVersionId": formula["id"],
+        "idempotencyKey": f"decision-engine-shadow:{metric_date_str}",
+        "dateFrom": metric_date_str, "dateTo": metric_date_str,
+        "inputs": {"source": "core.margin.calcular_margen_real", "window": "30d"},
+    })
+    rows = _economics_rows(real_margin_by_sku, skus_with_real_ads_cost, metric_date_str)
+    result = erp.persist_sku_daily_economics(run["id"], rows)
+    erp.finish_calculation_run(run["id"], {"status": "completed"})
+    return {"runId": run["id"], "rows": len(rows), "result": result}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=None, help="Procesar solo las primeras N unidades (debug)")
-    parser.add_argument("--dry-run", action="store_true", help="Decide pero no empuja nada a ads_queue")
+    parser.add_argument("--dry-run", action="store_true", help="Decide pero no empuja nada a ads_queue ni persiste economía")
     args = parser.parse_args()
 
     load_dotenv(BASE / ".env")
@@ -94,14 +164,22 @@ def main():
     # Contribución real pre-Ads por SKU (liquidación MP conciliada - COGS
     # ERP), ventana 30d -- sin esto decide() bloquea el 100% de las unidades
     # (economic_confidence siempre 'blocked'), confirmado en vivo hoy con
-    # margin_by_sku=None. sku_ads={} a propósito: decision_engine usa
-    # net_real/cogs crudos (contribución PRE-Ads), nunca margin_value/pct
-    # (esos sí restan ads_cost y darían una base circular).
+    # margin_by_sku=None. sku_ads real (no {}): decision_engine solo usa
+    # net_real/cogs crudos (contribución PRE-Ads, nunca margin_value/pct que
+    # sí restan ads_cost), así que pasar el gasto real acá no le afecta a
+    # decide() -- pero sí habilita un contributionPostAds real al persistir.
     date_from = (date.today() - timedelta(days=30)).isoformat()
+    current_month = today[:7]
+    sku_ads = erp.get_ad_spend_by_sku(current_month)
+    print(f"[decision-engine-shadow] gasto Ads real sincronizado este mes: {len(sku_ads)} SKUs")
     print(f"[decision-engine-shadow] calculando margen real conciliado {date_from} a {today}...")
-    real_margin_by_sku = calcular_margen_real(ml, erp, date_from, today, sku_ads={})
+    real_margin_by_sku = calcular_margen_real(ml, erp, date_from, today, sku_ads=sku_ads)
     ok_skus = sum(1 for v in real_margin_by_sku.values() if isinstance(v, dict) and v.get("status") == "ok")
     print(f"[decision-engine-shadow] margen real: {ok_skus} SKUs con status=ok de {len(real_margin_by_sku) - 1}")
+
+    if not args.dry_run:
+        econ_result = persist_sku_economics(erp, real_margin_by_sku, set(sku_ads.keys()), today)
+        print(f"[decision-engine-shadow] sku_daily_economics: {econ_result['rows']} filas persistidas (run {econ_result['runId']})")
 
     counts = {"KEEP_TESTING": 0, "NO_ACTION": 0, "BLOCKED": 0, "REPLENISH_BEFORE_SCALE": 0, "pushed": 0, "push_failed": 0}
     for row in units_raw:
