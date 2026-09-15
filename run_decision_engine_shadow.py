@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -26,7 +27,7 @@ from core.decision_engine import (
     CAMPAIGN_CORREGIR, CAMPAIGN_MOTORES, CAMPAIGN_POTENCIALES, CAMPAIGN_RECUPERAR, CAMPAIGN_RENTABLES, decide,
 )
 from core.erp_client import ERPClient
-from core.margin import calcular_margen_real
+from core.margin import base_sku, calcular_margen_real
 from core.ml_client import MLClient
 
 BASE = Path(__file__).resolve().parent
@@ -70,8 +71,35 @@ def _rehydrate_unit(row: dict) -> ActionableUnit:
 FORMULA_NAME = "contribucion_settled_pre_post_ads"
 FORMULA_VERSION_TAG = "v1"
 
+RECLAMO_DEVOLUCION_TYPES = {"Reclamo", "Devolución de dinero", "Devolución de dinero"}
 
-def _economics_rows(real_margin_by_sku: dict, skus_with_real_ads_cost: set, metric_date_str: str) -> list:
+
+def reclamos_devoluciones_por_sku(movimientos: list) -> dict:
+    """Reclamos y devoluciones de dinero REALES, ya conciliados en la
+    liquidación de MP (mismos movimientos que ya usa core.margin -- no es
+    una fuente nueva, es un recorte explícito de la misma). Confirmado en
+    vivo 15/09: vienen con sku real la gran mayoría (138/149 reclamos,
+    7/7 devoluciones en una ventana de 30 días) -- eso YA está neteado
+    dentro de net_real en calcular_margen_real, esto solo lo separa para
+    que se vea como un número propio en vez de quedar escondido adentro
+    de la contribución. Los que NO tienen sku quedan en 'sinAsignar',
+    nunca prorrateados a ciegas entre productos."""
+    por_sku: dict = defaultdict(lambda: {"netoArs": 0.0, "cantidad": 0})
+    sin_asignar = 0.0
+    for m in movimientos:
+        if m.get("operation_type") not in RECLAMO_DEVOLUCION_TYPES:
+            continue
+        net = float(m.get("net_amount") or 0)
+        sku = base_sku(m.get("sku")) if m.get("sku") else None
+        if not sku:
+            sin_asignar += net
+            continue
+        por_sku[sku]["netoArs"] += net
+        por_sku[sku]["cantidad"] += 1
+    return {"porSku": dict(por_sku), "sinAsignarArs": round(sin_asignar, 2)}
+
+
+def _economics_rows(real_margin_by_sku: dict, skus_with_real_ads_cost: set, reclamos_por_sku: dict, metric_date_str: str) -> list:
     """Traduce core.margin.calcular_margen_real -> filas de sku_daily_economics.
     contributionPreAds = net_real - cogs, siempre real cuando status='ok'
     (mismo cálculo que usa decision_engine, ver core/decision_context.
@@ -102,6 +130,16 @@ def _economics_rows(real_margin_by_sku: dict, skus_with_real_ads_cost: set, metr
                 "confidence": "high", "coverage": 1.0, "estimated": False,
             },
         }
+        # Reclamos/devoluciones REALES de este SKU, ya incluidos en
+        # contrib_pre (net_real ya los tiene sumados) -- se muestran
+        # aparte para que se vea el número, no para volver a restarlo.
+        rd = reclamos_por_sku.get(sku)
+        if rd:
+            components["reclamos_devoluciones_30d"] = {
+                "value": rd["netoArs"], "source": "mp_settlement_movements",
+                "confidence": "high", "coverage": 1.0, "estimated": False,
+                "cantidad": rd["cantidad"],
+            }
         blocked = []
         if contrib_post is None:
             components["ads_cost_mes"] = {
@@ -116,7 +154,7 @@ def _economics_rows(real_margin_by_sku: dict, skus_with_real_ads_cost: set, metr
     return rows
 
 
-def persist_sku_economics(erp, real_margin_by_sku: dict, skus_with_real_ads_cost: set, metric_date_str: str) -> dict:
+def persist_sku_economics(erp, real_margin_by_sku: dict, skus_with_real_ads_cost: set, reclamos: dict, metric_date_str: str) -> dict:
     formula = erp.create_formula_version({
         "formulaName": FORMULA_NAME, "version": FORMULA_VERSION_TAG, "status": "approved",
         "definition": {
@@ -131,9 +169,18 @@ def persist_sku_economics(erp, real_margin_by_sku: dict, skus_with_real_ads_cost
         "dateFrom": metric_date_str, "dateTo": metric_date_str,
         "inputs": {"source": "core.margin.calcular_margen_real", "window": "30d"},
     })
-    rows = _economics_rows(real_margin_by_sku, skus_with_real_ads_cost, metric_date_str)
+    rows = _economics_rows(real_margin_by_sku, skus_with_real_ads_cost, reclamos["porSku"], metric_date_str)
     result = erp.persist_sku_daily_economics(run["id"], rows)
-    erp.finish_calculation_run(run["id"], {"status": "completed"})
+    erp.finish_calculation_run(run["id"], {
+        "status": "completed",
+        # Reclamos/devoluciones reales SIN sku identificable en la
+        # liquidación de MP -- explícito, nunca prorrateado a ningún
+        # producto (pedido directo del dueño 15/09).
+        "reconciliationResult": {
+            "reclamosDevolucionesSinAsignarArs": reclamos["sinAsignarArs"],
+            "ventanaDias": 30, "fuente": "mp_settlement_movements",
+        },
+    })
     return {"runId": run["id"], "rows": len(rows), "result": result}
 
 
@@ -177,8 +224,16 @@ def main():
     ok_skus = sum(1 for v in real_margin_by_sku.values() if isinstance(v, dict) and v.get("status") == "ok")
     print(f"[decision-engine-shadow] margen real: {ok_skus} SKUs con status=ok de {len(real_margin_by_sku) - 1}")
 
+    # Reclamos/devoluciones reales -- mismos movimientos que ya usa
+    # calcular_margen_real (misma llamada real, se repite para no tocar
+    # margin.py, que ya está auditado y no expone su lista interna).
+    movimientos = erp.settlement_movements(date_from, today)
+    reclamos = reclamos_devoluciones_por_sku(movimientos)
+    print(f"[decision-engine-shadow] reclamos/devoluciones: {len(reclamos['porSku'])} SKUs con dato real, "
+          f"${reclamos['sinAsignarArs']:,.2f} sin sku identificable (30d)".replace(",", "X").replace(".", ",").replace("X", "."))
+
     if not args.dry_run:
-        econ_result = persist_sku_economics(erp, real_margin_by_sku, set(sku_ads.keys()), today)
+        econ_result = persist_sku_economics(erp, real_margin_by_sku, set(sku_ads.keys()), reclamos, today)
         print(f"[decision-engine-shadow] sku_daily_economics: {econ_result['rows']} filas persistidas (run {econ_result['runId']})")
 
     counts = {"KEEP_TESTING": 0, "NO_ACTION": 0, "BLOCKED": 0, "REPLENISH_BEFORE_SCALE": 0, "pushed": 0, "push_failed": 0}

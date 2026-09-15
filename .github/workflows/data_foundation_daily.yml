@@ -49,6 +49,18 @@ jobs:
           ERP_EMAIL: ${{ secrets.ERP_EMAIL }}
           ERP_PASSWORD: ${{ secrets.ERP_PASSWORD }}
 
+      - name: Sincronizar gasto real de Ads por SKU (ad_spend_by_sku)
+        shell: bash
+        run: python push_ads_sku_al_erp.py
+        env:
+          ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
+          ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
+          ML_SELLER_ID: ${{ secrets.ML_SELLER_ID }}
+          ML_REDIRECT_URI: ${{ secrets.ML_REDIRECT_URI }}
+          ERP_BASE_URL: ${{ secrets.ERP_BASE_URL }}
+          ERP_EMAIL: ${{ secrets.ERP_EMAIL }}
+          ERP_PASSWORD: ${{ secrets.ERP_PASSWORD }}
+
       - name: Decision engine en shadow (empuja recomendaciones a ads_queue, nunca ejecuta en ML)
         shell: bash
         run: python run_decision_engine_shadow.py
