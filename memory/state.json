@@ -4,21 +4,27 @@
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA3841098150"
+        "MLA3955062674"
       ],
-      "family_name": "Remera Hombre Lisa Algodon Manga Corta Al Cuerpo",
+      "family_name": "Hornito Aromatico Ceramica Para Esencias Y Aceite Vela",
       "alerta": "ctr_bajo",
       "roas": 0.0,
       "acos": null,
-      "campania": "testeo",
+      "campania": "lanzamientos_acc",
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
       "tipo": "agregar_a_promo",
       "item_ids": [
-        "MLA3841098150"
+        "MLA3770423748",
+        "MLA3770423746",
+        "MLA3770423744",
+        "MLA1977464137",
+        "MLA1977464135",
+        "MLA1977464133",
+        "MLA1977417803"
       ],
-      "family_name": "Remera Hombre Lisa Algodon Manga Corta Al Cuerpo",
+      "family_name": "Trapo Reutilizables Cocina Rollo X20 Absorbentes 25x25 Paño",
       "motivo": "poco_stock"
     },
     {
@@ -30,31 +36,11 @@
       ],
       "family_name": "Pantalón Mujer Palazzo Pierna Ancha Gamuza Tiro Alto",
       "campania_origen": "testeo",
-      "campania_destino": "plata_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 6.475038798843597,
-      "grupo_id": "7128827909097744"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA3706492080",
-        "MLA3706342528",
-        "MLA3706342524",
-        "MLA3706304246",
-        "MLA3706304244",
-        "MLA3706304242",
-        "MLA3706304240"
-      ],
-      "family_name": "Camisa Niño Manga Larga Cuello Mao Casual Nene",
-      "campania_origen": "testeo",
       "campania_destino": "oro_alto",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 218.084789219486,
-      "grupo_id": "4396384007104081",
-      "poco_stock": true
+      "roas_reciente": 6.522187639345207,
+      "grupo_id": "7128827909097744"
     },
     {
       "tipo": "agregar_a_promo",
@@ -69,30 +55,6 @@
       ],
       "family_name": "Camisa Niño Manga Larga Cuello Mao Casual Nene",
       "motivo": "poco_stock"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3686102906"
-      ],
-      "family_name": "Neceser Y Mini Bolso Combo Organizador De Viaje Gym Pileta",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3686102906"
-      ],
-      "family_name": "Neceser Y Mini Bolso Combo Organizador De Viaje Gym Pileta",
-      "alerta": "cvr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
     },
     {
       "tipo": "mover_tier",
@@ -110,7 +72,7 @@
       "campania_destino": "oro_alto",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 11.661113755354595,
+      "roas_reciente": 7.665048849333704,
       "grupo_id": "990526411675858"
     },
     {
@@ -126,13 +88,13 @@
       ],
       "family_name": "Calza Térmica Niño Lycra Negra Escolar Abrigada Nene",
       "alerta": "ctr_bajo",
-      "roas": 7.167738030137253,
-      "acos": 0.13951402740940455,
+      "roas": 4.324871570554988,
+      "acos": 0.23122073885576105,
       "campania": "oro_bajo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
     {
-      "tipo": "agregar_a_promo",
+      "tipo": "alerta",
       "item_ids": [
         "MLA3382490776",
         "MLA1807301427",
@@ -143,7 +105,30 @@
         "MLA1807275521"
       ],
       "family_name": "Calza Térmica Niño Lycra Negra Escolar Abrigada Nene",
-      "motivo": "poco_stock"
+      "alerta": "acos_alto",
+      "roas": 4.324871570554988,
+      "acos": 0.23122073885576105,
+      "campania": "oro_bajo",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3382490776",
+        "MLA1807301427",
+        "MLA1807288393",
+        "MLA1807288389",
+        "MLA1807288387",
+        "MLA1807275523",
+        "MLA1807275521"
+      ],
+      "family_name": "Calza Térmica Niño Lycra Negra Escolar Abrigada Nene",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 4.324871570554988,
+      "grupo_id": "8129433199386895"
     },
     {
       "tipo": "mover_tier",
@@ -167,10 +152,10 @@
       ],
       "family_name": "Pantalon Babucha Hombre Recto Deportivo Con Vivo Lateral",
       "campania_origen": "testeo",
-      "campania_destino": "plata_alto",
+      "campania_destino": "oro_alto",
       "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 6.276715039753202,
+      "tier_destino": "oro",
+      "roas_reciente": 7.905454594719735,
       "grupo_id": "2040596443848656"
     },
     {
@@ -190,42 +175,6 @@
       ],
       "family_name": "Campera Mujer Deportiva Entallada Elastizada Gym Urbano",
       "motivo": "poco_stock"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA2473413538",
-        "MLA2473401774",
-        "MLA2473401772",
-        "MLA2473401770",
-        "MLA2473401768",
-        "MLA2472863112",
-        "MLA2472863110",
-        "MLA2472863108",
-        "MLA2472850452",
-        "MLA2472850450",
-        "MLA2472836970",
-        "MLA2472811526",
-        "MLA2472811524",
-        "MLA2472811522",
-        "MLA2472798640",
-        "MLA2472798638",
-        "MLA2472798636",
-        "MLA2472759872",
-        "MLA2472746760",
-        "MLA2472669198",
-        "MLA2472669196",
-        "MLA2472669194",
-        "MLA2472579102",
-        "MLA2472579100",
-        "MLA1562927987"
-      ],
-      "family_name": "Remera Hombre Lisa Algodon Clasica Basica Slim Fit Shaffe",
-      "alerta": "ctr_bajo",
-      "roas": 2.1060372362607738,
-      "acos": 0.4748254127621597,
-      "campania": "testeo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
       "tipo": "mover_tier",
@@ -254,91 +203,36 @@
       "campania_destino": "oro_alto",
       "tier_origen": "testeo",
       "tier_destino": "oro",
-      "roas_reciente": 12.970208831024353,
+      "roas_reciente": 10.66362338250825,
       "grupo_id": "5837472192529673"
     },
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA2220214678",
-        "MLA2220149598",
-        "MLA2220149596",
-        "MLA2220136560",
-        "MLA2220136558",
-        "MLA2220123702",
-        "MLA2220097786",
-        "MLA2220097784",
-        "MLA2220097782",
-        "MLA2220045562",
-        "MLA2219915544",
-        "MLA2219915542",
-        "MLA2219876600",
-        "MLA2219837520",
-        "MLA2219824608",
-        "MLA2219798522"
+        "MLA2094133787",
+        "MLA2094121371",
+        "MLA2094121367",
+        "MLA2094108955",
+        "MLA2094108953"
       ],
-      "family_name": "Remera Oversize Hombre Básica De Algodón Estilo Streetwear",
+      "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "ctr_bajo",
-      "roas": 2.599227208710421,
-      "acos": 0.38472973684210526,
-      "campania": "testeo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "roas": 0.0,
+      "acos": null,
+      "campania": "lanzamientos_acc",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
-      "tipo": "agregar_a_promo",
+      "tipo": "alerta",
       "item_ids": [
         "MLA1977357073"
       ],
       "family_name": "Toallitas Húmedas Limpieza Cocina Antigrasa Desengrasante 80",
-      "motivo": "poco_stock"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA1930523289",
-        "MLA1930435177",
-        "MLA1930435175",
-        "MLA1930435173",
-        "MLA1930435171",
-        "MLA1930409605",
-        "MLA1930409603"
-      ],
-      "family_name": "Pantalon Jean Cargo Baggy Nena Wide Leg Cintura Elastizca",
-      "campania_origen": "testeo",
-      "campania_destino": "plata_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 4.001767063204064,
-      "grupo_id": "8480018630407698",
-      "poco_stock": true
-    },
-    {
-      "tipo": "agregar_a_promo",
-      "item_ids": [
-        "MLA1930523289",
-        "MLA1930435177",
-        "MLA1930435175",
-        "MLA1930435173",
-        "MLA1930435171",
-        "MLA1930409605",
-        "MLA1930409603"
-      ],
-      "family_name": "Pantalon Jean Cargo Baggy Nena Wide Leg Cintura Elastizca",
-      "motivo": "poco_stock"
-    },
-    {
-      "tipo": "agregar_a_promo",
-      "item_ids": [
-        "MLA1907966903",
-        "MLA1907966901",
-        "MLA1907937673",
-        "MLA1907937671",
-        "MLA1907937669",
-        "MLA1907937667",
-        "MLA1907925479"
-      ],
-      "family_name": "Pantalon Jean Baggy Niño Denim Algodon Nene Rigido Mom",
-      "motivo": "poco_stock"
+      "alerta": "ctr_bajo",
+      "roas": 3.9621655450961666,
+      "acos": 0.2523872333496173,
+      "campania": "lanzamientos_acc",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
       "tipo": "alerta",
@@ -358,76 +252,49 @@
       ],
       "family_name": "Remera Termica Niño Manga Larga Super Abrigada Escolar",
       "alerta": "ctr_bajo",
-      "roas": 6.880259687838489,
-      "acos": 0.14534335117722297,
+      "roas": 5.99282555745672,
+      "acos": 0.166866195321792,
       "campania": "oro_bajo",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA1719339758"
+        "MLA1812611463",
+        "MLA1812611461",
+        "MLA1812598669",
+        "MLA1812598667",
+        "MLA1812586499",
+        "MLA1812586497",
+        "MLA1812586495",
+        "MLA1812586493",
+        "MLA1812554479",
+        "MLA1812554477",
+        "MLA1812554475",
+        "MLA1812554473"
       ],
-      "family_name": "Jogger Hombre Babucha Con Bolsillos Liso Básico Shaffe ",
-      "alerta": "ctr_bajo",
-      "roas": 1.3812779524669148,
-      "acos": 0.7239672494692575,
-      "campania": "testeo",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA1420436886"
-      ],
-      "family_name": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
-      "alerta": "ctr_bajo",
-      "roas": 5.207724743616931,
-      "acos": 0.19202243767313018,
-      "campania": "oro_alto",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA1420436886"
-      ],
-      "family_name": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
+      "family_name": "Remera Termica Niño Manga Larga Super Abrigada Escolar",
       "alerta": "acos_alto",
-      "roas": 5.207724743616931,
-      "acos": 0.19202243767313018,
-      "campania": "oro_alto",
+      "roas": 5.99282555745672,
+      "acos": 0.166866195321792,
+      "campania": "oro_bajo",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
     {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA1420436886"
-      ],
-      "family_name": "Remera Oversize Hombre Algodón Shaffe Ng Clasicc",
-      "campania_origen": "oro_alto",
-      "campania_destino": "plata_alto",
-      "tier_origen": "oro",
-      "tier_destino": "plata",
-      "roas_reciente": 5.207724743616931,
-      "grupo_id": "MLA1420436886"
-    },
-    {
-      "tipo": "mover_tier",
+      "tipo": "alerta",
       "item_ids": [
         "MLA1194006886"
       ],
       "family_name": "Remera Hombre Lisa Algodon Clasica Basica Entallada Shaffeco",
-      "campania_origen": "testeo",
-      "campania_destino": "plata_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "plata",
-      "roas_reciente": 5.508555337294351,
-      "grupo_id": "MLA1194006886"
+      "alerta": "ctr_bajo",
+      "roas": 1.760289419745237,
+      "acos": 0.5680883999999999,
+      "campania": "testeo",
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     }
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1790011516",
+  "run_id": "1790621828",
   "fecha_entrada_campania": {}
 }
