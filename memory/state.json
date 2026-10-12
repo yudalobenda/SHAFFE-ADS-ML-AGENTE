@@ -4,14 +4,255 @@
     {
       "tipo": "alerta",
       "item_ids": [
+        "MLA4022419206"
+      ],
+      "family_name": "Kit Cafe Vaso + 3 Frascos Azucareros Vidrio Set Regalo",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA4022419206"
+      ],
+      "family_name": "Kit Cafe Vaso + 3 Frascos Azucareros Vidrio Set Regalo",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "4387368402642832"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA4021899296",
+        "MLA2146407795",
+        "MLA2146407793",
+        "MLA2146369547",
+        "MLA2146369545"
+      ],
+      "family_name": "Pack X2 Pijama Mujer Conjunto Musculosa Y Short Suave",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA4021899296",
+        "MLA2146407795",
+        "MLA2146407793",
+        "MLA2146369547",
+        "MLA2146369545"
+      ],
+      "family_name": "Pack X2 Pijama Mujer Conjunto Musculosa Y Short Suave",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "5764904860566674"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA4021574112"
+      ],
+      "family_name": "Musculosa Mujer Pack X3 Lisa Elastizada Basica Modal",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA4021574112"
+      ],
+      "family_name": "Musculosa Mujer Pack X3 Lisa Elastizada Basica Modal",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "6175375763441743"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3995523056",
+        "MLA3995523054",
+        "MLA3995523052",
+        "MLA3995523050"
+      ],
+      "family_name": "Almohada Cervical Viscoelástica Para Viaje Cuello Almohadon",
+      "alerta": "ctr_bajo",
+      "roas": 3.986208666447226,
+      "acos": 0.25086494051784464,
+      "campania": "oro_bajo",
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3995523056",
+        "MLA3995523054",
+        "MLA3995523052",
+        "MLA3995523050"
+      ],
+      "family_name": "Almohada Cervical Viscoelástica Para Viaje Cuello Almohadon",
+      "alerta": "acos_alto",
+      "roas": 3.986208666447226,
+      "acos": 0.25086494051784464,
+      "campania": "oro_bajo",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3995523056",
+        "MLA3995523054",
+        "MLA3995523052",
+        "MLA3995523050"
+      ],
+      "family_name": "Almohada Cervical Viscoelástica Para Viaje Cuello Almohadon",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 3.986208666447226,
+      "grupo_id": "4180847211279699"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3955070800"
+      ],
+      "family_name": "Plato De Sitio Acero Inoxidable Esmaltado 30cm Vajilla",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3955070800"
+      ],
+      "family_name": "Plato De Sitio Acero Inoxidable Esmaltado 30cm Vajilla",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "8962761044948366"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA3955070800"
+      ],
+      "family_name": "Plato De Sitio Acero Inoxidable Esmaltado 30cm Vajilla",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
         "MLA3955062674"
       ],
       "family_name": "Hornito Aromatico Ceramica Para Esencias Y Aceite Vela",
+      "alerta": "ctr_bajo",
+      "roas": 3.0266111222872953,
+      "acos": 0.3304025392083645,
+      "campania": "lanzamientos_acc",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3955057216"
+      ],
+      "family_name": "Especieros Azucareras Pack X3 Con Cuchara Integrada",
       "alerta": "ctr_bajo",
       "roas": 0.0,
       "acos": null,
       "campania": "lanzamientos_acc",
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3932044126"
+      ],
+      "family_name": "Mascarillas Faciales Comprimidas Pack X30 Skincare Pastilla",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA3932044126"
+      ],
+      "family_name": "Mascarillas Faciales Comprimidas Pack X30 Skincare Pastilla",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3931654080"
+      ],
+      "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
+      "alerta": "ctr_bajo",
+      "roas": 6.084247306995049,
+      "acos": 0.16435886799839672,
+      "campania": "oro_bajo",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3931654080"
+      ],
+      "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
+      "alerta": "acos_alto",
+      "roas": 6.084247306995049,
+      "acos": 0.16435886799839672,
+      "campania": "oro_bajo",
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA3931654080"
+      ],
+      "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3840365056",
+        "MLA3840352202",
+        "MLA3840339192",
+        "MLA3840339190"
+      ],
+      "family_name": "Botella Termica Acero Inoxidable Con Sujetador 300ml",
+      "alerta": "ctr_bajo",
+      "roas": 6.996529997881056,
+      "acos": 0.14292799434903536,
+      "campania": "oro_bajo",
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
       "tipo": "agregar_a_promo",
@@ -28,21 +269,6 @@
       "motivo": "poco_stock"
     },
     {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA3706493468",
-        "MLA3706343660",
-        "MLA3706305462"
-      ],
-      "family_name": "Pantalón Mujer Palazzo Pierna Ancha Gamuza Tiro Alto",
-      "campania_origen": "testeo",
-      "campania_destino": "oro_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "oro",
-      "roas_reciente": 6.522187639345207,
-      "grupo_id": "7128827909097744"
-    },
-    {
       "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA3706492080",
@@ -55,108 +281,6 @@
       ],
       "family_name": "Camisa Niño Manga Larga Cuello Mao Casual Nene",
       "motivo": "poco_stock"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA3636456460",
-        "MLA3636456458",
-        "MLA1907934381",
-        "MLA1907934379",
-        "MLA1907934377",
-        "MLA1907921995",
-        "MLA1907921993"
-      ],
-      "family_name": "Sweater Nene Tejido Con Botones Saquito Pullover",
-      "campania_origen": "testeo",
-      "campania_destino": "oro_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "oro",
-      "roas_reciente": 7.665048849333704,
-      "grupo_id": "990526411675858"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3382490776",
-        "MLA1807301427",
-        "MLA1807288393",
-        "MLA1807288389",
-        "MLA1807288387",
-        "MLA1807275523",
-        "MLA1807275521"
-      ],
-      "family_name": "Calza Térmica Niño Lycra Negra Escolar Abrigada Nene",
-      "alerta": "ctr_bajo",
-      "roas": 4.324871570554988,
-      "acos": 0.23122073885576105,
-      "campania": "oro_bajo",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3382490776",
-        "MLA1807301427",
-        "MLA1807288393",
-        "MLA1807288389",
-        "MLA1807288387",
-        "MLA1807275523",
-        "MLA1807275521"
-      ],
-      "family_name": "Calza Térmica Niño Lycra Negra Escolar Abrigada Nene",
-      "alerta": "acos_alto",
-      "roas": 4.324871570554988,
-      "acos": 0.23122073885576105,
-      "campania": "oro_bajo",
-      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA3382490776",
-        "MLA1807301427",
-        "MLA1807288393",
-        "MLA1807288389",
-        "MLA1807288387",
-        "MLA1807275523",
-        "MLA1807275521"
-      ],
-      "family_name": "Calza Térmica Niño Lycra Negra Escolar Abrigada Nene",
-      "campania_origen": "oro_bajo",
-      "campania_destino": "plata_bajo",
-      "tier_origen": "oro",
-      "tier_destino": "plata",
-      "roas_reciente": 4.324871570554988,
-      "grupo_id": "8129433199386895"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA3215506478",
-        "MLA3215506476",
-        "MLA3215506474",
-        "MLA3215506472",
-        "MLA3215378974",
-        "MLA3215378972",
-        "MLA1757030023",
-        "MLA1757030021",
-        "MLA1757030019",
-        "MLA1757030017",
-        "MLA1757030015",
-        "MLA1757009389",
-        "MLA1757009387",
-        "MLA1757009385",
-        "MLA1757009383",
-        "MLA1757009381"
-      ],
-      "family_name": "Pantalon Babucha Hombre Recto Deportivo Con Vivo Lateral",
-      "campania_origen": "testeo",
-      "campania_destino": "oro_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "oro",
-      "roas_reciente": 7.905454594719735,
-      "grupo_id": "2040596443848656"
     },
     {
       "tipo": "agregar_a_promo",
@@ -177,34 +301,81 @@
       "motivo": "poco_stock"
     },
     {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2137801133"
+      ],
+      "family_name": "Kit Spa Mujer Regalo Relax Antifaz Gel Vela Aromatizador",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "lanzamientos_acc",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2137801133"
+      ],
+      "family_name": "Kit Spa Mujer Regalo Relax Antifaz Gel Vela Aromatizador",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "lanzamientos_acc",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA2137801133"
+      ],
+      "family_name": "Kit Spa Mujer Regalo Relax Antifaz Gel Vela Aromatizador",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2116981469"
+      ],
+      "family_name": "Topes Esquineros Silicona Protectores Adhesivos X12",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
       "tipo": "mover_tier",
       "item_ids": [
-        "MLA2314082594",
-        "MLA2313978848",
-        "MLA2313978846",
-        "MLA2313978844",
-        "MLA2313965816",
-        "MLA2313901148",
-        "MLA2313862606",
-        "MLA2313862604",
-        "MLA2313810840",
-        "MLA2313798012",
-        "MLA1676539843",
-        "MLA1676526883",
-        "MLA1676526881",
-        "MLA1676500911",
-        "MLA1676487979",
-        "MLA1676397123",
-        "MLA1676397121",
-        "MLA1676215845"
+        "MLA2116981469"
       ],
-      "family_name": "Bermuda Hombre Corte Chino De Gabardina Elastizada Shaffe",
-      "campania_origen": "testeo",
-      "campania_destino": "oro_alto",
-      "tier_origen": "testeo",
-      "tier_destino": "oro",
-      "roas_reciente": 10.66362338250825,
-      "grupo_id": "5837472192529673"
+      "family_name": "Topes Esquineros Silicona Protectores Adhesivos X12",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "112501598304786"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA2116981469"
+      ],
+      "family_name": "Topes Esquineros Silicona Protectores Adhesivos X12",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2116974503"
+      ],
+      "family_name": "Cubre Alfombra Auto Goma Universal Antideslizante",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "lanzamientos_acc",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
       "tipo": "alerta",
@@ -217,84 +388,129 @@
       ],
       "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
+      "roas": 3.941194401275254,
+      "acos": 0.25373018891847343,
       "campania": "lanzamientos_acc",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
       "tipo": "alerta",
+      "item_ids": [
+        "MLA2094133787",
+        "MLA2094121371",
+        "MLA2094121367",
+        "MLA2094108955",
+        "MLA2094108953"
+      ],
+      "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
+      "alerta": "cvr_bajo",
+      "roas": 3.941194401275254,
+      "acos": 0.25373018891847343,
+      "campania": "lanzamientos_acc",
+      "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2076265925"
+      ],
+      "family_name": "Bandas Elásticas Ejercicio Kit X5 Niveles Gym Con Bolsa",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA2076265925"
+      ],
+      "family_name": "Bandas Elásticas Ejercicio Kit X5 Niveles Gym Con Bolsa",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "2612459049984466"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA2076265925"
+      ],
+      "family_name": "Bandas Elásticas Ejercicio Kit X5 Niveles Gym Con Bolsa",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2031743271"
+      ],
+      "family_name": "Esponja Para Auto  Microfibra Limpieza Detailing Paño",
+      "alerta": "ctr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA2031743271"
+      ],
+      "family_name": "Esponja Para Auto  Microfibra Limpieza Detailing Paño",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "2783850783570896"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
+        "MLA2023829567"
+      ],
+      "family_name": "Pizarra Magica Led Luminosa 3d Usb Acrilico 20x20 Infantil",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA1977357073"
       ],
       "family_name": "Toallitas Húmedas Limpieza Cocina Antigrasa Desengrasante 80",
-      "alerta": "ctr_bajo",
-      "roas": 3.9621655450961666,
-      "acos": 0.2523872333496173,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "motivo": "poco_stock"
     },
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA1812611463",
-        "MLA1812611461",
-        "MLA1812598669",
-        "MLA1812598667",
-        "MLA1812586499",
-        "MLA1812586497",
-        "MLA1812586495",
-        "MLA1812586493",
-        "MLA1812554479",
-        "MLA1812554477",
-        "MLA1812554475",
-        "MLA1812554473"
+        "MLA1930520861"
       ],
-      "family_name": "Remera Termica Niño Manga Larga Super Abrigada Escolar",
+      "family_name": "Pack X3 Muñequera Running Porta Llaves Tarjetas Elastizada",
       "alerta": "ctr_bajo",
-      "roas": 5.99282555745672,
-      "acos": 0.166866195321792,
+      "roas": 0.0,
+      "acos": null,
       "campania": "oro_bajo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
-      "tipo": "alerta",
+      "tipo": "mover_tier",
       "item_ids": [
-        "MLA1812611463",
-        "MLA1812611461",
-        "MLA1812598669",
-        "MLA1812598667",
-        "MLA1812586499",
-        "MLA1812586497",
-        "MLA1812586495",
-        "MLA1812586493",
-        "MLA1812554479",
-        "MLA1812554477",
-        "MLA1812554475",
-        "MLA1812554473"
+        "MLA1930520861"
       ],
-      "family_name": "Remera Termica Niño Manga Larga Super Abrigada Escolar",
-      "alerta": "acos_alto",
-      "roas": 5.99282555745672,
-      "acos": 0.166866195321792,
-      "campania": "oro_bajo",
-      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA1194006886"
-      ],
-      "family_name": "Remera Hombre Lisa Algodon Clasica Basica Entallada Shaffeco",
-      "alerta": "ctr_bajo",
-      "roas": 1.760289419745237,
-      "acos": 0.5680883999999999,
-      "campania": "testeo",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
+      "family_name": "Pack X3 Muñequera Running Porta Llaves Tarjetas Elastizada",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "7792602128063056"
     }
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1790621828",
+  "run_id": "1791837333",
   "fecha_entrada_campania": {}
 }
