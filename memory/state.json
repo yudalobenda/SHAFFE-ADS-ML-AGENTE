@@ -43,6 +43,22 @@
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA4021899296",
+        "MLA2146407795",
+        "MLA2146407793",
+        "MLA2146369547",
+        "MLA2146369545"
+      ],
+      "family_name": "Pack X2 Pijama Mujer Conjunto Musculosa Y Short Suave",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+    },
+    {
       "tipo": "mover_tier",
       "item_ids": [
         "MLA4021899296",
@@ -94,13 +110,13 @@
       ],
       "family_name": "Almohada Cervical Viscoelástica Para Viaje Cuello Almohadon",
       "alerta": "ctr_bajo",
-      "roas": 3.986208666447226,
-      "acos": 0.25086494051784464,
+      "roas": 6.780795544093416,
+      "acos": 0.1474753210736571,
       "campania": "oro_bajo",
-      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
+      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
     {
-      "tipo": "alerta",
+      "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA3995523056",
         "MLA3995523054",
@@ -108,27 +124,7 @@
         "MLA3995523050"
       ],
       "family_name": "Almohada Cervical Viscoelástica Para Viaje Cuello Almohadon",
-      "alerta": "acos_alto",
-      "roas": 3.986208666447226,
-      "acos": 0.25086494051784464,
-      "campania": "oro_bajo",
-      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA3995523056",
-        "MLA3995523054",
-        "MLA3995523052",
-        "MLA3995523050"
-      ],
-      "family_name": "Almohada Cervical Viscoelástica Para Viaje Cuello Almohadon",
-      "campania_origen": "oro_bajo",
-      "campania_destino": "plata_bajo",
-      "tier_origen": "oro",
-      "tier_destino": "plata",
-      "roas_reciente": 3.986208666447226,
-      "grupo_id": "4180847211279699"
+      "motivo": "poco_stock"
     },
     {
       "tipo": "alerta",
@@ -166,18 +162,6 @@
     {
       "tipo": "alerta",
       "item_ids": [
-        "MLA3955062674"
-      ],
-      "family_name": "Hornito Aromatico Ceramica Para Esencias Y Aceite Vela",
-      "alerta": "ctr_bajo",
-      "roas": 3.0266111222872953,
-      "acos": 0.3304025392083645,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
         "MLA3955057216"
       ],
       "family_name": "Especieros Azucareras Pack X3 Con Cuchara Integrada",
@@ -200,6 +184,19 @@
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
+      "tipo": "mover_tier",
+      "item_ids": [
+        "MLA3932044126"
+      ],
+      "family_name": "Mascarillas Faciales Comprimidas Pack X30 Skincare Pastilla",
+      "campania_origen": "oro_bajo",
+      "campania_destino": "plata_bajo",
+      "tier_origen": "oro",
+      "tier_destino": "plata",
+      "roas_reciente": 0.0,
+      "grupo_id": "5914282589564626"
+    },
+    {
       "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA3932044126"
@@ -214,8 +211,8 @@
       ],
       "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
       "alerta": "ctr_bajo",
-      "roas": 6.084247306995049,
-      "acos": 0.16435886799839672,
+      "roas": 5.939595011232373,
+      "acos": 0.16836164723502178,
       "campania": "oro_bajo",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -226,8 +223,8 @@
       ],
       "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
       "alerta": "acos_alto",
-      "roas": 6.084247306995049,
-      "acos": 0.16435886799839672,
+      "roas": 5.939595011232373,
+      "acos": 0.16836164723502178,
       "campania": "oro_bajo",
       "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
@@ -240,7 +237,7 @@
       "motivo": "poco_stock"
     },
     {
-      "tipo": "alerta",
+      "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA3840365056",
         "MLA3840352202",
@@ -248,11 +245,7 @@
         "MLA3840339190"
       ],
       "family_name": "Botella Termica Acero Inoxidable Con Sujetador 300ml",
-      "alerta": "ctr_bajo",
-      "roas": 6.996529997881056,
-      "acos": 0.14292799434903536,
-      "campania": "oro_bajo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
+      "motivo": "poco_stock"
     },
     {
       "tipo": "agregar_a_promo",
@@ -301,30 +294,6 @@
       "motivo": "poco_stock"
     },
     {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA2137801133"
-      ],
-      "family_name": "Kit Spa Mujer Regalo Relax Antifaz Gel Vela Aromatizador",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA2137801133"
-      ],
-      "family_name": "Kit Spa Mujer Regalo Relax Antifaz Gel Vela Aromatizador",
-      "alerta": "cvr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
-    },
-    {
       "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA2137801133"
@@ -370,7 +339,7 @@
       "item_ids": [
         "MLA2116974503"
       ],
-      "family_name": "Cubre Alfombra Auto Goma Universal Antideslizante",
+      "family_name": "Cubre Alfombra Auto Goma Universal Antideslizante 4 Piezas",
       "alerta": "ctr_bajo",
       "roas": 0.0,
       "acos": null,
@@ -388,8 +357,8 @@
       ],
       "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "ctr_bajo",
-      "roas": 3.941194401275254,
-      "acos": 0.25373018891847343,
+      "roas": 3.572334450584292,
+      "acos": 0.2799289970838088,
       "campania": "lanzamientos_acc",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -404,8 +373,8 @@
       ],
       "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "cvr_bajo",
-      "roas": 3.941194401275254,
-      "acos": 0.25373018891847343,
+      "roas": 3.572334450584292,
+      "acos": 0.2799289970838088,
       "campania": "lanzamientos_acc",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
@@ -470,14 +439,6 @@
     {
       "tipo": "agregar_a_promo",
       "item_ids": [
-        "MLA2023829567"
-      ],
-      "family_name": "Pizarra Magica Led Luminosa 3d Usb Acrilico 20x20 Infantil",
-      "motivo": "poco_stock"
-    },
-    {
-      "tipo": "agregar_a_promo",
-      "item_ids": [
         "MLA1977357073"
       ],
       "family_name": "Toallitas Húmedas Limpieza Cocina Antigrasa Desengrasante 80",
@@ -511,6 +472,6 @@
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1791837333",
+  "run_id": "1792432654",
   "fecha_entrada_campania": {}
 }
