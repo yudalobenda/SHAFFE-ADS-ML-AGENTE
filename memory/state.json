@@ -76,46 +76,6 @@
       "grupo_id": "5764904860566674"
     },
     {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA4021574112"
-      ],
-      "family_name": "Musculosa Mujer Pack X3 Lisa Elastizada Basica Modal",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "oro_bajo",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA4021574112"
-      ],
-      "family_name": "Musculosa Mujer Pack X3 Lisa Elastizada Basica Modal",
-      "campania_origen": "oro_bajo",
-      "campania_destino": "plata_bajo",
-      "tier_origen": "oro",
-      "tier_destino": "plata",
-      "roas_reciente": 0.0,
-      "grupo_id": "6175375763441743"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3995523056",
-        "MLA3995523054",
-        "MLA3995523052",
-        "MLA3995523050"
-      ],
-      "family_name": "Almohada Cervical Viscoelástica Para Viaje Cuello Almohadon",
-      "alerta": "ctr_bajo",
-      "roas": 6.780795544093416,
-      "acos": 0.1474753210736571,
-      "campania": "oro_bajo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
-    },
-    {
       "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA3995523056",
@@ -137,6 +97,18 @@
       "acos": null,
       "campania": "oro_bajo",
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+    },
+    {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA3955070800"
+      ],
+      "family_name": "Plato De Sitio Acero Inoxidable Esmaltado 30cm Vajilla",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
     },
     {
       "tipo": "mover_tier",
@@ -158,18 +130,6 @@
       ],
       "family_name": "Plato De Sitio Acero Inoxidable Esmaltado 30cm Vajilla",
       "motivo": "poco_stock"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3955057216"
-      ],
-      "family_name": "Especieros Azucareras Pack X3 Con Cuchara Integrada",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "lanzamientos_acc",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
       "tipo": "alerta",
@@ -199,66 +159,12 @@
     {
       "tipo": "agregar_a_promo",
       "item_ids": [
-        "MLA3932044126"
-      ],
-      "family_name": "Mascarillas Faciales Comprimidas Pack X30 Skincare Pastilla",
-      "motivo": "poco_stock"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3931654080"
-      ],
-      "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
-      "alerta": "ctr_bajo",
-      "roas": 5.939595011232373,
-      "acos": 0.16836164723502178,
-      "campania": "oro_bajo",
-      "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
-    },
-    {
-      "tipo": "alerta",
-      "item_ids": [
-        "MLA3931654080"
-      ],
-      "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
-      "alerta": "acos_alto",
-      "roas": 5.939595011232373,
-      "acos": 0.16836164723502178,
-      "campania": "oro_bajo",
-      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
-    },
-    {
-      "tipo": "agregar_a_promo",
-      "item_ids": [
-        "MLA3931654080"
-      ],
-      "family_name": "Set Belleza Mujer Kit Skincare Facial Spa Regalo Completo",
-      "motivo": "poco_stock"
-    },
-    {
-      "tipo": "agregar_a_promo",
-      "item_ids": [
         "MLA3840365056",
         "MLA3840352202",
         "MLA3840339192",
         "MLA3840339190"
       ],
       "family_name": "Botella Termica Acero Inoxidable Con Sujetador 300ml",
-      "motivo": "poco_stock"
-    },
-    {
-      "tipo": "agregar_a_promo",
-      "item_ids": [
-        "MLA3770423748",
-        "MLA3770423746",
-        "MLA3770423744",
-        "MLA1977464137",
-        "MLA1977464135",
-        "MLA1977464133",
-        "MLA1977417803"
-      ],
-      "family_name": "Trapo Reutilizables Cocina Rollo X20 Absorbentes 25x25 Paño",
       "motivo": "poco_stock"
     },
     {
@@ -314,6 +220,18 @@
       "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
     },
     {
+      "tipo": "alerta",
+      "item_ids": [
+        "MLA2116981469"
+      ],
+      "family_name": "Topes Esquineros Silicona Protectores Adhesivos X12",
+      "alerta": "cvr_bajo",
+      "roas": 0.0,
+      "acos": null,
+      "campania": "oro_bajo",
+      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+    },
+    {
       "tipo": "mover_tier",
       "item_ids": [
         "MLA2116981469"
@@ -357,8 +275,8 @@
       ],
       "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "ctr_bajo",
-      "roas": 3.572334450584292,
-      "acos": 0.2799289970838088,
+      "roas": 3.57710922224747,
+      "acos": 0.27955534423735257,
       "campania": "lanzamientos_acc",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -373,8 +291,8 @@
       ],
       "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "cvr_bajo",
-      "roas": 3.572334450584292,
-      "acos": 0.2799289970838088,
+      "roas": 3.57710922224747,
+      "acos": 0.27955534423735257,
       "campania": "lanzamientos_acc",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
@@ -472,6 +390,6 @@
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1792432654",
+  "run_id": "1793037250",
   "fecha_entrada_campania": {}
 }
