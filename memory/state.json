@@ -214,10 +214,10 @@
       ],
       "family_name": "Topes Esquineros Silicona Protectores Adhesivos X12",
       "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
+      "roas": 3.4625338671195762,
+      "acos": 0.28880583941605836,
       "campania": "oro_bajo",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
+      "recomendacion": "mejorar foto/precio para recuperar el ROAS"
     },
     {
       "tipo": "alerta",
@@ -225,11 +225,11 @@
         "MLA2116981469"
       ],
       "family_name": "Topes Esquineros Silicona Protectores Adhesivos X12",
-      "alerta": "cvr_bajo",
-      "roas": 0.0,
-      "acos": null,
+      "alerta": "acos_alto",
+      "roas": 3.4625338671195762,
+      "acos": 0.28880583941605836,
       "campania": "oro_bajo",
-      "recomendacion": "sin ventas — revisá descripción, precio y fotos secundarias"
+      "recomendacion": "costo de publicidad muy alto para este tier — revisar puja o pausar"
     },
     {
       "tipo": "mover_tier",
@@ -241,7 +241,7 @@
       "campania_destino": "plata_bajo",
       "tier_origen": "oro",
       "tier_destino": "plata",
-      "roas_reciente": 0.0,
+      "roas_reciente": 3.4625338671195762,
       "grupo_id": "112501598304786"
     },
     {
@@ -275,8 +275,8 @@
       ],
       "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "ctr_bajo",
-      "roas": 3.57710922224747,
-      "acos": 0.27955534423735257,
+      "roas": 3.2388996962986316,
+      "acos": 0.30874682570219314,
       "campania": "lanzamientos_acc",
       "recomendacion": "mejorar foto para potenciar (ya está cerca del objetivo)"
     },
@@ -291,8 +291,8 @@
       ],
       "family_name": "Vaso Termico Con Manija Y Sorbete Acero 1200 Ml Tapa",
       "alerta": "cvr_bajo",
-      "roas": 3.57710922224747,
-      "acos": 0.27955534423735257,
+      "roas": 3.2388996962986316,
+      "acos": 0.30874682570219314,
       "campania": "lanzamientos_acc",
       "recomendacion": "la gente entra pero no compra — mejorar descripción/ficha"
     },
@@ -357,39 +357,30 @@
     {
       "tipo": "agregar_a_promo",
       "item_ids": [
+        "MLA2023829567"
+      ],
+      "family_name": "Pizarra Magica Led Luminosa 3d Usb Acrilico 20x20 Infantil",
+      "motivo": "poco_stock"
+    },
+    {
+      "tipo": "agregar_a_promo",
+      "item_ids": [
         "MLA1977357073"
       ],
       "family_name": "Toallitas Húmedas Limpieza Cocina Antigrasa Desengrasante 80",
       "motivo": "poco_stock"
     },
     {
-      "tipo": "alerta",
+      "tipo": "agregar_a_promo",
       "item_ids": [
         "MLA1930520861"
       ],
       "family_name": "Pack X3 Muñequera Running Porta Llaves Tarjetas Elastizada",
-      "alerta": "ctr_bajo",
-      "roas": 0.0,
-      "acos": null,
-      "campania": "oro_bajo",
-      "recomendacion": "sin ventas — cambiá la foto principal antes de decidir"
-    },
-    {
-      "tipo": "mover_tier",
-      "item_ids": [
-        "MLA1930520861"
-      ],
-      "family_name": "Pack X3 Muñequera Running Porta Llaves Tarjetas Elastizada",
-      "campania_origen": "oro_bajo",
-      "campania_destino": "plata_bajo",
-      "tier_origen": "oro",
-      "tier_destino": "plata",
-      "roas_reciente": 0.0,
-      "grupo_id": "7792602128063056"
+      "motivo": "poco_stock"
     }
   ],
   "telegram_offset": 581633330,
   "fecha_entrada_oro": {},
-  "run_id": "1793037250",
+  "run_id": "1793653427",
   "fecha_entrada_campania": {}
 }
